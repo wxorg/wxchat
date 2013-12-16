@@ -1,0 +1,17 @@
+<!DOCTYPE hibernate-configuration PUBLIC  
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"  
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">  
+  
+<hibernate-configuration> 
+     
+    <session-factory>  
+        <!-- 引入需要映射的类 -->  
+        <property name="hibernate.jdbc.batch_size">500</property>
+        <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property> 
+        
+  
+        <mapping class="wx.com.entity.receive.Msg_Text"/> 
+
+        
+    </session-factory>  
+</hibernate-configuration>
