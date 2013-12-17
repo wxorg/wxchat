@@ -39,15 +39,14 @@
 
 	<div class="container">
 	
+		<c:forEach items="${platFormList}" var = "rowlist">
+			<div>
+				<button type="button" class="btn btn-default btn-lg btn-block">${rowlist.getPlatName() }</button>
+			</div>
 		
+		</c:forEach>
 		
-		<div>
-			<button type="button" class="btn btn-default btn-lg btn-block">Block level button</button>
-		</div>
-		
-		<div>
-			<button type="button" class="btn btn-default btn-lg btn-block">Block level button</button>
-		</div>
+
 	
 	</div>
 	
