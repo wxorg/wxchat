@@ -5,7 +5,7 @@ import java.util.List;
 
 import wx.com.entity.cms.PlatForm;
 
-public class SelectPlatFormManager implements ISelectPlatForm{
+public class SelectPlatFormManager implements ISelectPlatFormManager{
 
 	@Override
 	public List<PlatForm> getPlatFormList() {
@@ -28,13 +28,31 @@ public class SelectPlatFormManager implements ISelectPlatForm{
 	}
 
 	@Override
-	public PlatForm getPlatForm(String str0) {
+	public PlatForm getPlatFormById(String str0) {
 		// TODO Auto-generated method stub
 		PlatForm platForm = new PlatForm();
 		platForm.setId("1");
 		platForm.setOrigId("gh_9cc49ccae03a");
 		platForm.setPlatName("无线天利深圳分公司");
 		return platForm;
+	}
+
+	@Override
+	public boolean addPlatForm(PlatForm platForm) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean editPlatForm(String origId, PlatForm platForm) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delPlatForm(String origId) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

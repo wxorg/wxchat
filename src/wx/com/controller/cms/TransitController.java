@@ -20,7 +20,7 @@ import wx.com.service.cms.SelectPlatFormManager;
 
 @Controller
 @RequestMapping(value="protected")
-public class TransitRedict {
+public class TransitController {
 	
 	@RequestMapping(value="transit",method = RequestMethod.GET)
 	public ModelAndView  Transit(HttpServletRequest request ,HttpServletResponse response) throws IOException{

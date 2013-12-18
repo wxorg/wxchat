@@ -29,12 +29,12 @@ public class IndexController {
 	
 		List<Index> indexList = new ArrayList<Index>();
 		
-		indexList.add(indexManager.getIndex("1"));
-		indexList.add(indexManager.getIndex("2"));
-		indexList.add(indexManager.getIndex("3"));
+		indexList.add(indexManager.getIndex("1","1"));
+		indexList.add(indexManager.getIndex("2","1"));
+		indexList.add(indexManager.getIndex("3","1"));
 		SelectPlatFormManager selectPlatFormManager =new SelectPlatFormManager();
 		String origId = httpRequest.getParameter("origId");
-    	PlatForm platForm=selectPlatFormManager.getPlatForm(origId);
+    	PlatForm platForm=selectPlatFormManager.getPlatFormById(origId);
 		 
     	httpRequest.getSession().setAttribute("_platform_", platForm);
     	
@@ -48,8 +48,8 @@ public class IndexController {
 		System.out.println("dsf");
 		List<Index> indexList = new ArrayList<Index>();
 		
-		indexList.add(indexManager.getIndex("1"));
-		indexList.add(indexManager.getIndex("2"));
+		indexList.add(indexManager.getIndex("1","1"));
+		indexList.add(indexManager.getIndex("2","1"));
 		
 		httpRequest.getSession().setAttribute("indexList", indexList);
 	
@@ -63,9 +63,9 @@ public class IndexController {
 	
 		List<Index> indexList = new ArrayList<Index>();
 		
-		indexList.add(indexManager.getIndex("1"));
-		indexList.add(indexManager.getIndex("2"));
-		indexList.add(indexManager.getIndex("3"));
+		indexList.add(indexManager.getIndex("1","1"));
+		indexList.add(indexManager.getIndex("2","2"));
+		indexList.add(indexManager.getIndex("3","3"));
 		System.out.println("add_get");
 		return new ModelAndView("/protected/index/wx_index_add","indexList",indexList);
 	}
