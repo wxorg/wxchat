@@ -8,9 +8,10 @@
         <p class="text-muted credit">Example courtesy <a href="http://martinbean.co.uk">Martin Bean</a> and <a href="http://ryanfait.com/sticky-footer/">Ryan Fait</a>.</p>
       </div>
     </div>
-    
-     <script src="../js/jquery.js"></script>
-     <script src="../js/bootstrap.min.js"></script>
+     
+ 
+
+
     
 </body>
 </html>

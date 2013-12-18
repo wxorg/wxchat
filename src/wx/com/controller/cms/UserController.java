@@ -9,10 +9,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserController {
 	
 	@RequestMapping(value="/wx_user",method = RequestMethod.GET)
-	public String  checkSig(){
+	public String  getwxUser(){
 	
-		System.out.println("user");
-		return "/protected/wx_user";
+
+		return "/protected/wxuser/wx_user";
+	}
+	
+	@RequestMapping(value="/wx_user_group",method = RequestMethod.GET)
+	public String  getwxUser_group(){
+	
+
+		return "/protected/wxuser/wx_user_group";
 	}
 
 }

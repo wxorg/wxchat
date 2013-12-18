@@ -7,5 +7,6 @@ import wx.com.entity.cms.PlatForm;
 public interface ISelectPlatForm {
 	
 	public List<PlatForm> getPlatFormList();
+	public PlatForm getPlatForm(String str0);
 
 }

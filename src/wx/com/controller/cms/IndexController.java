@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import wx.com.entity.cms.PlatForm;
 import wx.com.entity.cms.index.Index;
 import wx.com.service.cms.IIndexManager;
+import wx.com.service.cms.SelectPlatFormManager;
 
 @Controller
 @RequestMapping(value="protected")
@@ -30,8 +32,13 @@ public class IndexController {
 		indexList.add(indexManager.getIndex("1"));
 		indexList.add(indexManager.getIndex("2"));
 		indexList.add(indexManager.getIndex("3"));
+		SelectPlatFormManager selectPlatFormManager =new SelectPlatFormManager();
+		String origId = httpRequest.getParameter("origId");
+    	PlatForm platForm=selectPlatFormManager.getPlatForm(origId);
 		 
-		return new ModelAndView("/protected/wx_index","indexList",indexList);
+    	httpRequest.getSession().setAttribute("_platform_", platForm);
+    	
+		return new ModelAndView("/protected/index/wx_index","indexList",indexList);
 	}
 
 	
@@ -46,7 +53,7 @@ public class IndexController {
 		
 		httpRequest.getSession().setAttribute("indexList", indexList);
 	
-		return "/protected/wx_index";
+		return "/protected/index/wx_index";
 		
 	}
 	
@@ -54,14 +61,22 @@ public class IndexController {
 	@RequestMapping(value="/wx_index_add",method = RequestMethod.GET)
 	public ModelAndView  getwx_index_add(HttpServletRequest httpRequest){
 	
-		System.out.println("dsf");
 		List<Index> indexList = new ArrayList<Index>();
 		
 		indexList.add(indexManager.getIndex("1"));
 		indexList.add(indexManager.getIndex("2"));
 		indexList.add(indexManager.getIndex("3"));
+		System.out.println("add_get");
+		return new ModelAndView("/protected/index/wx_index_add","indexList",indexList);
+	}
+	
+	@RequestMapping(value="/wx_index_add",method = RequestMethod.POST)
+	public ModelAndView  postwx_index_add(HttpServletRequest httpRequest){
+	
+		
+		System.out.println("dd");
 		 
-		return new ModelAndView("/protected/wx_index_add","indexList",indexList);
+		return new ModelAndView("/protected/index/wx_index_add");
 	}
 	
 	

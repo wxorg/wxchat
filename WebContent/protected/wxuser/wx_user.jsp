@@ -1,6 +1,14 @@
 
+
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="/protected/header.jsp"%>
+
+<style>
+	.img-size{
+		width:50px;
+		height:50px
+	}
+</style>
 
 
 <div class="row">
@@ -8,8 +16,8 @@
   	<div class="btn-group-vertical sidebar-offcanvas" role="navigation">
 
 		<div class="list-group">
-            <a href="#" class="list-group-item active">用户管理</a>
-            <a href="#" class="list-group-item">分组管理</a>
+            <a href="${ctx}/protected/wx_user" class="list-group-item active">用户管理</a>
+            <a href="${ctx}/protected/wx_user_group" class="list-group-item">分组管理</a>
 
           </div>
 	</div>
@@ -48,11 +56,12 @@
 		</ul>
 	  </div>
    </div>
+   
    <div class="table-responsive">
   		<table class="table table-striped  table-hover">
 		<thead>
 			<tr>
-				<th></th>
+				<th width="80px"></th>
 				<th></th>
 				<th>分组</th>
 				<th>修改备注</th>
@@ -61,15 +70,22 @@
 	
 		<tbody>
 			<tr>
-				<td>1
+				<td><img src="${ctx }/static/a1.jpg" alt="..." class="img-rounded img-responsive img-size">
 				</td>
-				<td>1
+				<td>alice
 				</td>
-				<td>1
+				<td>
+					<select >
+  						<option value="-1">未分组</option>
+  						<option value="0">组1</option>
+  						<option value="1">组2</option>
+					</select>
 				</td>
 				<td>1
 				</td>
 			</tr>
+			<c:forEach items="${aa}" var = "rowlist">
+			
 			<tr>
 				<td>1
 				</td>
@@ -80,6 +96,8 @@
 				<td>1
 				</td>
 			</tr>
+			</c:forEach>
+			
 		</tbody>
 	</table>
   </div>
@@ -91,7 +109,21 @@
   </div>
 </div>
 
+	<script type="text/javascript">
+	
+		$(".nav li").each(function(){
+		
+			$(this).removeClass("active");
 
+		});
+	
+		$(document).ready(function(){
+		
+			$("#usermanager").addClass("active");
+		
+		});
+		
+	</script>
 
 		
 

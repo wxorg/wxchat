@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/protected/taglibs.jsp"%>
+<%@ page import="wx.com.entity.cms.PlatForm"%>
+<%@ page import="wx.com.service.cms.SelectPlatFormManager" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,10 +14,35 @@
     <link rel="shortcut icon" href="../static/favicon.png">
 	<title>微信管理平台</title>
 	
-	<link href="../css/bootstrap.css" rel="stylesheet">
+	<link href="${ctx}/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../css/navbar.css" rel="stylesheet">
+    <link href="${ctx}/css/navbar.css" rel="stylesheet">
+    
+    <script src="${ctx}/js/jquery.js"></script>
+    <script src="${ctx}/js/bootstrap.min.js"></script>   
+    
+    <script type="text/javascript">
+	
+	
+    	function changeNavCss(){
+    		
+    		$(".nav li").each(function(){
+    			
+    			alert("click");
+    			if($(this).hasClass("active")){
+    				return;
+    			}else{
+    				$(".nav li").each(function(){
+    				    $(this).removeClass("active");
+    				  });
+    				$(this).addClass("active");
+
+    			}
+    		});
+    	}
+		
+	</script>
     
 </head>
 <body >
@@ -31,13 +58,40 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-home">&nbsp;无线天利</span></a>
+            <%
+            PlatForm  platForm=null;
+    		boolean isnotnull=false;
+            if(request.getSession().getAttribute("_platform_")!=null){
+            	//platForm = (PlatForm)request.getSession().getAttribute("_platform_");	
+            	platForm=(PlatForm)request.getSession().getAttribute("_platform_");
+            	isnotnull = true;
+            }else{
+            	response.sendRedirect("/protected/transit");
+            }
+ 
+            
+            %>
+            
+            <c:if test="<%=isnotnull %>">
+         
+            <a class="navbar-brand" 
+            	
+            	href="${ctx }/protected/transit?id=<%=((PlatForm)platForm).getOrigId()%>" >
+            	<span >
+            		<%=((PlatForm)platForm).getPlatName() %>
+            			
+            	</span>
+            
+            </a>
+            
+            </c:if>
+          
           </div>
           <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="${ctx}/protected/wx_index"><span class="glyphicon glyphicon-tasks">&nbsp;索引管理</span></a></li>
-              <li><a href="${ctx}/protected/wx_user"><span class="glyphicon glyphicon-user">&nbsp;用户管理</span></a></li>
-              <li><a href="#contact"><span class="glyphicon glyphicon-file">&nbsp;素材管理</span></a></li>
+              <li id="indexmanager" class="active"><a href="${ctx}/protected/wx_index"><span class="glyphicon glyphicon-tasks">&nbsp;索引管理</span></a></li>
+              <li id="usermanager"><a href="${ctx}/protected/wx_user"><span class="glyphicon glyphicon-user">&nbsp;用户管理</span></a></li>
+              <li id="materialmanager"><a href="#contact"><span class="glyphicon glyphicon-file">&nbsp;素材管理</span></a></li>
             </ul>
             
             <ul class="nav navbar-nav navbar-right">

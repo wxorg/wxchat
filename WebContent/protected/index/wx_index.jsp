@@ -21,12 +21,18 @@
   			<div class="col-md-6">
   				<div class="row">
   					<div class="col-md-6 form-group">
-  	 					<label class="sr-only control-label" for="title">标题：</label>
-   			   			 <input type="text" class="form-control" id="title" placeholder="标题">
+  	 					<label class="sr-only control-label" for="keyword">关键词：</label>
+   			   			 <input type="text" class="form-control" id="keyword" placeholder="关键词">
   	 				</div>
   	 				<div class="col-md-6 form-group">
-  	 					<label class="sr-only" for="indexid">索引号</label>
-    					<input type="text" class="form-control" id="indexid" placeholder="索引号">
+  	 					<label class="sr-only" for="indextype">索引类型</label>
+    					<select class="form-control">
+  							<option value="-1">选择索引类型</option>
+  							<option value="0">关注索引</option>
+  							<option value="1">关键词索引</option>
+  							<option value="2">搜索索引</option>
+  							<option value="3">默认索引</option>
+						</select>
   	 				</div>
   				</div>
   			</div>
@@ -35,16 +41,17 @@
   	 				<div class="col-md-6 form-group">
   	 					<label class="sr-only" for="msgtype">消息类型</label>
     					<select class="form-control">
-  							<option value="-1">选择消息类型</option>
-  							<option value="0">文本</option>
-  							<option value="1">单图文</option>
-  							<option value="2">多图文</option>
-  							<option value="3">声音</option>
+  							<option value =-1>消息类型</option>
+ 							<option value =0>文本</option>
+  							<option value =1>图片</option>
+  							<option value =2>声音</option>
+  							<option value =3>视频</option>
+  							<option value =4>图文</option>
 						</select>
   	 				</div>
-  	 				<div class="col-md-6 form-group" style="text-align:right">
+  	 				<div class="col-md-6 form-group" >
   	 					<button type="submit" class="btn btn-default">搜索</button>
-   						<button type="submit" class="btn btn-default" data-toggle="modal" data-target="#myModal">添加</button>
+   						
   	 				</div>
   	 		
   	 			</div>
@@ -108,23 +115,21 @@
   </div>
 
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">添加索引</h4>
-      </div>
-      <div class="modal-body">
-       
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+	<script type="text/javascript">
+	
+		$(".nav li").each(function(){
+		
+			$(this).removeClass("active");
+
+		});
+	
+		$(document).ready(function(){
+		
+			$("#indexmanager").addClass("active");
+		
+		});
+		
+	</script>
 
 
 
