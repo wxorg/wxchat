@@ -19,9 +19,9 @@
 
     <!-- Custom styles for this template -->
     <link href="css/signin.css" rel="stylesheet">
-    
-    <script src="js/bootstrap.js" ></script>
     <script src="js/jquery.js" ></script>
+    <script src="js/bootstrap.js" ></script>
+    
     
     <script>
     	function clickImg(obj){
@@ -53,7 +53,7 @@
 	<h2 class="form-signin-heading">Please sign in</h2>
 	
 		<input type="text" name='j_username' class="form-control" placeholder="username"  <c:if test="${not empty param.login_error}">value='<%= session.getAttribute(ProcessingFilter.ACEGI_SECURITY_LAST_USERNAME_KEY) %>'</c:if>  required >
-    <input type="password" name='j_password' class="form-control" placeholder="Password" required>
+    	<input type="password" name='j_password' class="form-control" placeholder="Password" required>
 
     <div style="margin-bottom:10px">
     	<input type="text" class="form-control" style = "max-width:180px;display:inline" placeholder="imagecode" name="j_imagecode" required/>

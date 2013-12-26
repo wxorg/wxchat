@@ -23,8 +23,12 @@
 	</div>
   </div>
   <div class="col-md-8">
-  	<div style="background-color: #E1E1E1;padding:10px 10px 0px 10px"> 
-  	<form class="form-inline" role="form" style="background-color: #c9c9c9;margin-bottom:0px">
+  
+  	<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+     
+  	<form class="form-inline" role="form" >
   		<div class="row">
   			<div class="col-md-3">
  
@@ -47,24 +51,18 @@
 
     
    </form>
-      <div > 
-   		<ul class=" pager col-md-offset-2" style="margin:5px 0px 5px 0px;text-align:right">
-  			<li class=" disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span> </a></li>
-  			<li class=" disabled" ><a href="#">1/3</a></li>
-  			<li class=""><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-
-		</ul>
-	  </div>
+   </h3>
+      
    </div>
    
-   <div class="table-responsive">
+   <div class="table-responsive panel panel-default">
   		<table class="table table-striped  table-hover">
-		<thead>
+		<thead >
 			<tr>
 				<th width="80px"></th>
 				<th></th>
 				<th>分组</th>
-				<th>修改备注</th>
+				<th>关注时间</th>
 			</tr>
 		</thead>
 	
@@ -101,30 +99,25 @@
 		</tbody>
 	</table>
   </div>
+  </div>
+  
+   <div > 
+   		<ul class=" pager " style="margin:5px 0px 5px 0px;text-align:center">
+  			<li class=" disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span> </a></li>
+  			<li class=" disabled" ><a href="#">1/3</a></li>
+  			<li class=""><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+
+		</ul>
+	  </div>
    
    
-   </div>
-   
+</div>
   	
   </div>
 </div>
 
-	<script type="text/javascript">
-	
-		$(".nav li").each(function(){
-		
-			$(this).removeClass("active");
 
-		});
-	
-		$(document).ready(function(){
-		
-			$("#usermanager").addClass("active");
-		
-		});
-		
-	</script>
-
+<script src="${ctx}/js/user.js"></script>
 		
 
 <%@ include file="/protected/footer.jsp"%>

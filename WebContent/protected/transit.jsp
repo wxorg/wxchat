@@ -33,7 +33,7 @@
     	}
     	
     	.addPlatform{
-    		border:solid 1px #D4D4D4;
+    		
     		padding-top:20px
     	}
     	.addPlatform .form-group{
@@ -47,7 +47,13 @@
 <body>
 
 	<div class="container">
-	
+		<c:if test="${not empty param.transit_error }">
+			<div class="alert alert-danger">
+  				<a href="" ><%=session.getAttribute("addplatform_error") %></a>
+			</div>
+		
+		</c:if>
+		
 	
 		<c:choose>
 			<c:when test="${platFormList.size()==0}">
@@ -64,10 +70,15 @@
 		
 			<c:otherwise>
 				<c:forEach items="${platFormList}" var = "rowlist">
-					<div>
-						<a class="btn btn-default btn-lg btn-block" href="${ctx}/protected/wx_index?origId=${rowlist.getOrigId()}">
+					<div class="btn btn-default btn-lg btn-block">
+						<a  href="${ctx}/protected/wx_index?origId=${rowlist.getOrigId()}">${rowlist.getPlatName() }</a>
+					
+							<a type="button" class="btn btn-link EditplatForm" onclick="EditplatForm('${rowlist.getPlatName()}','${rowlist.getWxName()}','${rowlist.getOrigId()}','${rowlist.getType()}')">
+								<span class="glyphicon glyphicon-edit"></span></a>
+							<a type="button"  class="btn btn-link" onclick="EditplatForm('${rowlist.getPlatName()}','${rowlist.getWxName()}','${rowlist.getOrigId()}','${rowlist.getType()}')">
+								<span class="glyphicon glyphicon-trash"></span></a>
 						
-						${rowlist.getPlatName() }</a>
+						
 					</div>
 		
 				</c:forEach>
@@ -79,40 +90,103 @@
 			<a id="addplatformbtn" class="btn btn-default btn-lg btn-block " ><span class="glyphicon glyphicon-plus"></span></a>
 		</div>
 		
-		<div id="addPlatModal" class="hide">
-			<form role="form" class="addPlatform" >
-  		 	
-  		 		<div class="form-group" >
-    				<label for="platname">名称</label>
-  			    	<input type="text" class="form-control" id="platname" placeholder="名称" required>
+		<div class="panel-group hide" id="addPlatModal">
+   					<div class="panel panel-default">
+   						<div class="panel-heading">
+   							<h4 class="panel-title">
+   								<a data-toggle="collapse" data-toggle="collapse" data-parent="#addPlatModal" href="#collapseOne">
+          							平台添加
+        						</a>
+      						</h4>
+    					</div>
+    					<div id="collapseOne" class="panel-collapse collapse in">
+      						<div class="panel-body">
+								<form role="form" class="addPlatform" action="${ctx }/protected/transitAdd"  method="POST">
+  		 							
+  		 							<div class="form-group" >
+    									<label for="platname">名称</label>
+  			    						<input type="text" class="form-control" id="platname" name="platname" placeholder="名称" required>
 
-  				</div>
-  				<div class="form-group">
-    				<label for="wxName">微信号</label>
-  			    	<input type="text" class="form-control" id="wxName" placeholder="微信号" required>
+  									</div>
+  									<div class="form-group">
+    									<label for="wxName">微信号</label>
+  			    						<input type="text" class="form-control" id="wxName" name="wxName" placeholder="微信号" required>
 
-  				</div>
-  				<div class="form-group" >
-    				<label for="origId">原始ID</label>
-  			    	<input type="text" class="form-control" id="origId" placeholder="原始ID" required>
+  									</div>
+  									<div class="form-group" >
+    									<label for="origId">原始ID</label>
+  			    						<input type="text" class="form-control" id="origId" name="origId" placeholder="原始ID" required>
 
-  				</div>
-  				<div class="form-group" >
-    				<label for="type">账号类型</label>
-  			    	<select class="form-control">
-  					<option value="0">服务号</option>
-  					<option value="1">订阅号</option>
-				</select>
+  									</div>
+  									<div class="form-group" >
+    									<label for="type">账号类型</label>
+  			    						<select class="form-control" name="plattype">
+  											<option value="0">服务号</option>
+  											<option value="1">订阅号</option>
+										</select>
 
-  				</div>
-  				<div class="form-group" style="text-align:center" >
-  					<button type="button" class="btn btn-default" onclick="cancleBtn()">取消</button>
-					<button type="button" id="btnTextConfirm" class="btn btn-primary" onclick="cancleBtn()">确定</button>
-  				</div>
+  									</div>
+  									<div class="form-group" style="text-align:center" >
+  										<button type="button" class="btn btn-default" onclick="cancleBtn()">取消</button>
+										<button type="submit" id="btnTextConfirm" class="btn btn-primary" >确定</button>
+  									</div>
   				
-  			</form>
-		</div>
+  								</form>
+							</div>
+						</div>
+				</div>
+			</div>
+		
+			<div class="panel-group hide" id="editPlatModal">
+   					<div class="panel panel-default">
+   						<div class="panel-heading">
+   							<h4 class="panel-title">
+   								<a data-toggle="collapse" data-toggle="collapse" data-parent="#editPlatModal" href="#collapseOne">
+          							平台修改
+        						</a>
+      						</h4>
+    					</div>
+    					<div id="collapseOne" class="panel-collapse collapse in">
+      						<div class="panel-body">
+      							<form role="form" class="addPlatform" action="${ctx }/protected/transitEdit"  method="POST">
+  		 		
+  		 							<div class="form-group" >
+    									<label for="platname">名称</label>
+  			    						<input type="text" class="form-control" id="editplatname" name="platname" placeholder="名称" required>
 
+  										</div>
+  										<div class="form-group">
+    										<label for="wxName">微信号</label>
+  			    							<input type="text" class="form-control" id="editwxName" name="wxName" placeholder="微信号" required>
+
+  										</div>
+  										<div class="form-group" >
+    										<label for="origId">原始ID</label>
+  			    							<input type="text" class="form-control" id="editorigId" name="origId" placeholder="原始ID" required>
+
+  										</div>
+  										<div class="form-group" >
+    										<label for="type">账号类型</label>
+  			    							<select class="form-control" name="editplattype">
+  												<option value="0">服务号</option>
+  												<option value="1">订阅号</option>
+											</select>
+
+  										</div>
+  										<div class="form-group" style="text-align:center" >
+  											<button type="button" class="btn btn-default" onclick="cancleBtn()">取消</button>
+											<button type="submit" id="btnTextConfirm" class="btn btn-primary" >确定</button>
+  										</div>
+  				
+  								</form>
+  							</div>
+       						 
+       					</div>
+    				</div>
+  			</div>
+		
+			
+	
 	
 	</div>
 	
@@ -121,20 +195,56 @@
 		
 	function cancleBtn(){
 		$("#addPlatModal").addClass("hide");
-		$("#addplatformbtn").removeClass("show");
+		$("#editPlatModal").addClass("hide");
 	}
 	
 	$("#addplatformbtn").click(function(){
-		if(!$("#addplatformbtn").hasClass("show")){
+		if($("#addPlatModal").hasClass("hide")){
+			//打开添加面板
 			$("#addPlatModal").removeClass("hide");
-			$("#addplatformbtn").addClass("show");
+			//关闭编辑面板
+			$("#editPlatModal").addClass("hide");
+
+			
 		}else{
+			//关闭添加面板
 			$("#addPlatModal").addClass("hide");
-			$("#addplatformbtn").removeClass("show");
+
+			
 		}
 		
 	});
 	
+	function addplatformBtn(){
+		$("#addPlatModal").addClass("hide");
+		$("#addplatformbtn").removeClass("show");
+	}
+	
+	function EditplatForm(PlatName,WxName,OrigId,getType){
+				
+		//$("#editPlatModal").removeClass("hide");
+		
+		$("#editplatname").val(PlatName);
+		$("#editwxName").val(WxName);
+		$("#origId").val(OrigId);
+		$("#editplattype").value=getType;
+		
+		
+		if($("#editPlatModal").hasClass("hide")){
+			
+			$("#editPlatModal").removeClass("hide");
+			
+			$("#addPlatModal").addClass("hide");
+			
+
+		}else{
+		
+			$("#editPlatModal").addClass("hide");
+			
+			
+		}
+
+	}
 	</script>
 	
 

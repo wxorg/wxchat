@@ -21,12 +21,17 @@
 
 		<div class="list-group">
             <a href="${ctx}/protected/wx_index" class="list-group-item">普通索引</a>
-            <a href="#" class="list-group-item">接口索引</a>
+            <a href="#" class="list-group-item">菜单管理</a>
 			<a href="${ctx}/protected/wx_index_add" class="list-group-item  active">添加索引</a>
           </div>
 	</div>
   </div>
   <div class="col-md-8">
+  	<div class="panel panel-default">
+  	<div class="panel-heading">
+    	<h3 class="panel-title">添加索引</h3>
+  	</div>
+  	<div class="panel-body">
   		 <form role="form">
   		 	
   		 	<div class="form-group" style="max-width:600px">
@@ -110,7 +115,10 @@
   		
   		
 		</form>
+   	  </div>
    
+  	
+ 	</div>
    
    
    </div>

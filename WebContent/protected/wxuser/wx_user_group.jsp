@@ -24,8 +24,35 @@
   </div>
   <div class="col-md-8">
   	
+   <div class="panel panel-default">
+  	<div class="panel-heading">
+    <h3 class="panel-title">
+  	<form class="form-inline" role="form" >
+  		<div class="row">
+  			<div class="col-md-2">
+ 
+  					<button type="button" class="btn btn-default">添加分组</button>
+
+ 
+  			</div>
+  	 		<div class="col-md-2">
+
+  	 				<button type="button" class="btn btn-default">删除分组</button>
+
+  	 		
+  	 			
+  			</div>
+  	 			
+  		 </div>
+
+    
+   </form>
+   </h3>
+      
+   </div>
    
    <div class="table-responsive">
+   		
   		<table class="table table-striped  table-hover">
 		<thead>
 			<tr>
@@ -42,7 +69,7 @@
 				<td>31
 				</td>
 				<td>
-					<a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+					<a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
 				</td>
 
 			</tr>
@@ -64,14 +91,14 @@
 	</table>
   </div>
    
-   
+   </div>
    </div>
    
   	
   </div>
 </div>
 
-
+<script src="${ctx}/js/user.js"></script> 
 
 		
 

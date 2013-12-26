@@ -13,15 +13,16 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../static/favicon.png">
 	<title>微信管理平台</title>
-	
+	<link href="${ctx}/css/uploadify.css" rel="stylesheet">
 	<link href="${ctx}/css/bootstrap.css" rel="stylesheet">
-
+	<link href="${ctx}/css/bootstrap-theme.min.css" rel="stylesheet">	
     <!-- Custom styles for this template -->
     <link href="${ctx}/css/navbar.css" rel="stylesheet">
     
     <script src="${ctx}/js/jquery.js"></script>
-    <script src="${ctx}/js/bootstrap.min.js"></script>   
-    
+    <script src="${ctx}/js/bootstrap.min.js"></script>  
+ 
+   
     <script type="text/javascript">
 	
 	
@@ -43,6 +44,16 @@
     	}
 		
 	</script>
+	
+	<style type="text/css">
+		table thead{
+			
+			
+		}
+		table{
+			margin-top:10px;
+		}
+	</style>
     
 </head>
 <body >
@@ -66,7 +77,8 @@
             	platForm=(PlatForm)request.getSession().getAttribute("_platform_");
             	isnotnull = true;
             }else{
-            	response.sendRedirect("/protected/transit");
+            	
+            	response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/protected/transit");
             }
  
             
@@ -91,7 +103,7 @@
             <ul class="nav navbar-nav">
               <li id="indexmanager" class="active"><a href="${ctx}/protected/wx_index"><span class="glyphicon glyphicon-tasks">&nbsp;索引管理</span></a></li>
               <li id="usermanager"><a href="${ctx}/protected/wx_user"><span class="glyphicon glyphicon-user">&nbsp;用户管理</span></a></li>
-              <li id="materialmanager"><a href="#contact"><span class="glyphicon glyphicon-file">&nbsp;素材管理</span></a></li>
+              <li id="materialmanager"><a href="${ctx}/protected/wx_news"><span class="glyphicon glyphicon-file">&nbsp;素材管理</span></a></li>
             </ul>
             
             <ul class="nav navbar-nav navbar-right">

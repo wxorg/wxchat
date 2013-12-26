@@ -97,7 +97,7 @@
         </tx:attributes>
     </tx:advice>
     <aop:config proxy-target-class="false">
-        <aop:pointcut id="entryPointMethod" expression="execution(* annocontroller..*Manager.*(..))" />
+        <aop:pointcut id="entryPointMethod" expression="execution(* wx..*Manager.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="entryPointMethod" />
     </aop:config>
 

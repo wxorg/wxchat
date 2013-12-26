@@ -4,6 +4,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 @XStreamAlias("item")
 public class Article {
+	
+	
+	  private String id;
 
 	  @XStreamAlias("Title")
 	  private String title;
@@ -50,4 +53,14 @@ public class Article {
 	  public void setUrl(String url) {
 	    this.url = url;
 	  }
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	  
+	  
 }

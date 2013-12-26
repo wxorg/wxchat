@@ -42,4 +42,70 @@ public class TransitController {
 		}
 			
 	}
+	
+	@RequestMapping(value="transit",method = RequestMethod.POST)
+	public void  TransitPost(HttpServletRequest request ,HttpServletResponse response) throws IOException{
+	
+		String platname;
+		String wxName;
+		String origId;
+		String plattype;
+		
+		
+		platname = request.getParameter("platname");
+		wxName = request.getParameter("wxName");
+		origId = request.getParameter("origId");
+		plattype = request.getParameter("plattype");
+		
+		
+		request.getSession().setAttribute("addplatform_error", "platname is error");
+		
+		
+		response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/protected/transit?transit_error=1");
+		
+	}
+	
+	@RequestMapping(value="transitAdd",method = RequestMethod.POST)
+	public void  TransitPostAdd(HttpServletRequest request ,HttpServletResponse response) throws IOException{
+	
+		String platname;
+		String wxName;
+		String origId;
+		String plattype;
+		
+		
+		platname = request.getParameter("platname");
+		wxName = request.getParameter("wxName");
+		origId = request.getParameter("origId");
+		plattype = request.getParameter("plattype");
+		
+		
+		request.getSession().setAttribute("addplatform_error", "platname is error");
+		System.out.println("TransitPostAdd");
+		
+		response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/protected/transit?transit_error=1");
+		
+	}
+	
+	@RequestMapping(value="transitEdit",method = RequestMethod.POST)
+	public void  TransitPostEdit(HttpServletRequest request ,HttpServletResponse response) throws IOException{
+	
+		String platname;
+		String wxName;
+		String origId;
+		String plattype;
+		
+		
+		platname = request.getParameter("platname");
+		wxName = request.getParameter("wxName");
+		origId = request.getParameter("origId");
+		plattype = request.getParameter("plattype");
+		
+		System.out.println("TransitPostEdit");
+		request.getSession().setAttribute("addplatform_error", "platname is error");
+		
+		
+		response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/protected/transit?transit_error=1");
+		
+	}
 }

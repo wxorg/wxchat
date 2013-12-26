@@ -9,14 +9,18 @@
 
 		<div class="list-group">
             <a href="${ctx}/protected/wx_index" class="list-group-item active">普通索引</a>
-            <a href="#" class="list-group-item">接口索引</a>
+            <a href="#" class="list-group-item">菜单管理</a>
 			<a href="${ctx}/protected/wx_index_add" class="list-group-item">添加索引</a>
-          </div>
+        </div>
+        
 	</div>
   </div>
   <div class="col-md-8">
-  	<div style="background-color: #E1E1E1;padding:10px 10px 0px 10px"> 
-  	<form class="form-inline" action='${ctx}/protected/wx_index' method="POST" role="form" style="background-color: #c9c9c9;margin-bottom:0px">
+ 
+   <div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">
+  	<form class="form-inline" action='${ctx}/protected/wx_index' method="POST" role="form" >
   		<div class="row">
   			<div class="col-md-6">
   				<div class="row">
@@ -61,16 +65,10 @@
 
     
    </form>
-      <div > 
-   		<ul class=" pager col-md-offset-2" style="margin:5px 0px 5px 0px;text-align:right">
-  			<li class=" disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span> </a></li>
-  			<li class=" disabled" ><a href="#">1/3</a></li>
-  			<li class=""><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-
-		</ul>
-	  </div>
-   </div>
-   <div class="table-responsive">
+  
+  </div>
+  
+   <div class="table-responsive panel panel-default">
   		<table class="table table-striped  table-hover">
 		<thead>
 			<tr>
@@ -107,6 +105,15 @@
 		</tbody>
 	</table>
   </div>
+  </div>
+   <div > 
+   		<ul class=" pager " style="margin:5px 0px 5px 0px;text-align:center">
+  			<li class=" disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span> </a></li>
+  			<li class=" disabled" ><a href="#">1/3</a></li>
+  			<li class=""><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+
+		</ul>
+	  </div>
    
    
    </div>
