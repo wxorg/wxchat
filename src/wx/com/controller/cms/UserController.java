@@ -21,5 +21,12 @@ public class UserController {
 
 		return "/protected/wxuser/wx_user_group";
 	}
+	
+	@RequestMapping(value="/wx_user_custom",method = RequestMethod.GET)
+	public String  getwxUser_custom(){
+	
+
+		return "/protected/wxuser/wx_user_custom";
+	}
 
 }

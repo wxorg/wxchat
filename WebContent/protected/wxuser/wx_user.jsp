@@ -18,7 +18,7 @@
 		<div class="list-group">
             <a href="${ctx}/protected/wx_user" class="list-group-item active">用户管理</a>
             <a href="${ctx}/protected/wx_user_group" class="list-group-item">分组管理</a>
-
+			<a href="${ctx}/protected/wx_user_custom" class="list-group-item">客服管理</a>
           </div>
 	</div>
   </div>
