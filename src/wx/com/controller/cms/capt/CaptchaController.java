@@ -1,4 +1,4 @@
-package wx.com.controller.cms;
+package wx.com.controller.cms.capt;
 
 import java.awt.Color;
 import java.io.IOException;

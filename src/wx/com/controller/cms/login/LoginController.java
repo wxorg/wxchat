@@ -1,4 +1,4 @@
-package wx.com.controller.cms;
+package wx.com.controller.cms.login;
 
 import java.util.Map;
 

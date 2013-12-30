@@ -1,4 +1,4 @@
-package wx.com.controller.cms;
+package wx.com.controller.cms.index;
 
 import java.util.ArrayList;
 import java.util.HashMap;

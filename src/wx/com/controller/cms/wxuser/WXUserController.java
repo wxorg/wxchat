@@ -1,4 +1,4 @@
-package wx.com.controller.cms;
+package wx.com.controller.cms.wxuser;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping(value="protected")
-public class UserController {
+public class WXUserController {
 	
 	@RequestMapping(value="/wx_user",method = RequestMethod.GET)
 	public String  getwxUser(){

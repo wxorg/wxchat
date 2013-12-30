@@ -1,4 +1,4 @@
-package wx.com.controller.cms;
+package wx.com.controller.cms.plat;
 
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -20,7 +20,7 @@ import wx.com.service.cms.plat.SelectPlatFormManager;
 
 @Controller
 @RequestMapping(value="protected")
-public class TransitController {
+public class SelectPlatFormController {
 	
 	@RequestMapping(value="transit",method = RequestMethod.GET)
 	public ModelAndView  Transit(HttpServletRequest request ,HttpServletResponse response) throws IOException{

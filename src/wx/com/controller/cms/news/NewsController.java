@@ -1,4 +1,4 @@
-package wx.com.controller.cms;
+package wx.com.controller.cms.news;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +28,7 @@ import wx.com.util.StringUtil;
 
 @Controller
 @RequestMapping(value="protected")
-public class MaterialController {
+public class NewsController {
 	
 	private INewsManager newsManager;
 	
