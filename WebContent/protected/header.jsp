@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/protected/taglibs.jsp"%>
+<%@ include file="/WEB-INF/taglibs.jsp"%>
 <%@ page import="wx.com.entity.cms.PlatForm"%>
 <%@ page import="wx.com.service.cms.SelectPlatFormManager" %>
 <!DOCTYPE html>
@@ -28,7 +28,7 @@
 	
     	function changeNavCss(){
     		
-    		$(".nav li").each(function(){
+    		$(".navbar-nav li").each(function(){
     			
     			alert("click");
     			if($(this).hasClass("active")){

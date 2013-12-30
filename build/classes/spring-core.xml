@@ -22,7 +22,7 @@
         <!-- Root Context: defines shared resources visible to all other web components -->
         
         
-        <mvc:view-controller path="/" view-name="forward:/hello"/>
+        <mvc:view-controller path="/" view-name="forward:/login"/>
         <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
  			 <property name="locations" value="classpath*:application.properties"/>
 		</bean>

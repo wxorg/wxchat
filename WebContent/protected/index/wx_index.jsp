@@ -9,7 +9,7 @@
 
 		<div class="list-group">
             <a href="${ctx}/protected/wx_index" class="list-group-item active">普通索引</a>
-            <a href="#" class="list-group-item">菜单管理</a>
+            <a href="${ctx}/protected/wx_index_menu" class="list-group-item">菜单管理</a>
 			<a href="${ctx}/protected/wx_index_add" class="list-group-item">添加索引</a>
         </div>
         

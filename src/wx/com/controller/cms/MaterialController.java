@@ -57,7 +57,7 @@ public class MaterialController {
 		
 		msg_News.getArticles().add(article1);
 		msg_News.getArticles().add(article2);
-	
+		msg_News.getId();
 //		System.out.println(msg_News.getArticles().size());
 		List<Msg_News_Out> newslist = new ArrayList<Msg_News_Out>();
 		newslist.add(msg_News);

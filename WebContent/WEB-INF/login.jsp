@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ page import="wx.auth.filter.ProcessingFilter" %>
 <%@ page import="org.acegisecurity.AuthenticationException"%>
-<%@ include file="/protected/taglibs.jsp"%>
+<%@ include file="taglibs.jsp"%>
 
 <!DOCTYPE html>
 <html>

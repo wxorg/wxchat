@@ -102,6 +102,8 @@
   	
 
 </div>
+
+<script src="${ctx}/js/user.js"></script>
 <script type="text/javascript">
 	
 	$(document).ready(function(){

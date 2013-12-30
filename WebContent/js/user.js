@@ -1,5 +1,5 @@
 	
-		$(".nav li").each(function(){
+		$(".navbar-nav li").each(function(){
 		
 			$(this).removeClass("active");
 
