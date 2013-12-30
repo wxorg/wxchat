@@ -73,7 +73,7 @@
 			<value>
 				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
 				PATTERN_TYPE_APACHE_ANT 
-				/protected/**=ROLE_HEAD_OF_ENGINEERING
+				/protected/*=ROLE_HEAD_OF_ENGINEERING
 				/ss**=IS_AUTHENTICATED_ANONYMOUSLY
 			</value>
 		</property>

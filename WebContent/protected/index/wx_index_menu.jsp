@@ -3,6 +3,8 @@
 <%@ include file="/protected/header.jsp"%>
 
 
+
+
 <div class="row">
   <div class="col-md-2 col-md-offset-1">
   	<div class="btn-group-vertical sidebar-offcanvas" role="navigation">
@@ -21,6 +23,7 @@
   <!-- Default panel contents -->
   <div class="panel-heading">
 	  	菜单管理
+	  	 <a  class="btn btn-link " style="float:right" onclick="addBasemenu()"><span class="glyphicon glyphicon-plus"> 添加主菜单</span></a>
   </div>
   <div class="panel-body">
   
@@ -53,17 +56,17 @@
   				
 			</ul>
       		
+      		<div >
+			  <a  class="btn btn-link " onclick="addchilmenu('list-group${status.index }')"><span class="glyphicon glyphicon-plus"> 添加子菜单</span></a>
+		    </div>
       	</div>
       	
-        <div >
-			<a  class="btn btn-link " onclick="addchilmenu($('#list-group${status.index }'))"><span class="glyphicon glyphicon-plus"> 添加子菜单</span></a>
-		</div>
+        
       </div>
     </div>
   </div>
   </c:forEach>
-  
-  
+
 </div>
   
   
@@ -119,18 +122,39 @@
 
 	<script type="text/javascript">
 	
-		function getChildrenNum(obj){
-			return obj.length;
+		function addBasemenu(){
+			if($("#accordion").children().length<3){
+				$("#accordion").append('<div class="panel panel-default">'+
+						'<div class="panel-heading"><h4 class="panel-title">'+
+						' <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion${wx_menu.getMainMenu().size()+1 }" '+
+						'href="#collapse${wx_menu.getMainMenu().size()+1 }" >主菜单${wx_menu.getMainMenu().size()+1 }</a>'+
+						'<a href="" class="col-md-offset-1"><span class=" glyphicon glyphicon-pencil"></span></a>'+
+						'</h4></div><div id="collapse${wx_menu.getMainMenu().size()+1 }"  class="panel-collapse collapse in"><div class="panel-body">'+
+						'<div class="childmenu"><ul class="list-group" id="list-group${wx_menu.getMainMenu().size()+1 }">'+
+						'</ul><div ><a  class="btn btn-link " onclick="addchilmenu(\'list-group${wx_menu.getMainMenu().size()+1}\')">'+
+						'<span class="glyphicon glyphicon-plus"> 添加子菜单</span></a> </div></div></div></div></div>');
+				
+			    
+					      
+			      	
+			      		
+			      		
+				
+			    
+			      
+			}
 		}
 	
-		function addchilmenu(parent){
+	
+		function addchilmenu(obj){
 			
-			if(getChildrenNum($("#list-group1").children)<5){
-				$(parent).append('<li class="list-group-item">子菜单'+getChildrenNum($("#list-group1").children)+'<a href="" style="float:right"><span class=" glyphicon glyphicon-pencil"></span> </a></li>');
+			if($('#'+obj).children().length<5){
+				$('#'+obj).append('<li class="list-group-item">子菜单'+($('#'+obj).children().length+1)+'<a href="" style="float:right"><span class=" glyphicon glyphicon-pencil"></span> </a></li>');
 				
 			}else{
 				alert("子菜单书不超过5个");
 			}
+			
 			
 		}	
 	
@@ -140,7 +164,7 @@
 		
 			
 		
-		});
+		});s
 		
 	</script>
 
