@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/taglibs.jsp"%>
 <%@ page import="wx.com.entity.cms.PlatForm"%>
-<%@ page import="wx.com.service.cms.SelectPlatFormManager" %>
+<%@ page import="wx.com.service.cms.plat.SelectPlatFormManager" %>
 <!DOCTYPE html>
 <html>
 <head>
