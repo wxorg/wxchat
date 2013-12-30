@@ -11,6 +11,7 @@
         
   
         <mapping class="wx.com.entity.receive.Msg_Text"/> 
+        <mapping class="wx.com.entity.cms.auth.Authorities"/>
 
         
     </session-factory>  

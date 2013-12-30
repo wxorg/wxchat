@@ -24,10 +24,16 @@
         <bean id="messageManager" class="wx.com.service.MessageManager">
             <property name="msgDAO" ref="msgDAO"></property>
         </bean>
+        <bean id="msgDAO" class="wx.com.dao.MsgDAO">           
+        </bean>
         
-
-        <bean id="msgDAO" class="wx.com.dao.MsgDAO">
-           
+        <bean id="loginManager" class="wx.com.service.cms.auth.LoginManager">
+            <property name="loginDAO" ref="loginDAO"></property>
+        </bean>    
+        <bean id="loginDAO" class="wx.com.dao.auth.LoginDAO">    
+        	<property name="usersByUsernameQuery">   
+            	<value> from Authorities as t where t.UserName= '{0}'</value>   
+       		</property>       
         </bean>
 
 
