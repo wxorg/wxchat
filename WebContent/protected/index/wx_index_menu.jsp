@@ -119,10 +119,14 @@
 
 	<script type="text/javascript">
 	
+		function getChildrenNum(obj){
+			return obj.length;
+		}
+	
 		function addchilmenu(parent){
 			
-			if($(parent).children().length<5){
-				$(parent).append('<li class="list-group-item">子菜单'+$(parent).children.length+'<a href="" style="float:right"><span class=" glyphicon glyphicon-pencil"></span> </a></li>');
+			if(getChildrenNum($("#list-group1").children)<5){
+				$(parent).append('<li class="list-group-item">子菜单'+getChildrenNum($("#list-group1").children)+'<a href="" style="float:right"><span class=" glyphicon glyphicon-pencil"></span> </a></li>');
 				
 			}else{
 				alert("子菜单书不超过5个");

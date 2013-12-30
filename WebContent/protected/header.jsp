@@ -104,6 +104,7 @@
               <li id="indexmanager" class="active"><a href="${ctx}/protected/wx_index"><span class="glyphicon glyphicon-tasks">&nbsp;索引管理</span></a></li>
               <li id="usermanager"><a href="${ctx}/protected/wx_user"><span class="glyphicon glyphicon-user">&nbsp;用户管理</span></a></li>
               <li id="materialmanager"><a href="${ctx}/protected/wx_news"><span class="glyphicon glyphicon-file">&nbsp;素材管理</span></a></li>
+              <li id="wxcmsmanager"><a href="${ctx}/protected/wcms_index"><span class="glyphicon glyphicon-phone">&nbsp;微站管理</span></a></li>
             </ul>
             
             <ul class="nav navbar-nav navbar-right">

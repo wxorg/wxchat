@@ -21,8 +21,8 @@ import wx.com.entity.cms.PlatForm;
 import wx.com.entity.cms.index.Index;
 import wx.com.entity.send.Article;
 import wx.com.entity.send.Msg_News_Out;
-import wx.com.service.cms.IIndexManager;
 import wx.com.service.cms.SelectPlatFormManager;
+import wx.com.service.cms.index.IIndexManager;
 import wx.com.util.ConfigureClass;
 import wx.com.util.StringUtil;
 

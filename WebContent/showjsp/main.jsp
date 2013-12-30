@@ -154,7 +154,7 @@
     				<a  href=""><span style="font-size:14px">精灵的乐宴是以小朋友最喜欢的精灵为主题，结合...</span></a>
 			</li>
 			<li class="list-group-item media">
-  			<button type="button" class="btn btn-lg btn-primary">进入消息中心<span class="glyphicon glyphicon-chevron-right"></span></button>
+  			<a  class="btn btn-lg btn-primary">进入消息中心<span class="glyphicon glyphicon-chevron-right"></span></a>
 		</li>
   		</ul>
   		

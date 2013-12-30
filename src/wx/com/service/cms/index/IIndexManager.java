@@ -1,4 +1,4 @@
-package wx.com.service.cms;
+package wx.com.service.cms.index;
 
 import java.util.List;
 
