@@ -29,7 +29,7 @@
   					
   						<input type="radio" name="optionsRadios"  class="optionsRadios" value="option1" >
     					<a class="pull-right" href="#">
-      						<img class="media-object img-rounded" id="listimg" src="${article.getPicUrl()}" alt="..." width="70",height="70">
+      						<img class="media-object img-rounded" id="listimg" src="${ctx}/${article.getPicUrl()}" alt="..." width="70",height="70">
     					</a>
     					<div class="media-body ">
       						

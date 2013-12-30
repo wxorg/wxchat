@@ -45,14 +45,14 @@ public class MaterialController {
 		Article article1 = new Article();
 		article1.setTitle("图片1展示");
 		article1.setDiscription("图片1展示图片1展示图片1展示图片1展示图片1展示");
-		article1.setPicUrl(ConfigureClass.getWEBURL()+"/static/a1.jpg");
-		article1.setUrl(ConfigureClass.getWEBURL()+"/static/a1.jpg");
+		article1.setPicUrl("/static/a1.jpg");
+		article1.setUrl("/static/a1.jpg");
 		
 		Article article2 = new Article();
 		article2.setTitle("图片2展示");
 		article2.setDiscription("图片2展示图片2展示图片2展示图片2展示图片2展示");
-		article2.setPicUrl(ConfigureClass.getWEBURL()+"/static/a2.jpg");
-		article2.setUrl(ConfigureClass.getWEBURL()+"/static/a2.jpg");
+		article2.setPicUrl("/static/a2.jpg");
+		article2.setUrl("/static/a2.jpg");
 		
 		
 		msg_News.getArticles().add(article1);
@@ -87,15 +87,15 @@ public class MaterialController {
 			article1.setId("11");
 			article1.setTitle("图片1展示");
 			article1.setDiscription("图片1展示图片1展示图片1展示图片1展示图片1展示");
-			article1.setPicUrl(ConfigureClass.getWEBURL()+"/static/a1.jpg");
-			article1.setUrl(ConfigureClass.getWEBURL()+"/static/a1.jpg");
+			article1.setPicUrl("/static/a1.jpg");
+			article1.setUrl("/static/a1.jpg");
 			
 			Article article2 = new Article();
 			article2.setId("12");
 			article2.setTitle("图片2展示");
 			article2.setDiscription("图片2展示图片2展示图片2展示图片2展示图片2展示");
-			article2.setPicUrl(ConfigureClass.getWEBURL()+"/static/a2.jpg");
-			article2.setUrl(ConfigureClass.getWEBURL()+"/static/a2.jpg");
+			article2.setPicUrl("/static/a2.jpg");
+			article2.setUrl("/static/a2.jpg");
 //			article2.getId()
 			
 			msg_News.getArticles().add(article1);
