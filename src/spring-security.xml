@@ -110,7 +110,7 @@
 	
 	</bean>
 	
-	<bean id ="userservice" class="wx.com.service.cms.AuthUserDetailServiceManager"> 
+	<bean id ="userservice" class="wx.com.service.cms.auth.AuthUserDetailServiceManager"> 
 	</bean>
 		
 	<bean id="userDetailsService" class="org.acegisecurity.userdetails.memory.InMemoryDaoImpl">
