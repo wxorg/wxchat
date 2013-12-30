@@ -9,6 +9,11 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import wx.com.entity.cms.auth.AuthRole;
+import wx.com.entity.cms.auth.Authorities;
+
+import javax.annotation.Resource;
+
+import wx.com.service.cms.auth.ILoginManager;
 
 
 /** 
@@ -21,6 +26,17 @@ import wx.com.entity.cms.auth.AuthRole;
 */ 
 @Service
 public class AuthUserDetailServiceManager implements UserDetailsService {
+	
+	@Resource(name="loginManager") 
+    public ILoginManager loginManager; 
+
+	public ILoginManager getLoginManager() {
+		return loginManager;
+	}
+
+	public void setLoginManager(ILoginManager loginManager) {
+		this.loginManager = loginManager;
+	}
 
 	//username
 	@Override
@@ -29,7 +45,18 @@ public class AuthUserDetailServiceManager implements UserDetailsService {
 		// TODO Auto-generated method stub
 		
 		GrantedAuthority[] authorities = {new AuthRole("ROLE_HEAD_OF_ENGINEERING")};
-		User user = new User("alice", "123", true, true, true, true, authorities);
+		//User user = new User("alice", "123", true, true, true, true, authorities);
+		
+		Authorities authuser=null;
+		User user = null;
+		try{
+			authuser=loginManager.getAuthUserDetail(arg0);
+			//loginManager.SaveAuthUserDetail(null);
+			user = new User(arg0, authuser.getPassword(), true, true, true, true, authorities);
+			
+		}catch(Exception ex ){
+			ex.printStackTrace();
+		}
 		
 		
 		return user;
