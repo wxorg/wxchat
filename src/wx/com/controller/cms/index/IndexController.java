@@ -38,9 +38,9 @@ public class IndexController {
 	
 		List<Index> indexList = new ArrayList<Index>();
 		
-		indexList.add(indexManager.getIndex("1","1"));
-		indexList.add(indexManager.getIndex("2","1"));
-		indexList.add(indexManager.getIndex("3","1"));
+		indexList.add(indexManager.getIndex("1",1));
+		indexList.add(indexManager.getIndex("2",2));
+		indexList.add(indexManager.getIndex("3",3));
 		SelectPlatFormManager selectPlatFormManager =new SelectPlatFormManager();
 		String origId = httpRequest.getParameter("origId");
     	PlatForm platForm=selectPlatFormManager.getPlatFormById(origId);
@@ -48,53 +48,40 @@ public class IndexController {
     	httpRequest.getSession().setAttribute("_platform_", platForm);
     	Map map = new HashMap();
     	map.put("indexList", indexList);
-    	
-    	Msg_News_Out msg_News = new Msg_News_Out();
-//		msg_News.setToUserName(msg.getFromUserName());
-//		msg_News.setFromUserName(msg.getToUserName());
-		msg_News.setCreateTime(StringUtil.getTime());
-//		msg_News.setMsgType("new");
-		msg_News.setArticleCount(Integer.valueOf(2));
-		Article article1 = new Article();
-		article1.setTitle("图片1展示");
-		article1.setDiscription("图片1展示图片1展示图片1展示图片1展示图片1展示");
-		article1.setPicUrl(ConfigureClass.getWEBURL()+"/static/a1.jpg");
-		article1.setUrl(ConfigureClass.getWEBURL()+"/static/a1.jpg");
-		
-		Article article2 = new Article();
-		article2.setTitle("图片2展示");
-		article2.setDiscription("图片2展示图片2展示图片2展示图片2展示图片2展示");
-		article2.setPicUrl(ConfigureClass.getWEBURL()+"/static/a2.jpg");
-		article2.setUrl(ConfigureClass.getWEBURL()+"/static/a2.jpg");
-		
-		
-		msg_News.getArticles().add(article1);
-		msg_News.getArticles().add(article2);
-	
-//		System.out.println(msg_News.getArticles().size());
-		List<Msg_News_Out> newslist = new ArrayList<Msg_News_Out>();
-		newslist.add(msg_News);
-		newslist.add(msg_News);
-		
-		
-    	map.put("newslist",newslist);
-    	map.get("indexList");
-		return new ModelAndView("/protected/index/wx_index","indexList",indexList);
+    	map.put("totlepage",11);
+    	map.put("currpage",2);
+    	Math.ceil(1.1);
+		return new ModelAndView("/protected/index/wx_index","indexmap",map);
 	}
 
 	
 	@RequestMapping(value="/wx_index",method = RequestMethod.POST)
-	public String  checkSig(HttpServletRequest httpRequest,HttpServletResponse httpRespon){
+	public ModelAndView  checkSig(HttpServletRequest httpRequest,HttpServletResponse httpRespon){
 	
-		System.out.println("dsf");
+		
+		String keyword;
+		String indextype;
+		String msgtype;
+		
+		keyword = httpRequest.getParameter("keyword");
+		indextype = httpRequest.getParameter("indextype");
+		msgtype = httpRequest.getParameter("msgtype");
+		
 		List<Index> indexList = new ArrayList<Index>();
 		
-		indexList.add(indexManager.getIndex("1","1"));
-		indexList.add(indexManager.getIndex("2","1"));
+//		indexList.add(indexManager.getIndex("1",1));
+//		indexList.add(indexManager.getIndex("2",1));
 		
-		httpRequest.getSession().setAttribute("indexList", indexList);
-	
-		return "/protected/index/wx_index";
+//		httpRequest.getSession().setAttribute("indexList", indexList);
+
+		Map map = new HashMap();
+		
+		map.putAll( indexManager.getIndexBySelect(keyword, Byte.valueOf(indextype), Byte.valueOf(msgtype),10,1, ((PlatForm)httpRequest.getSession().getAttribute("_platform_")).getPlatID()));
+		
+		
+		
+		return new ModelAndView("/protected/index/wx_index","indexmap",map);
+
 		
 	}
 	

@@ -1,6 +1,7 @@
 package wx.com.service.cms.index;
 
 import java.util.List;
+import java.util.Map;
 
 import wx.com.entity.cms.index.Index;
 
@@ -24,7 +25,7 @@ public interface IIndexManager {
 	* @return Index   
 	* @throws
 	 */
-	public Index getIndex(String id,String origId);
+	public Index getIndex(String id,int platid);
 	
 	/**
 	 * 
@@ -35,7 +36,7 @@ public interface IIndexManager {
 	* @return List<Index>   
 	* @throws
 	 */
-	public List<Index> getIndexByKeyword(String word,String origId);
+	public List<Index> getIndexByKeyword(String word,int platid);
 	
 	/**
 	 * 
@@ -47,7 +48,7 @@ public interface IIndexManager {
 	* @return List<index>   
 	* @throws
 	 */
-	public List<Index> getIndexByMsgType(byte msgType,String origId);
+	public List<Index> getIndexByMsgType(byte msgType,int platid);
 	
 	/**
 	 * 
@@ -59,8 +60,25 @@ public interface IIndexManager {
 	* @return List<Index>   
 	* @throws
 	 */
-	public List<Index> getIndexByIndexType(byte indexType,String origId);
+	public List<Index> getIndexByIndexType(byte indexType,int platid);
 	
+	/**
+	 * 
+	* @Title: getIndexBySelect 
+	* @Description: TODO word 关键字，indextype 索引类型，msgType 消息类型,numPerpage 每页显示数量， page 第几页
+	* @param @param word
+	* @param @param indexType
+	* @param @param msgType
+	* @param @param numPerpage
+	* @param @param page
+	* @param @param platid
+	* @param @return     
+
+	* @return  Map   返回  总页数  "totlepage", 当前第几页  currpage list<Index> 
+	* @throws
+	 */
+	public Map getIndexBySelect(String word,byte indexType,byte msgType,int numPerpage,int page,int platid);
+
 	/**
 	 * 
 	* @Title: getAllIndex 
@@ -70,7 +88,8 @@ public interface IIndexManager {
 	* @return List<Index>   
 	* @throws
 	 */
-	public List<Index> getAllIndex(String origId);
+ 
+	public List<Index> getAllIndex(int platid);
 	
 	/**
 	 * 
@@ -93,7 +112,7 @@ public interface IIndexManager {
 	* @return boolean   
 	* @throws
 	 */
-	public boolean addIndex(Index index,String origId);
+	public boolean addIndex(Index index,int platid);
 	
 	/**
 	 * 
@@ -106,7 +125,7 @@ public interface IIndexManager {
 	* @return boolean   
 	* @throws
 	 */
-	public boolean editIndex(String indexId,Index index ,String origId);
+	public boolean editIndex(String indexId,Index index ,int platid);
 	
 	/**
 	 * 
@@ -118,6 +137,6 @@ public interface IIndexManager {
 	* @return boolean   
 	* @throws
 	 */
-	public boolean delIndex(String indexId,String origId);
+	public boolean delIndex(String indexId,int platid);
 
 }

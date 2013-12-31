@@ -26,11 +26,11 @@
   				<div class="row">
   					<div class="col-md-6 form-group">
   	 					<label class="sr-only control-label" for="keyword">关键词：</label>
-   			   			 <input type="text" class="form-control" id="keyword" placeholder="关键词">
+   			   			 <input type="text" class="form-control" id="keyword" name="keyword" placeholder="关键词">
   	 				</div>
   	 				<div class="col-md-6 form-group">
   	 					<label class="sr-only" for="indextype">索引类型</label>
-    					<select class="form-control">
+    					<select class="form-control" name="indextype">
   							<option value="-1">选择索引类型</option>
   							<option value="0">关注索引</option>
   							<option value="1">关键词索引</option>
@@ -44,13 +44,10 @@
   				<div class="row">
   	 				<div class="col-md-6 form-group">
   	 					<label class="sr-only" for="msgtype">消息类型</label>
-    					<select class="form-control">
+    					<select class="form-control" name="msgtype">
   							<option value =-1>消息类型</option>
- 							<option value =0>文本</option>
-  							<option value =1>图片</option>
-  							<option value =2>声音</option>
-  							<option value =3>视频</option>
-  							<option value =4>图文</option>
+ 							<option value =0>文本</option>							
+  							<option value =2>图文</option>
 						</select>
   	 				</div>
   	 				<div class="col-md-6 form-group" >
@@ -81,7 +78,7 @@
 		</thead>
 	
 		<tbody>
-			<c:forEach items="${indexList}" var = "rowlist">
+			<c:forEach items="${indexmap.get('indexlist')}" var = "rowlist">
 			<tr>
 				<td>
 				 	${rowlist.getId() }
@@ -107,12 +104,19 @@
   </div>
   </div>
    <div > 
-   		<ul class=" pager " style="margin:5px 0px 5px 0px;text-align:center">
-  			<li class=" disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span> </a></li>
-  			<li class=" disabled" ><a href="#">1/3</a></li>
-  			<li class=""><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-
-		</ul>
+   
+   		<div class="container">
+   			<c:if test="${indexmap.get('totlepage')>10}">
+   				<ul class=" pager " id="pagerchange">
+  					<li class="" id="pagerpre"><a><span class="glyphicon glyphicon-chevron-left"></span> </a></li>
+  					<li class="" id="pagernum"><a ><span id="currentpage">${indexmap.get("currpage")}</span>/<span id="totlepage">${indexmap.get("totlepage")}</span></a></li>
+  					<li class="" id="pagerafter"><a><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+				</ul>
+   			</c:if>
+   		</div>
+ 
+   		
+   		
 	  </div>
    
    
@@ -124,6 +128,8 @@
 
 	<script type="text/javascript">
 	
+	
+	
 		$(".nav li").each(function(){
 		
 			$(this).removeClass("active");
@@ -132,7 +138,32 @@
 	
 		$(document).ready(function(){
 		
+	
 			$("#indexmanager").addClass("active");
+			
+			$("#pagerpre").click(function(){
+				
+				if($("#currentpage").text()==1){
+					return;
+				}else{
+					
+					$("#currentpage").text($("#currentpage").text()-1);
+				}
+				
+			});
+			
+			
+			$("#pagerafter").click(function(){
+				
+				if($("#currentpage").text()==$("#totlepage").text()){
+					return;
+				}else{
+					
+					$("#currentpage").text(Number($("#currentpage").text())+1);
+				}
+				
+			});
+			
 		
 		});
 		
@@ -142,4 +173,4 @@
 
 		
 
-<%@ include file="/protected/footer.jsp"%>
+<%@ include file="/protected/footer.jsp" %>
