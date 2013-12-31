@@ -13,8 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import wx.com.common.SQLType;
 import wx.com.common.util.StringFormatSQL;
+import wx.com.dao.base.BaseDAO;
 import wx.com.entity.cms.auth.Authorities;
-import wx.com.service.base.BaseDAO;
 
 @Repository
 @SuppressWarnings("all")

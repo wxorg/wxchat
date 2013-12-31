@@ -35,13 +35,20 @@
             	<value> from Authorities as t where t.UserName= '{0}'</value>   
        		</property>       
         </bean>
+        								
+        <bean id="selectPlatFormManager" class="wx.com.service.cms.plat.SelectPlatFormManager">
+            <property name="selectPlatFormDAO" ref="selectPlatFormDAO"></property>
+        </bean>    
+        <bean id="selectPlatFormDAO" class="wx.com.dao.plat.SelectPlatFormDAO">    
+        	<property name="allPlatFormListQuery">   
+            	<value> SELECT platID,createTime,info,isValid,origId,platName,register,registerPhone,serviceType,wxCode,email from wxplatacounts where isValid=1 </value>   
+       		</property>       
+        </bean>
+        
 
 
         <bean id="indexManager"
             class="wx.com.service.cms.index.IndexManager">
-            
-            
-            
         </bean>
                 
 </beans>

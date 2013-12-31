@@ -52,7 +52,11 @@ public class AuthUserDetailServiceManager implements UserDetailsService {
 		try{
 			authuser=loginManager.getAuthUserDetail(arg0);
 			//loginManager.SaveAuthUserDetail(null);
-			user = new User(arg0, authuser.getPassword(), true, true, true, true, authorities);
+			boolean enable=true;
+			if(authuser==null){
+				enable=false;
+			}
+			user = new User(arg0, authuser.getPassword(), enable, true, true, true, authorities);
 			
 		}catch(Exception ex ){
 			ex.printStackTrace();

@@ -77,9 +77,7 @@
 					</span>
 				</c:if>
 				<c:if
-					test="${fn:indexOf(error,'LockedException') > 0
-	  							|| fn:indexOf(error,'DisabledException') > 0
-	  							|| fn:indexOf(error,'AccountExpiredException') > 0
+					test="${fn:indexOf(error,'LockedException') > 0|| fn:indexOf(error,'DisabledException') > 0 || fn:indexOf(error,'AccountExpiredException') > 0
 	  				}">
 					<span id="imageCodeError" style="color: red; font-size: 12"> <c:out value="${msg}" />
 					</span>

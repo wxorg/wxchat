@@ -2,7 +2,7 @@ package wx.com.service.cms.plat;
 
 import java.util.List;
 
-import wx.com.entity.cms.PlatForm;
+import wx.com.entity.cms.plat.PlatForm;
 
 public interface ISelectPlatFormManager {
 	
@@ -15,7 +15,7 @@ public interface ISelectPlatFormManager {
 	* @return List<PlatForm>   
 	* @throws
 	 */
-	public List<PlatForm> getPlatFormList();
+	public List<wx.com.entity.cms.plat.PlatForm> getPlatFormList();
 	
 	
 	/**

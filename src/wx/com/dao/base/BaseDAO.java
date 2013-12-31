@@ -1,4 +1,4 @@
-package wx.com.service.base;
+package wx.com.dao.base;
 
 import java.io.Serializable;
 import java.util.List;

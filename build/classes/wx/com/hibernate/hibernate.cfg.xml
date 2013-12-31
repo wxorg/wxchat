@@ -12,7 +12,7 @@
   
         <mapping class="wx.com.entity.receive.Msg_Text"/> 
         <mapping class="wx.com.entity.cms.auth.Authorities"/>
-
+		<mapping class="wx.com.entity.cms.plat.PlatForm"/>  
         
     </session-factory>  
 </hibernate-configuration>

@@ -3,6 +3,7 @@
 <%@ page import="wx.auth.filter.ProcessingFilter" %>
 <%@ page import="org.acegisecurity.AuthenticationException"%>
 <%@ include file="/WEB-INF/taglibs.jsp"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -73,9 +74,9 @@
 					<div class="btn btn-default btn-lg btn-block">
 						<a  href="${ctx}/protected/wx_index?origId=${rowlist.getOrigId()}">${rowlist.getPlatName() }</a>
 					
-							<a type="button" class="btn btn-link EditplatForm" onclick="EditplatForm('${rowlist.getPlatName()}','${rowlist.getWxName()}','${rowlist.getOrigId()}','${rowlist.getType()}')">
+							<a type="button" class="btn btn-link EditplatForm" onclick="EditplatForm('${rowlist.getWxCode()}','${rowlist.getWxCode()}','${rowlist.getOrigId()}','${rowlist.getServiceType()}')">
 								<span class="glyphicon glyphicon-edit"></span></a>
-							<a type="button"  class="btn btn-link" onclick="EditplatForm('${rowlist.getPlatName()}','${rowlist.getWxName()}','${rowlist.getOrigId()}','${rowlist.getType()}')">
+							<a type="button"  class="btn btn-link" onclick="EditplatForm('${rowlist.getPlatName()}','${rowlist.getWxCode()}','${rowlist.getOrigId()}','${rowlist.getServiceType()}')">
 								<span class="glyphicon glyphicon-trash"></span></a>
 						
 						
