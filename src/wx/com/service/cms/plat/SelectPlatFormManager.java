@@ -6,8 +6,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+
 import wx.com.common.util.JsonBuilder;
 import wx.com.dao.plat.ISelectPlatFormDAO;
 import wx.com.entity.cms.plat.PlatForm;
@@ -34,14 +36,14 @@ public class SelectPlatFormManager implements ISelectPlatFormManager{
 			String json=JsonBuilder.getJsonFromList(selectPlatFormDAO.getAllPlatFormList());
 			System.out.println(json);
 			
-			JSONObject jsonobj=JSONObject.fromObject(json);//将字符串转化成json对象 
+			JSONObject jsonobj=new JSONObject(json);//将字符串转化成json对象 
 			 // String name=jsonobj.getString("name");//获取字符串。
 			  JSONArray array=jsonobj.getJSONArray("array");//获取数组
 			  
 			//遍历数组
-			  for (int i = 0; i < array.size(); i++) {   
+			  for (int i = 0; i < array.length(); i++) {   
 			   System.out.println("item "+ i + " :" + array.getString(i)); 
-			   JSONObject jsonobj_tmp=JSONObject.fromObject(array.getString(i));
+			   JSONObject jsonobj_tmp=array.getJSONObject(i);
 			   PlatForm platForm = new PlatForm();
 			   platForm.setPlatID(jsonobj_tmp.getInt("platid"));
 			   platForm.setOrigId(jsonobj_tmp.getString("origid"));
@@ -70,29 +72,32 @@ public class SelectPlatFormManager implements ISelectPlatFormManager{
 	@Override
 	public boolean addPlatForm(PlatForm platForm) {
 		// TODO Auto-generated method stub
-	/*	PlatForm platForm2 = new PlatForm();
+		PlatForm platForm2 = new PlatForm();
 		platForm2.setPlatID(1);
 		platForm2.setOrigId("gh_9cc49ccae03a");
 		platForm2.setPlatName("无线天利深圳分公司");
 		platForm2.setValid(true);	
 		platForm2.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		platForm2.setServiceType((short)0);
 		
 		PlatForm platForm1 = new PlatForm();
 		platForm1.setPlatID(1);
 		platForm1.setOrigId("gh_9cc49ccae03a1");
 		platForm1.setPlatName("无线天利深圳分公司订阅号");
 		platForm1.setValid(true);	
-		platForm1.setCreateTime(new Timestamp(System.currentTimeMillis()));*/
+		platForm1.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		platForm1.setServiceType((short)0);
 		
-		//selectPlatFormDAO.savePlatForm(platForm);
+		
 		try {
 			selectPlatFormDAO.savePlatForm(platForm);
-			//selectPlatFormDAO.savePlatForm(platForm2);
+			//selectPlatFormDAO.savePlatForm(platForm);
+//			selectPlatFormDAO.savePlatForm(platForm2);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return false;
+		return true;
 	}
 
 	@Override

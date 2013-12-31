@@ -3,6 +3,7 @@ package wx.com.controller.cms.plat;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,6 @@ public class SelectPlatFormController {
 		
 		//selectPlatFormManager.addPlatForm(null);
 		
-		
 		if(platFormList.size()!=1)
 			return new ModelAndView("protected/transit","platFormList",platFormList);
 		else{
@@ -77,42 +77,26 @@ public class SelectPlatFormController {
 		wxName = request.getParameter("wxName");
 		origId = request.getParameter("origId");
 		plattype = request.getParameter("plattype");
+
+		PlatForm platForm = new PlatForm();
+		platForm.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		platForm.setPlatName(platname);
+		platForm.setOrigId(origId);
+		platForm.setServiceType(Short.parseShort(plattype));
+		platForm.setWxCode(wxName);
+		platForm.setValid(true);
+		platForm.setPlatID(1);
 		
-		
-		request.getSession().setAttribute("addplatform_error", "platname is error");
-		
-		
-		response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/protected/transit?transit_error=1");
+		if(!selectPlatFormManager.addPlatForm(platForm)){
+			request.getSession().setAttribute("addplatform_error", "platname is error");
+			response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/protected/transit?transit_error=1");
+		}
+	
 		
 	}
 	
 	@RequestMapping(value="transitAdd",method = RequestMethod.POST)
 	public void  TransitPostAdd(HttpServletRequest request ,HttpServletResponse response) throws IOException{
-	
-		String platname = request.getParameter("platname");
-		String wxName = request.getParameter("wxName");
-		String origId = request.getParameter("origId");
-		String plattype = request.getParameter("plattype");
-		
-		java.util.Enumeration enum1=request.getParameterNames();
-		
-		//Enumeration enu=request.getParameterNames(); 
-        while(enum1.hasMoreElements()) 
-        { 
-            String name=(String)enum1.nextElement(); 
-            System.out.println(name);
-        }
-        
-		
-		request.getSession().setAttribute("addplatform_error", "platname is error");
-		System.out.println("TransitPostAdd");
-		
-		response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/protected/transit?transit_error=1");
-		
-	}
-	
-	@RequestMapping(value="transitEdit",method = RequestMethod.POST)
-	public void  TransitPostEdit(HttpServletRequest request ,HttpServletResponse response) throws IOException{
 	
 		String platname;
 		String wxName;
@@ -124,12 +108,97 @@ public class SelectPlatFormController {
 		wxName = request.getParameter("wxName");
 		origId = request.getParameter("origId");
 		plattype = request.getParameter("plattype");
+
+		PlatForm platForm = new PlatForm();
+		platForm.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		platForm.setPlatName(platname);
+		platForm.setOrigId(origId);
+		platForm.setServiceType(Short.parseShort(plattype));
+		platForm.setWxCode(wxName);
+		platForm.setValid(true);
+		platForm.setPlatID(1);
 		
-		System.out.println("TransitPostEdit");
-		request.getSession().setAttribute("addplatform_error", "platname is error");
+		
+		java.util.Enumeration enum1=request.getParameterNames();
+		
+		//Enumeration enu=request.getParameterNames(); 
+        while(enum1.hasMoreElements()) 
+        { 
+            String name=(String)enum1.nextElement(); 
+            System.out.println(name);
+        }
+        
+		
+        if(selectPlatFormManager.addPlatForm(platForm)){
+        	request.getSession().setAttribute("addplatform_info", "platname is success");
+			response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/protected/transit?transit_success=1");
+			
+		}else{
+			request.getSession().setAttribute("addplatform_info", "platname is error");
+			response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/protected/transit?transit_error=1");
+		}
+		
+	}
+	
+	@RequestMapping(value="transitEdit",method = RequestMethod.POST)
+	public void  TransitPostEdit(HttpServletRequest request ,HttpServletResponse response) throws IOException{
+	
+		String platid;
+		String platname;
+		String wxName;
+		String origId;
+		String plattype;
+		
+		platid = request.getParameter("platid");
+		platname = request.getParameter("platname");
+		wxName = request.getParameter("wxName");
+		origId = request.getParameter("origId");
+		plattype = request.getParameter("plattype");
+		
+		PlatForm platForm = new PlatForm();
+		platForm.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		platForm.setPlatName(platname);
+		platForm.setOrigId(origId);
+		platForm.setServiceType(Short.parseShort(plattype));
+		platForm.setWxCode(wxName);
+		platForm.setValid(true);
+		platForm.setPlatID(Integer.valueOf(platid));
+		
+		System.out.println(plattype);
 		
 		
-		response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/protected/transit?transit_error=1");
+		if(selectPlatFormManager.editPlatForm(platid,platForm)){
+			request.getSession().setAttribute("addplatform_info", "platname is success");
+			response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/protected/transit?transit_success=1");
+		}else{
+			
+			request.getSession().setAttribute("addplatform_info", "platname is error");
+			response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/protected/transit?transit_error=1");
+		}
+		
+		
+	}
+	
+	
+	@RequestMapping(value="transitDel",method = RequestMethod.GET)
+	public void  TransitPostDel(HttpServletRequest request ,HttpServletResponse response) throws IOException{
+	
+		String platid;
+		
+		platid = request.getParameter("platid");
+		
+		
+		
+		
+		if(selectPlatFormManager.delPlatForm(platid)){
+			request.getSession().setAttribute("addplatform_info", "platname is success");
+			response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/protected/transit?transit_success=1");
+		}else{
+			
+			request.getSession().setAttribute("addplatform_info", "platname is error");
+			response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/protected/transit?transit_error=1");
+		}
+		
 		
 	}
 }

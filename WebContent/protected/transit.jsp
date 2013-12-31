@@ -50,7 +50,13 @@
 	<div class="container">
 		<c:if test="${not empty param.transit_error }">
 			<div class="alert alert-danger">
-  				<a href="" ><%=session.getAttribute("addplatform_error") %></a>
+  				<a href="" ><%=session.getAttribute("addplatform_info") %></a>
+			</div>
+		
+		</c:if>
+		<c:if test="${not empty param.transit_success }">
+			<div class="alert alert-success">
+  				<a href="" ><%=session.getAttribute("addplatform_info") %></a>
 			</div>
 		
 		</c:if>
@@ -59,7 +65,7 @@
 		<c:choose>
 			<c:when test="${platFormList.size()==0}">
 				<div>
-					<a class="btn btn-default btn-lg btn-block" href="${ctx}/protected/wx_platFormAdd">没有公众平台，请先接入 </a>
+					<a class="btn btn-default btn-lg btn-block" >没有公众平台，请先接入 </a>
 				</div>
 			</c:when>
 			
@@ -72,11 +78,12 @@
 			<c:otherwise>
 				<c:forEach items="${platFormList}" var = "rowlist">
 					<div class="btn btn-default btn-lg btn-block">
-						<a  href="${ctx}/protected/wx_index?origId=${rowlist.getOrigId()}">${rowlist.getPlatName() }</a>
+					 <a class="hide" ></a>
+						<a  href="${ctx}/protected/wx_index?platId=${rowlist.getPlatID()}">${rowlist.getPlatName() }</a>
 					
-							<a type="button" class="btn btn-link EditplatForm" onclick="EditplatForm('${rowlist.getWxCode()}','${rowlist.getWxCode()}','${rowlist.getOrigId()}','${rowlist.getServiceType()}')">
+							<a type="button" class="btn btn-link EditplatForm" onclick="EditplatForm('${rowlist.getPlatName()}','${rowlist.getWxCode()}','${rowlist.getOrigId()}','${rowlist.getServiceType()}','${rowlist.getPlatID()}')">
 								<span class="glyphicon glyphicon-edit"></span></a>
-							<a type="button"  class="btn btn-link" onclick="EditplatForm('${rowlist.getPlatName()}','${rowlist.getWxCode()}','${rowlist.getOrigId()}','${rowlist.getServiceType()}')">
+							<a type="button"  class="btn btn-link" href="${ctx}/protected/transitDel?platId=${rowlist.getPlatID()}">
 								<span class="glyphicon glyphicon-trash"></span></a>
 						
 						
@@ -150,7 +157,8 @@
     					<div id="collapseOne" class="panel-collapse collapse in">
       						<div class="panel-body">
       							<form role="form" class="addPlatform" action="${ctx }/protected/transitEdit"  method="POST">
-  		 		
+  		 							<input type="text" class="form-control" id="editpplatid" name="platid" placeholder="id" >
+  		 							
   		 							<div class="form-group" >
     									<label for="platname">名称</label>
   			    						<input type="text" class="form-control" id="editplatname" name="platname" placeholder="名称" required>
@@ -168,7 +176,7 @@
   										</div>
   										<div class="form-group" >
     										<label for="type">账号类型</label>
-  			    							<select class="form-control" name="editplattype">
+  			    							<select class="form-control" name="plattype">
   												<option value="0">服务号</option>
   												<option value="1">订阅号</option>
 											</select>
@@ -221,15 +229,16 @@
 		$("#addplatformbtn").removeClass("show");
 	}
 	
-	function EditplatForm(PlatName,WxName,OrigId,getType){
+	function EditplatForm(PlatName,WxName,OrigId,getType,platid){
 				
 		//$("#editPlatModal").removeClass("hide");
 		
+		
 		$("#editplatname").val(PlatName);
 		$("#editwxName").val(WxName);
-		$("#origId").val(OrigId);
+		$("#editorigId").val(OrigId);
 		$("#editplattype").value=getType;
-		
+		$("#editpplatid").val(platid);
 		
 		if($("#editPlatModal").hasClass("hide")){
 			
