@@ -1,6 +1,5 @@
 package wx.com.service.cms.plat;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +9,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 
+import org.springframework.stereotype.Service;
+
 import wx.com.common.util.JsonBuilder;
 import wx.com.dao.plat.ISelectPlatFormDAO;
 import wx.com.entity.cms.plat.PlatForm;
+import wx.com.service.base.IBaseManager;
 
-public class SelectPlatFormManager implements ISelectPlatFormManager{
+@Service
+public class SelectPlatFormManager extends IBaseManager implements ISelectPlatFormManager{
 	
 	@Resource
 	private ISelectPlatFormDAO selectPlatFormDAO;
@@ -34,7 +37,7 @@ public class SelectPlatFormManager implements ISelectPlatFormManager{
 		List<PlatForm> list = new ArrayList<PlatForm>();
 		try {
 			String json=JsonBuilder.getJsonFromList(selectPlatFormDAO.getAllPlatFormList());
-			System.out.println(json);
+			//System.out.println(json);
 			
 			JSONObject jsonobj=new JSONObject(json);//将字符串转化成json对象 
 			 // String name=jsonobj.getString("name");//获取字符串。
@@ -42,13 +45,15 @@ public class SelectPlatFormManager implements ISelectPlatFormManager{
 			  
 			//遍历数组
 			  for (int i = 0; i < array.length(); i++) {   
-			   System.out.println("item "+ i + " :" + array.getString(i)); 
+			  // System.out.println("item "+ i + " :" + array.getString(i)); 
 			   JSONObject jsonobj_tmp=array.getJSONObject(i);
 			   PlatForm platForm = new PlatForm();
 			   platForm.setPlatID(jsonobj_tmp.getInt("platid"));
 			   platForm.setOrigId(jsonobj_tmp.getString("origid"));
+			   platForm.setWxCode(jsonobj_tmp.getString("wxcode"));
 			   platForm.setPlatName(jsonobj_tmp.getString("platname"));
-			   //System.out.println("item "+ i + " :" + jsonobj_tmp.getString("platname")); 
+			   platForm.setServiceType((short)jsonobj_tmp.getInt("servicetype"));
+			  // System.out.println("item "+ i + " :" + jsonobj_tmp.getString("platname")); 
 			   list.add(platForm); 
 			  }
 			 
@@ -72,7 +77,7 @@ public class SelectPlatFormManager implements ISelectPlatFormManager{
 	@Override
 	public boolean addPlatForm(PlatForm platForm) {
 		// TODO Auto-generated method stub
-		PlatForm platForm2 = new PlatForm();
+	/*	PlatForm platForm2 = new PlatForm();
 		platForm2.setPlatID(1);
 		platForm2.setOrigId("gh_9cc49ccae03a");
 		platForm2.setPlatName("无线天利深圳分公司");
@@ -86,7 +91,7 @@ public class SelectPlatFormManager implements ISelectPlatFormManager{
 		platForm1.setPlatName("无线天利深圳分公司订阅号");
 		platForm1.setValid(true);	
 		platForm1.setCreateTime(new Timestamp(System.currentTimeMillis()));
-		platForm1.setServiceType((short)0);
+		platForm1.setServiceType((short)0);*/
 		
 		
 		try {
@@ -96,20 +101,47 @@ public class SelectPlatFormManager implements ISelectPlatFormManager{
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 		return true;
 	}
 
 	@Override
-	public boolean editPlatForm(String origId, PlatForm platForm) {
+	public boolean editPlatForm(int platId, PlatForm platForm) {
 		// TODO Auto-generated method stub
-		return false;
+		try{
+			selectPlatFormDAO.updatePlatForm(platForm);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	@Override
-	public boolean delPlatForm(String origId) {
+	public boolean delPlatForm(String origId, PlatForm platForm) {
 		// TODO Auto-generated method stub
-		return false;
+		try{
+			selectPlatFormDAO.updatePlatForm(platForm);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean searchPlatForm(String platname,String wxCode,String origId,int platId){
+		try{
+			return selectPlatFormDAO.searchIsExistPlatForm(platname, wxCode, origId,platId);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return false;
+		}
+	}
+	
+	public PlatForm getPlatFormById(int platid) throws Exception {
+		return (PlatForm)selectPlatFormDAO.getPlatFormById(platid);
 	}
 
 }

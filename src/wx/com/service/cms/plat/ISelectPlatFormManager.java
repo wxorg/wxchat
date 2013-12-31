@@ -51,7 +51,7 @@ public interface ISelectPlatFormManager {
 	* @return boolean   
 	* @throws
 	 */
-	public boolean editPlatForm(String origId,PlatForm platForm);
+	public boolean editPlatForm(int platId,PlatForm platForm);
 	
 	/**
 	 * 
@@ -62,6 +62,31 @@ public interface ISelectPlatFormManager {
 	* @return boolean   
 	* @throws
 	 */
-	public boolean delPlatForm(String origId);
+	public boolean delPlatForm(String origId, PlatForm platForm);
+	
+	/**
+	 * 
+	* @Title: searchPlatForm 
+	* @Description: TODO
+	* @param @param platname
+	* @param @param wxCode
+	* @param @param origId
+	* @param @return   
+	* @return boolean
+	* @throws
+	 */
+	public boolean searchPlatForm(String platname,String wxCode,String origId,int platId);
+	
+	/**
+	 * 
+	* @Title: getPlatFormById 
+	* @Description: TODO
+	* @param @param platid
+	* @param @return
+	* @param @throws Exception   
+	* @return PlatForm
+	* @throws
+	 */
+	public PlatForm getPlatFormById(int platid) throws Exception ;
 
 }

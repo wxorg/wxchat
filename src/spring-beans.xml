@@ -42,7 +42,10 @@
         <bean id="selectPlatFormDAO" class="wx.com.dao.plat.SelectPlatFormDAO">    
         	<property name="allPlatFormListQuery">   
             	<value> SELECT platID,createTime,info,isValid,origId,platName,register,registerPhone,serviceType,wxCode,email from wxplatacounts where isValid=1 </value>   
-       		</property>       
+       		</property>   
+       		<property name="isExistPlatFormQuery">   
+            	<value> SELECT count(*) NUMS from wxplatacounts where  isValid=1  and (platName = '{0}' or wxCode = '{1}' or origId = '{2}' ) and platID!={3} </value>   
+       		</property>     
         </bean>
         
 
