@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import wx.com.entity.cms.PlatForm;
+import wx.com.entity.cms.plat.PlatForm;
 import wx.com.entity.send.Article;
 import wx.com.entity.send.Msg_News_Out;
 import wx.com.service.cms.news.INewsManager;

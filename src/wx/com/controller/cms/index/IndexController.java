@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import wx.com.entity.Sub_Menu;
 import wx.com.entity.WX_Menu;
-import wx.com.entity.cms.PlatForm;
+import wx.com.entity.cms.plat.PlatForm;
 import wx.com.entity.cms.index.Index;
 import wx.com.entity.send.Article;
 import wx.com.entity.send.Msg_News_Out;
