@@ -9,7 +9,8 @@ import java.util.Vector;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+//import javax.servlet.http.HttpServletResponse;
+
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import wx.com.entity.cms.index.Index;
 import wx.com.entity.send.Article;
 import wx.com.entity.send.Msg_News_Out;
 import wx.com.service.cms.index.IIndexManager;
+import wx.com.service.cms.plat.ISelectPlatFormManager;
 import wx.com.service.cms.plat.SelectPlatFormManager;
 import wx.com.util.ConfigureClass;
 import wx.com.util.StringUtil;
@@ -33,6 +35,17 @@ public class IndexController {
 	
 	@Resource(name="indexManager")
 	private IIndexManager indexManager;
+	
+	@Resource(name="selectPlatFormManager") 
+    public ISelectPlatFormManager selectPlatFormManager; 
+	
+	public ISelectPlatFormManager getSelectPlatFormManager() {
+		return selectPlatFormManager;
+	}
+
+	public void setSelectPlatFormManager(ISelectPlatFormManager selectPlatFormManager) {
+		this.selectPlatFormManager = selectPlatFormManager;
+	}
 	
 	
 	
@@ -45,6 +58,15 @@ public class IndexController {
 		byte numPerpage=10;
 		byte indextype =-1;
 		String keyword="";
+		
+		java.util.Enumeration enum1=httpRequest.getParameterNames();
+		
+		//Enumeration enu=request.getParameterNames(); 
+        while(enum1.hasMoreElements()) 
+        { 
+            String name=(String)enum1.nextElement(); 
+            System.out.println(name);
+        }
 		
 
 		
@@ -91,9 +113,17 @@ public class IndexController {
 		indexList.add(indexManager.getIndex("3",3));
 		
 		//此步骤需要 用注解实例化
-		SelectPlatFormManager selectPlatFormManager =new SelectPlatFormManager();
-		String platId = httpRequest.getParameter("platId=");
-    	PlatForm platForm=selectPlatFormManager.getPlatFormById(platId);
+		//SelectPlatFormManager selectPlatFormManager =new SelectPlatFormManager();
+		String platId = httpRequest.getParameter("platId");
+		
+		System.out.println("platId="+platId);
+    	//PlatForm platForm=selectPlatFormManager.getPlatFormById(platId);
+		PlatForm platForm=null;
+		try{
+    		platForm=selectPlatFormManager.getPlatFormById(Integer.valueOf(platId));
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
 		 
     	httpRequest.getSession().setAttribute("_platform_", platForm);
     	Map map = new HashMap();
