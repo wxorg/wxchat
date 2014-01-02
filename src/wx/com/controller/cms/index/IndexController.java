@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpServletResponse;
 
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,12 +26,12 @@ import wx.com.entity.send.Article;
 import wx.com.entity.send.Msg_News_Out;
 import wx.com.service.cms.index.IIndexManager;
 import wx.com.service.cms.plat.ISelectPlatFormManager;
-import wx.com.service.cms.plat.SelectPlatFormManager;
 import wx.com.util.ConfigureClass;
 import wx.com.util.StringUtil;
 
 @Controller
 @RequestMapping(value="protected")
+@SuppressWarnings("all")
 public class IndexController {
 	
 	@Resource(name="indexManager")
@@ -57,46 +58,26 @@ public class IndexController {
 		byte currentpage=1;
 		byte numPerpage=10;
 		byte indextype =-1;
-		String keyword="";
-		
-		java.util.Enumeration enum1=httpRequest.getParameterNames();
-		
-		//Enumeration enu=request.getParameterNames(); 
-        while(enum1.hasMoreElements()) 
-        { 
-            String name=(String)enum1.nextElement(); 
-            System.out.println(name);
-        }
-		
-
-		
+		String keyword = httpRequest.getParameter("keyword");
+		String currpage = httpRequest.getParameter("currentpage");
+		String numPpage = httpRequest.getParameter("numPerpage");
+		String msgttype = httpRequest.getParameter("msgtype");
+				
 		try {
-			
-			keyword = httpRequest.getParameter("keyword");
 			if(null!=keyword){
-				
-				keyword=new String(keyword.getBytes("iso8859-1"),"utf-8");
-				
+				keyword=new String(keyword.getBytes("iso8859-1"),"utf-8");				
 				System.out.println(keyword);
 			}
 			
-			String currpage = httpRequest.getParameter("currentpage");
 			if(null!= currpage){
-				
 				currentpage = Byte.valueOf(currpage);
 			}
 			
-			String numPpage = httpRequest.getParameter("numPerpage");
-			
 			if(null!= numPpage){
-				
 				indextype = Byte.valueOf(numPpage);
 			}
 			
-			String msgttype = httpRequest.getParameter("msgtype");
-			
 			if(null!= msgttype){
-				
 				msgtype = Byte.valueOf(msgttype);
 			}
 
@@ -116,7 +97,7 @@ public class IndexController {
 		//SelectPlatFormManager selectPlatFormManager =new SelectPlatFormManager();
 		String platId = httpRequest.getParameter("platId");
 		
-		System.out.println("platId="+platId);
+//		System.out.println("platId="+platId);
     	//PlatForm platForm=selectPlatFormManager.getPlatFormById(platId);
 		PlatForm platForm=null;
 		try{
@@ -136,6 +117,15 @@ public class IndexController {
 		
 		
 		return new ModelAndView("/protected/index/wx_index","indexmap",map);
+		
+	/*	@SuppressWarnings("rawtypes")
+		java.util.Enumeration enum1=httpRequest.getParameterNames();		
+		//Enumeration enu=request.getParameterNames(); 
+        while(enum1.hasMoreElements()) 
+        { 
+            String name=(String)enum1.nextElement(); 
+            System.out.println(name);
+        }*/
 	}
 
 	
