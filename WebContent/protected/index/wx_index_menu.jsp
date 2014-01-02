@@ -33,11 +33,18 @@
   		<c:forEach items="${wx_menu.getMainMenu()}" var = "rowmap" varStatus="status">
   <div class="panel panel-default">
     <div class="panel-heading">
+    	<div class="form-inline">
+                	<input  type="text" class="form-control" id="indexkeyword" placeholder="keyword" required>
+                	<button type="submit" class="btn btn-default">Sign in</button>
+                </div>
       <h4 class="panel-title">
         <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion${status.index }" href="#collapse${status.index }" >
                 ${rowmap.key }
+               
+                
         </a>
-        <a href="" class="col-md-offset-1">
+         
+        <a  id="editmainmenu${status.index }" style="cursor: pointer" class="col-md-offset-1">
         	<span class=" glyphicon glyphicon-pencil"></span>
         </a>
       </h4>
@@ -49,8 +56,9 @@
       		<ul class="list-group" id="list-group${status.index }">
       			<c:forEach items="${rowmap.value}" var = "innerlist">
       				<li class="list-group-item">
-      					${innerlist.getMenuName()}
-      					<a href=""><a href="" style="float:right"><span class=" glyphicon glyphicon-pencil"></span> </a> </a>
+      					<span>${innerlist.getMenuName()}</span>
+      					<span class="col-md-offset-1">${innerlist.getKeywordOrUrl()}</span>
+      					<a href="" style="float:right"><span class=" glyphicon glyphicon-pencil"></span> </a>
       				</li>
       			</c:forEach>
   				
@@ -82,7 +90,7 @@
   	
   </div>
   
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal"  >
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -119,8 +127,29 @@
 	</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">添加回复</h4>
+			</div>
+			<div class="modal-body">
+				
+       
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				<button type="button" id="btnTextConfirm" class="btn btn-primary">确定</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 	<script type="text/javascript">
+	
+	
+	
 	
 		function addBasemenu(){
 			if($("#accordion").children().length<3){
@@ -158,13 +187,23 @@
 			
 		}	
 	
-	
+		$('#myModal1').modal({
+			  keyboard: false,
+			  show:false
+		});
+		
+		$("#editmainmenu0").click(function(){
+			
+			$('#myModal1').modal('toggle');
+		});
 	
 		$(document).ready(function(){
 		
 			
+				
+			
 		
-		});s
+		});
 		
 	</script>
 

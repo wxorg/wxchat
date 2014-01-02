@@ -3,6 +3,7 @@
 <%@ include file="/protected/header.jsp"%>
 
 
+
 <div class="row">
   <div class="col-md-2 col-md-offset-1">
   	<div class="btn-group-vertical sidebar-offcanvas" role="navigation">
@@ -20,7 +21,7 @@
    <div class="panel panel-default">
   <!-- Default panel contents -->
   <div class="panel-heading">
-  	<form class="form-inline" action='${ctx}/protected/wx_index' method="POST" role="form" >
+  	<form class="form-inline" action='${ctx}/protected/wx_index' method="GET" role="form" >
   		<div class="row">
   			<div class="col-md-6">
   				<div class="row">
@@ -30,7 +31,7 @@
   	 				</div>
   	 				<div class="col-md-6 form-group">
   	 					<label class="sr-only" for="indextype">索引类型</label>
-    					<select class="form-control" name="indextype">
+    					<select class="form-control" name="indextype" id="indextype">
   							<option value="-1">选择索引类型</option>
   							<option value="0">关注索引</option>
   							<option value="1">关键词索引</option>
@@ -44,7 +45,7 @@
   				<div class="row">
   	 				<div class="col-md-6 form-group">
   	 					<label class="sr-only" for="msgtype">消息类型</label>
-    					<select class="form-control" name="msgtype">
+    					<select class="form-control" name="msgtype" id="msgtype">
   							<option value =-1>消息类型</option>
  							<option value =0>文本</option>							
   							<option value =2>图文</option>
@@ -78,7 +79,7 @@
 		</thead>
 	
 		<tbody>
-			<c:forEach items="${indexmap.get('indexlist')}" var = "rowlist">
+			<c:forEach items="${indexmap.get('indexList')}" var = "rowlist">
 			<tr>
 				<td>
 				 	${rowlist.getId() }
@@ -103,32 +104,76 @@
 	</table>
   </div>
   </div>
-   <div > 
+ 
    
-   		<div class="container">
-   			<c:if test="${indexmap.get('totlepage')>10}">
+   		<div class="">
    				<ul class=" pager " id="pagerchange">
-  					<li class="" id="pagerpre"><a><span class="glyphicon glyphicon-chevron-left"></span> </a></li>
+  					<li class="" id="pagerpre">
+  						<a href="">
+  							<span class="glyphicon glyphicon-chevron-left">
+  							</span> 
+  						</a>
+  					</li>
   					<li class="" id="pagernum"><a ><span id="currentpage">${indexmap.get("currpage")}</span>/<span id="totlepage">${indexmap.get("totlepage")}</span></a></li>
-  					<li class="" id="pagerafter"><a><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+  					<li class=""  id="pagerafter"><a><span class="glyphicon glyphicon-chevron-right"></span></a></li>
 				</ul>
-   			</c:if>
+
    		</div>
  
    		
    		
-	  </div>
+
    
    
    </div>
-   
+
   	
   </div>
 
 
 	<script type="text/javascript">
 	
+		
+		
 	
+		function getIndex(pageindex){
+		
+		var content={
+				keyword:$("#keyword").val(),
+				indextype:$("#indextype").val(),
+				msgtype:$("#msgtype").val(),
+				page:pageindex
+		};
+			
+		$.ajax({
+			
+			url:"${ctx}/protected/wx_index",
+			type:"POST",
+			timeout:10000,
+			beforeSend :function (XMLHttpRequest, textStatus, errorThrown){
+				
+				 
+	        },
+	        context: document.body,
+	        complete:function (XMLHttpRequest, textStatus){
+	        	
+	        },
+	        
+	        data: content,
+	        error: function (XMLHttpRequest, textStatus, errorThrown) {
+	        	
+	        },
+	        
+	        success:function (data, textStatus) {
+
+	        	$(this).html(data);
+	        	
+	        
+	        }
+	        
+			});
+		
+		}
 	
 		$(".nav li").each(function(){
 		
@@ -146,8 +191,11 @@
 				if($("#currentpage").text()==1){
 					return;
 				}else{
-					
-					$("#currentpage").text($("#currentpage").text()-1);
+					var src="${ctx}/protected/wx_index?keyword="+$("#keyword").val()+"&indextype="+$("#indextype").val()+"&msgtype="+
+							$("#msgtype").val()+"&currentpage="+(Number($("#currentpage").text())-1)+"&totlepage="+$("#totlepage").text();
+			
+					$(this).children("a").attr("href",src);
+					//getIndex(Number($("#currentpage").text())-1);
 				}
 				
 			});
@@ -159,7 +207,10 @@
 					return;
 				}else{
 					
-					$("#currentpage").text(Number($("#currentpage").text())+1);
+					var src="${ctx}/protected/wx_index?keyword="+$("#keyword").val()+"&indextype="+$("#indextype").val()+"&msgtype="+
+					$("#msgtype").val()+"&currentpage="+(Number($("#currentpage").text())+1)+"&totlepage="+$("#totlepage").text();
+	
+					$(this).children("a").attr("href",src);
 				}
 				
 			});

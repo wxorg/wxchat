@@ -78,8 +78,8 @@ public class IndexManager implements IIndexManager {
 		
 		Map map = new HashMap();
 		map.put("indexlist", new ArrayList());
-		map.put("totle",11);
-		map.get("totle");
+		map.put("totlepage",11);
+		map.put("currpage",2);
 		return map;
 
 	}

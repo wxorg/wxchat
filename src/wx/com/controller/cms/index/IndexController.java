@@ -1,5 +1,6 @@
 package wx.com.controller.cms.index;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,57 +34,82 @@ public class IndexController {
 	@Resource(name="indexManager")
 	private IIndexManager indexManager;
 	
+	
+	
 	@RequestMapping(value="/wx_index",method = RequestMethod.GET)
 	public ModelAndView  getwx_index(HttpServletRequest httpRequest){
-	
+		
+		byte msgtype =-1;
+		
+		byte currentpage=1;
+		byte numPerpage=10;
+		byte indextype =-1;
+		String keyword="";
+		
+
+		
+		try {
+			
+			keyword = httpRequest.getParameter("keyword");
+			if(null!=keyword){
+				
+				keyword=new String(keyword.getBytes("iso8859-1"),"utf-8");
+				
+				System.out.println(keyword);
+			}
+			
+			String currpage = httpRequest.getParameter("currentpage");
+			if(null!= currpage){
+				
+				currentpage = Byte.valueOf(currpage);
+			}
+			
+			String numPpage = httpRequest.getParameter("numPerpage");
+			
+			if(null!= numPpage){
+				
+				indextype = Byte.valueOf(numPpage);
+			}
+			
+			String msgttype = httpRequest.getParameter("msgtype");
+			
+			if(null!= msgttype){
+				
+				msgtype = Byte.valueOf(msgttype);
+			}
+
+			
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		List<Index> indexList = new ArrayList<Index>();
 		
 		indexList.add(indexManager.getIndex("1",1));
 		indexList.add(indexManager.getIndex("2",2));
 		indexList.add(indexManager.getIndex("3",3));
+		
+		//此步骤需要 用注解实例化
 		SelectPlatFormManager selectPlatFormManager =new SelectPlatFormManager();
-		String origId = httpRequest.getParameter("origId");
-    	PlatForm platForm=selectPlatFormManager.getPlatFormById(origId);
+		String platId = httpRequest.getParameter("platId=");
+    	PlatForm platForm=selectPlatFormManager.getPlatFormById(platId);
 		 
     	httpRequest.getSession().setAttribute("_platform_", platForm);
     	Map map = new HashMap();
+    	/*
     	map.put("indexList", indexList);
     	map.put("totlepage",11);
     	map.put("currpage",2);
-    	Math.ceil(1.1);
+    	*/
+    	map.putAll(indexManager.getIndexBySelect(keyword, indextype,msgtype,numPerpage,currentpage, platForm.getPlatID()));
+		
+		
 		return new ModelAndView("/protected/index/wx_index","indexmap",map);
 	}
 
 	
-	@RequestMapping(value="/wx_index",method = RequestMethod.POST)
-	public ModelAndView  checkSig(HttpServletRequest httpRequest,HttpServletResponse httpRespon){
-	
-		
-		String keyword;
-		String indextype;
-		String msgtype;
-		
-		keyword = httpRequest.getParameter("keyword");
-		indextype = httpRequest.getParameter("indextype");
-		msgtype = httpRequest.getParameter("msgtype");
-		
-		List<Index> indexList = new ArrayList<Index>();
-		
-//		indexList.add(indexManager.getIndex("1",1));
-//		indexList.add(indexManager.getIndex("2",1));
-		
-//		httpRequest.getSession().setAttribute("indexList", indexList);
 
-		Map map = new HashMap();
-		
-		map.putAll( indexManager.getIndexBySelect(keyword, Byte.valueOf(indextype), Byte.valueOf(msgtype),10,1, ((PlatForm)httpRequest.getSession().getAttribute("_platform_")).getPlatID()));
-		
-		
-		
-		return new ModelAndView("/protected/index/wx_index","indexmap",map);
-
-		
-	}
 	
 	
 	@RequestMapping(value="/wx_index_add",method = RequestMethod.GET)
@@ -140,7 +166,7 @@ public class IndexController {
 		wx_menu.setMainMenuCount(2);
 		
 		List<Sub_Menu> submenu1 = new Vector<Sub_Menu>(5);
-		submenu1.add(new Sub_Menu((byte)0, "子菜单1", "11"));
+		submenu1.add(new Sub_Menu((byte)0, "子菜单1", "http://localhost/SpringMVC/protected/wx_index_menu"));
 		submenu1.add(new Sub_Menu((byte)0, "子菜单2", "12"));
 		
 		wx_menu.getMainMenu().put("主菜单一", submenu1);
