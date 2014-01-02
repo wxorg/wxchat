@@ -54,13 +54,13 @@ public class SelectPlatFormController {
 		
 		//selectPlatFormManager.addPlatForm(null);
 		
-		if(platFormList.size()!=1)
+//		if(platFormList.size()!=1)
 			return new ModelAndView("protected/transit","platFormList",platFormList);
-		else{
-			
-			return new ModelAndView("/protected/index/wx_index.jsp?origId="+platFormList.get(0).getOrigId());
-			//protected/index/wx_index.jsp?origId=gh_9cc49ccae03a
-		}
+//		else{
+//			
+//			return new ModelAndView("/protected/index/wx_index.jsp?origId="+platFormList.get(0).getOrigId());
+//			//protected/index/wx_index.jsp?origId=gh_9cc49ccae03a
+//		}
 		
 	}
 	

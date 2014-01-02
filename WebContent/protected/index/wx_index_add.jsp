@@ -39,9 +39,9 @@
   			    <select class="form-control" id="indextype">
   					<option value="-1">选择索引类型</option>
   					<option value="0">关注索引</option>
-  					<option value="1">搜索索引</option>
+  					<option value="1">默认索引</option>
   					<option value="2">关键词索引</option>
-  					<option value="3">默认索引</option>
+  					<option value="3">搜索索引</option>
 				</select>
 
   			    
@@ -146,6 +146,8 @@
 	var saveUrl ="${ctx}/protected/wx_index_add";
 
 	var content ={
+			indextype:-1 ,//0 关注索引,1 默认索引 2、关键词 3 搜索
+			keyword:"",
 			msgType:0,//1 text 2 news
 			text:""
 	}
@@ -239,6 +241,8 @@
   	$("#indextype").change(function(){
   		if($(this).val()<2){
   			$("#indexkeyword").attr("disabled",true);
+  		}else{
+  			$("#indexkeyword").attr("disabled",false);
   		}
   	})	;	
   					 					
@@ -260,6 +264,10 @@
 	
 	
 	function saveIndex(){
+		
+		content.indextype=$("#indextype").val();
+		content.keyword=$("#indexkeyword").val();
+		
 		
 		$.ajax({
 			

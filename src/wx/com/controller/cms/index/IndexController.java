@@ -95,18 +95,24 @@ public class IndexController {
 		
 		//此步骤需要 用注解实例化
 		//SelectPlatFormManager selectPlatFormManager =new SelectPlatFormManager();
-		String platId = httpRequest.getParameter("platId");
 		
-//		System.out.println("platId="+platId);
-    	//PlatForm platForm=selectPlatFormManager.getPlatFormById(platId);
-		PlatForm platForm=null;
-		try{
-    		platForm=selectPlatFormManager.getPlatFormById(Integer.valueOf(platId));
-		}catch(Exception ex){
-			ex.printStackTrace();
+		if(null!=httpRequest.getParameter("platId")){
+			String platId = httpRequest.getParameter("platId");
+			
+//			System.out.println("platId="+platId);
+	    	//PlatForm platForm=selectPlatFormManager.getPlatFormById(platId);
+			PlatForm platForm=null;
+			try{
+	    		platForm=selectPlatFormManager.getPlatFormById(Integer.valueOf(platId));
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}
+			 
+	    	httpRequest.getSession().setAttribute("_platform_", platForm);
 		}
-		 
-    	httpRequest.getSession().setAttribute("_platform_", platForm);
+		
+		PlatForm platForm = (PlatForm) httpRequest.getSession().getAttribute("_platform_");
+		
     	Map map = new HashMap();
     	/*
     	map.put("indexList", indexList);
@@ -171,9 +177,16 @@ public class IndexController {
 	
 	@RequestMapping(value="/wx_index_add",method = RequestMethod.POST)
 	public ModelAndView  postwx_index_add(HttpServletRequest httpRequest){
-	
 		
-		System.out.println("dd");
+		String keyword = httpRequest.getParameter("indextype");
+		String currpage = httpRequest.getParameter("keyword");
+		String numPpage = httpRequest.getParameter("msgType");
+		String msgttype = httpRequest.getParameter("text");
+		
+		System.out.println(keyword);
+		System.out.println(currpage);
+		System.out.println(numPpage);
+		System.out.println(msgttype);
 		 
 		return new ModelAndView("/protected/index/wx_index_add");
 	}

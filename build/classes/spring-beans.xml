@@ -52,6 +52,7 @@
 
         <bean id="indexManager"
             class="wx.com.service.cms.index.IndexManager">
+       		
         </bean>
                 
 </beans>

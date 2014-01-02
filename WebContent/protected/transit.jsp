@@ -69,11 +69,6 @@
 				</div>
 			</c:when>
 			
-			<c:when test="${platFormList.size()==1}">
-				<div>
-					<c:url value='${ctx}/protected/wx_index'/>
-				</div>
-			</c:when>
 		
 			<c:otherwise>
 				<c:forEach items="${platFormList}" var = "rowlist">
