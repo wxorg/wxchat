@@ -34,9 +34,9 @@
     					<select class="form-control" name="indextype" id="indextype">
   							<option value="-1">选择索引类型</option>
   							<option value="0">关注索引</option>
-  							<option value="1">关键词索引</option>
-  							<option value="2">搜索索引</option>
-  							<option value="3">默认索引</option>
+  							<option value="1">默认索引</option>
+  							<option value="2">关键词索引</option>
+  							<option value="3">搜索索引</option>
 						</select>
   	 				</div>
   				</div>

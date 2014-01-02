@@ -173,13 +173,17 @@ public class NewsController {
 	@RequestMapping(value="wx_news_edit",method = RequestMethod.POST)
 	public ModelAndView  postWXNews_Edit(HttpServletRequest request){
 		
+		String data = request.getParameter("data");
+		System.out.println(data);
+		
 		return new ModelAndView("/protected/material/wx_news");
 	}
 	
 	@RequestMapping(value="wx_news_add",method = RequestMethod.POST)
 	public ModelAndView  postWXNews_Add(HttpServletRequest request){
 		
-		System.out.println("ddd");
+		String data = request.getParameter("data");
+		System.out.println(data);
 		return new ModelAndView("/protected/material/wx_news_add");
 	}
 	

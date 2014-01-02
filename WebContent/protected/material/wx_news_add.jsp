@@ -55,7 +55,7 @@
     					</div>
     					<div id="collapseOne" class="panel-collapse collapse in">
       						<div class="panel-body">
-      							<div class="form-group " style="max-width:600px">
+      							<div class="form-group hide" style="max-width:600px">
    				 					<label for="id">id</label>
    				 					<input type="text" class="form-control" id="articalid" placeholder="id" required>
   								</div>
@@ -250,7 +250,7 @@ function savenews()
         	
         },
         
-        data: data,
+        data: {data:JSON.stringify(data)},
         error: function (XMLHttpRequest, textStatus, errorThrown) {
         
         	alert("数据提交失败："+textStatus);

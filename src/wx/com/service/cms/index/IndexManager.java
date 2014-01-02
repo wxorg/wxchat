@@ -37,12 +37,14 @@ public class IndexManager implements IIndexManager {
 	@Override
 	public List<Index> getIndexByIndexType(byte indexType, int origId) {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList();
 	}
 
 	@Override
 	public List<Index> getAllIndex(int origId) {
 		// TODO Auto-generated method stub
+		
+		
 		return null;
 	}
 

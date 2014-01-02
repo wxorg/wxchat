@@ -10,6 +10,7 @@ public class Index {
 	public byte indexType;
 	public byte msgType;
 	public long creatTime;
+	public String keyword;
 	
 	
 	
@@ -36,6 +37,12 @@ public class Index {
 	}
 	public void setCreatTime(long creatTime) {
 		this.creatTime = creatTime;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
 	}
 	
 	
