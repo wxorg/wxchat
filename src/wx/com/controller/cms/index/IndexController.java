@@ -113,6 +113,7 @@ public class IndexController {
 		
 		PlatForm platForm = (PlatForm) httpRequest.getSession().getAttribute("_platform_");
 		
+		
     	Map map = new HashMap();
     	/*
     	map.put("indexList", indexList);
