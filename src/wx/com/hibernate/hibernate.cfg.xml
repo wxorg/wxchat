@@ -13,6 +13,6 @@
         <mapping class="wx.com.entity.receive.Msg_Text"/> 
         <mapping class="wx.com.entity.cms.auth.Authorities"/>
 		<mapping class="wx.com.entity.cms.plat.PlatForm"/>  
-        
+        <mapping class="wx.com.entity.cms.index.Index"/>  
     </session-factory>  
 </hibernate-configuration>

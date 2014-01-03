@@ -13,6 +13,7 @@ import wx.com.entity.cms.index.Index;
 * @date 2013-12-18 下午3:40:29 
 *
  */
+@SuppressWarnings("rawtypes")
 public interface IIndexManager {
 	
 	/**
@@ -77,7 +78,8 @@ public interface IIndexManager {
 	* @return  Map   返回  总页数  "totlepage", 当前第几页  currpage list<Index> 
 	* @throws
 	 */
-	public Map getIndexBySelect(String word,byte indexType,byte msgType,int numPerpage,int page,int platid);
+
+	public Map getIndexBySelect(String whereQuery,int numPerpage,int page,int platid);
 
 	/**
 	 * 
@@ -112,7 +114,19 @@ public interface IIndexManager {
 	* @return boolean   
 	* @throws
 	 */
-	public boolean addIndex(Index index,int platid);
+	public boolean addIndex(Index index);
+	
+	/**
+	 * 
+	* @Title: isExistIndex 
+	* @Description: TODO 判断是否存在索引，若存在不可增加
+	* @param @param index
+	* @param @param platid
+	* @param @return   
+	* @return boolean
+	* @throws
+	 */
+	public boolean isExistIndex(Index index);
 	
 	/**
 	 * 

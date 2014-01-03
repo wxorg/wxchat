@@ -165,6 +165,43 @@ public class BaseDAO   {
 	
 	/**
 	 * 
+	* @Title: queryPage 
+	* @Description: TODO
+	* @param @param queryString
+	* @param @param sqlType
+	* @param @param firstN
+	* @param @param maxN
+	* @param @return
+	* @param @throws Exception   
+	* @return List
+	* @throws
+	 */
+	public List queryPage(String queryString, SQLType sqlType,int firstN,int maxN) throws Exception {
+		try {
+			getSession();
+			Query query;
+			if (sqlType == SQLType.SQL) {
+				query = session.createSQLQuery(queryString)
+						.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+				//System.out.println("aa:"+queryString);
+			} else {
+				System.out.println(queryString);
+				query = session.createQuery(queryString);
+			}
+			query.setFirstResult((firstN-1)*maxN);
+            query.setMaxResults(maxN);
+			List list = query.list();
+			return list;
+		} catch (Exception e) {
+			//flag = false;
+			throw e;
+		} finally {
+			//closeSession(flag);
+		}
+	}
+	
+	/**
+	 * 
 	* @Title: formatString 
 	* @Description: TODO
 	* @param @param string

@@ -1,6 +1,7 @@
 package wx.com.controller.cms.index;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,8 +11,6 @@ import java.util.Vector;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpServletResponse;
-
-
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,53 +39,74 @@ public class IndexController {
 	@Resource(name="selectPlatFormManager") 
     public ISelectPlatFormManager selectPlatFormManager; 
 	
-	public ISelectPlatFormManager getSelectPlatFormManager() {
-		return selectPlatFormManager;
-	}
-
-	public void setSelectPlatFormManager(ISelectPlatFormManager selectPlatFormManager) {
-		this.selectPlatFormManager = selectPlatFormManager;
-	}
-	
-	
-	
 	@RequestMapping(value="/wx_index",method = RequestMethod.GET)
 	public ModelAndView  getwx_index(HttpServletRequest httpRequest){
 		
-		byte msgtype =-1;
+		short msgtype =-1;
 		
-		byte currentpage=1;
-		byte numPerpage=10;
-		byte indextype =-1;
-		String keyword = httpRequest.getParameter("keyword");
-		String currpage = httpRequest.getParameter("currentpage");
+		short currentpage=1;
+		short numPerpage=10;
+		short indextype =-1;
+		
+		
+		
 		String numPpage = httpRequest.getParameter("numPerpage");
-		String msgttype = httpRequest.getParameter("msgtype");
-				
+		
+	/*	out======>keyword
+		out======>indextype
+		out======>msgtype*/
+		
+		@SuppressWarnings("rawtypes")
+		java.util.Enumeration enum1=httpRequest.getParameterNames();		
+		//Enumeration enu=request.getParameterNames(); 
+        while(enum1.hasMoreElements()) 
+        { 
+            String name=(String)enum1.nextElement(); 
+            System.out.println("out======>"+name);
+        }
+		
+		String sqlWhere="";		
 		try {
-			if(null!=keyword){
-				keyword=new String(keyword.getBytes("iso8859-1"),"utf-8");				
-				System.out.println(keyword);
+			String keyword = httpRequest.getParameter("keyword");
+			if(null!=keyword && keyword.length()>0 ){
+				keyword=new String(keyword.getBytes("iso8859-1"),"utf-8");		
+				sqlWhere=" and ( t.keyWord like '%"+keyword+"%'";
 			}
 			
+			String currpage = httpRequest.getParameter("currentpage");
 			if(null!= currpage){
-				currentpage = Byte.valueOf(currpage);
+				currentpage = Short.valueOf(currpage);
+			}else{
+				currentpage=0;
 			}
 			
-			if(null!= numPpage){
-				indextype = Byte.valueOf(numPpage);
+			String indexType  = httpRequest.getParameter("indextype");
+			if(null!= indexType && !indexType.equals("-1")){
+				indextype = Short.valueOf(indexType);
+				if(sqlWhere.length()>5)
+					sqlWhere=sqlWhere+" or t.indexType = "+indextype;
+				else
+					sqlWhere=" and ( t.indexType = "+indextype;
 			}
 			
-			if(null!= msgttype){
-				msgtype = Byte.valueOf(msgttype);
+			String msgType = httpRequest.getParameter("msgtype");
+			if(null!= msgType && !msgType.equals("-1")){
+				msgtype = Short.valueOf(msgType);
+				if(sqlWhere.length()>5)
+					sqlWhere=sqlWhere+" or t.msgType = "+msgtype;
+				else
+					sqlWhere="and ( t.msgType = "+msgtype;
 			}
-
+			if(sqlWhere.length()>5)
+				sqlWhere = sqlWhere + ")";
+			
+			System.out.println("keyWord="+keyword+";currpage="+currpage+";numPpage="+numPpage+";msgttype="+msgType+";indexType"+indexType);
 			
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
-		
 		List<Index> indexList = new ArrayList<Index>();
 		
 		indexList.add(indexManager.getIndex("1",1));
@@ -95,12 +115,9 @@ public class IndexController {
 		
 		//此步骤需要 用注解实例化
 		//SelectPlatFormManager selectPlatFormManager =new SelectPlatFormManager();
-		
 		if(null!=httpRequest.getParameter("platId")){
 			String platId = httpRequest.getParameter("platId");
 			
-//			System.out.println("platId="+platId);
-	    	//PlatForm platForm=selectPlatFormManager.getPlatFormById(platId);
 			PlatForm platForm=null;
 			try{
 	    		platForm=selectPlatFormManager.getPlatFormById(Integer.valueOf(platId));
@@ -110,35 +127,15 @@ public class IndexController {
 			 
 	    	httpRequest.getSession().setAttribute("_platform_", platForm);
 		}
-		
 		PlatForm platForm = (PlatForm) httpRequest.getSession().getAttribute("_platform_");
-		
-		
     	Map map = new HashMap();
-    	/*
-    	map.put("indexList", indexList);
-    	map.put("totlepage",11);
-    	map.put("currpage",2);
-    	*/
-    	map.putAll(indexManager.getIndexBySelect(keyword, indextype,msgtype,numPerpage,currentpage, platForm.getPlatID()));
-		
+//    	keyWord=null;currpagenull;numPpage=null;msgttype=null
+    	System.out.println("numPerpage="+numPerpage+";currentpage"+currentpage+";PlatID="+ platForm.getPlatID());
+    	map.putAll(indexManager.getIndexBySelect(sqlWhere,numPerpage,currentpage, platForm.getPlatID()));
 		
 		return new ModelAndView("/protected/index/wx_index","indexmap",map);
-		
-	/*	@SuppressWarnings("rawtypes")
-		java.util.Enumeration enum1=httpRequest.getParameterNames();		
-		//Enumeration enu=request.getParameterNames(); 
-        while(enum1.hasMoreElements()) 
-        { 
-            String name=(String)enum1.nextElement(); 
-            System.out.println(name);
-        }*/
 	}
 
-	
-
-	
-	
 	@RequestMapping(value="/wx_index_add",method = RequestMethod.GET)
 	public ModelAndView  getwx_index_add(HttpServletRequest httpRequest){
 	
@@ -179,17 +176,50 @@ public class IndexController {
 	@RequestMapping(value="/wx_index_add",method = RequestMethod.POST)
 	public ModelAndView  postwx_index_add(HttpServletRequest httpRequest){
 		
-		String keyword = httpRequest.getParameter("indextype");
-		String currpage = httpRequest.getParameter("keyword");
-		String numPpage = httpRequest.getParameter("msgType");
-		String msgttype = httpRequest.getParameter("text");
+		String indextype = httpRequest.getParameter("indextype");
+		String keyword = httpRequest.getParameter("keyword");
+		String msgtype = httpRequest.getParameter("msgType");
+		String text = httpRequest.getParameter("text");
 		
-		System.out.println(keyword);
-		System.out.println(currpage);
-		System.out.println(numPpage);
-		System.out.println(msgttype);
-		 
-		return new ModelAndView("/protected/index/wx_index_add");
+		if(indextype.equals("0")|| indextype.equals("1") || null == keyword )
+			keyword="";
+		short indexType=0;
+		short msgType=0;
+		try{
+			indexType = Short.valueOf(indextype);
+			msgType = Short.valueOf(msgtype);
+		}catch(Exception ex){
+			httpRequest.getSession().setAttribute("addIndex_info", "indexType or msgType is error");
+			return new ModelAndView("/protected/index/wx_index_add?index_error=1");
+		}
+		
+		System.out.println("keyword="+keyword+";indextype="+indextype+";msgtype="+msgtype+";text="+text);
+		System.out.println("==================================");
+		PlatForm platForm = (PlatForm)httpRequest.getSession().getAttribute("_platform_");//.setAttribute("_platform_", platForm);
+		Index index = new Index();
+		index.setIndexType(indexType);
+		index.setKeyWord(keyword);
+		index.setMsgType(msgType);
+		index.setPlatId(platForm.getPlatID());
+		index.setCreatTime(new Timestamp(System.currentTimeMillis()));
+		index.setValid(true);
+		if(msgType==2){
+			index.setMediaId(Long.valueOf(text));
+		}else{
+			index.setText(text);
+		}
+		
+		boolean isOK=false;
+		
+		if(!indexManager.isExistIndex(index))
+			isOK=indexManager.addIndex(index);
+		if(isOK)
+			return new ModelAndView("/protected/index/wx_index_add?index_success=1");
+		else{
+			httpRequest.getSession().setAttribute("addIndex_info", "addIndex fail");
+			return new ModelAndView("/protected/index/wx_index_add?index_error=1");
+		}
+		
 	}
 	
 	@RequestMapping(value="/wx_index_menu",method = RequestMethod.GET)
@@ -218,6 +248,14 @@ public class IndexController {
 
 	public void setIndexManager(IIndexManager indexManager) {
 		this.indexManager = indexManager;
+	}
+	
+	public ISelectPlatFormManager getSelectPlatFormManager() {
+		return selectPlatFormManager;
+	}
+
+	public void setSelectPlatFormManager(ISelectPlatFormManager selectPlatFormManager) {
+		this.selectPlatFormManager = selectPlatFormManager;
 	}
 	
 	

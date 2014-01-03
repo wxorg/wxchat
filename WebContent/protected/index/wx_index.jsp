@@ -47,7 +47,7 @@
   	 					<label class="sr-only" for="msgtype">消息类型</label>
     					<select class="form-control" name="msgtype" id="msgtype">
   							<option value =-1>消息类型</option>
- 							<option value =0>文本</option>							
+ 							<option value =1>文本</option>							
   							<option value =2>图文</option>
 						</select>
   	 				</div>
@@ -65,7 +65,7 @@
    </form>
   
   </div>
-  
+
    <div class="table-responsive panel panel-default">
   		<table class="table table-striped  table-hover">
 		<thead>
@@ -79,10 +79,12 @@
 		</thead>
 	
 		<tbody>
-			<c:forEach items="${indexmap.get('indexList')}" var = "rowlist">
+		
+			<c:forEach items="${indexmap.get('indexlist')}" var = "rowlist">
 			<tr>
+			   <!--  <td></td> -->
 				<td>
-				 	${rowlist.getId() }
+				 	${rowlist.getKeyWord()}
 				</td>
 				<td>
 				 	${rowlist.getIndexType() }
