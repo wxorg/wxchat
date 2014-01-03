@@ -12,6 +12,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpServletResponse;
 
+<<<<<<< HEAD
+=======
+
+
+import org.json.JSONException;
+import org.json.JSONObject;
+>>>>>>> a979de59def944122f73d7d73d7bf432906b69e9
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -231,14 +238,38 @@ public class IndexController {
 		
 		List<Sub_Menu> submenu1 = new Vector<Sub_Menu>(5);
 		submenu1.add(new Sub_Menu((byte)0, "子菜单1", "http://localhost/SpringMVC/protected/wx_index_menu"));
-		submenu1.add(new Sub_Menu((byte)0, "子菜单2", "12"));
+		submenu1.add(new Sub_Menu((byte)1, "子菜单2", "12"));
+		
 		
 		wx_menu.getMainMenu().put("主菜单一", submenu1);
 		wx_menu.getMainMenu().put("主菜单二", submenu1);
 //		submenu1.get(0).getMenuName()
-		 
-		return new ModelAndView("/protected/index/wx_index_menu","wx_menu",wx_menu);
+		
+		List<Index> indexlist= new ArrayList<Index>();
+		indexlist.addAll(indexManager.getIndexByIndexType((byte)2,((PlatForm) httpRequest.getSession().getAttribute("_platform_")).getPlatID()));
+		//indexlist.get(0).getKeyword();
+		 Map map = new HashMap();
+		 map.put("wx_menu", wx_menu);
+		 map.put("indexlist", indexlist);
+//		 map.get("wx_menu")
+		return new ModelAndView("/protected/index/wx_index_menu","mapindex",map);
 	}
+	
+	
+	@RequestMapping(value="/wx_index_menu",method = RequestMethod.POST)
+	public ModelAndView  postwx_index_menu(HttpServletRequest httpRequest) throws JSONException{
+	
+		String menujson =  httpRequest.getParameter("menu");
+		
+		
+		
+		System.out.println(menujson);
+		
+		
+		return new ModelAndView("/protected/index/wx_index_menu");
+	}
+	
+	
 	
 	
 	

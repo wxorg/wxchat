@@ -132,7 +132,7 @@ public class SelectPlatFormController {
 			platForm.setValid(true);
 			
 			if(selectPlatFormManager.addPlatForm(platForm)){
-				request.getSession().setAttribute("addplatform_info", "addplatform is success");
+				request.getSession().setAttribute("addplatform_info", "成功  is success");
 				response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/protected/transit?transit_success=1");
 			}else{
 				request.getSession().setAttribute("addplatform_error", "addplatform is fail");
@@ -246,7 +246,7 @@ public class SelectPlatFormController {
 		platForm.setValid(false);
 		
 		if(returnError.length()==0 && selectPlatFormManager.delPlatForm("", platForm)){
-			request.getSession().setAttribute("addplatform_info", "delplatname is success");
+			request.getSession().setAttribute("addplatform_info", "成功 is success");
 			response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/protected/transit?transit_success=1");
 		}else{
 			

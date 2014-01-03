@@ -33,7 +33,7 @@
     					</a>
     					<div class="media-body ">
       						
-      						<h4 id="listtitle">${article.getTitle()}</h4>
+      						<h5 id="listtitle">${article.getTitle()}</h5>
       						
    					 	</div>
    					 	<a class="hide" id="listdescrip">${article.getDiscription()}</a>
@@ -46,7 +46,10 @@
 			</ul>
 			</div>
 		</div>
-			<button  class="btn btn-default col-md-offset-4" type="button" onclick="savenews()">提交</button>
+		<div >
+			<a id="addplatformbtn" class="btn btn-default btn-lg btn-block " onclick="addArticle()"><span class="glyphicon glyphicon-plus"></span></a>
+		</div>
+			<button  class="btn btn-default col-md-offset-5" type="button" onclick="savenews()">提交</button>
 
 			
   		</div>
@@ -89,7 +92,7 @@
   								<div class="form-group">
 									<div class="col-md-offset-4 col-md-10">
 										<button  class="btn btn-default" type="button" onclick="delaltical()">删除</button>
-										<button  class="btn btn-default" type="button" onclick="saveartical()">提交</button>
+										<button  class="btn btn-default" type="button" onclick="saveartical()">修改</button>
       			
 									</div>
 
@@ -207,20 +210,53 @@ function addArticle(){
 
 function saveartical()
 {
+	if($(".media-list").children(".radio").length==0){
+		$(".media-list").append('<li  class="media radio">'+
+				'<input type="radio" id="radio" name="optionsRadios" class="optionsRadios" value="option1"  >'+
+				'<a class="pull-right" >'+
+				'<img class="media-object img-rounded" id="listimg" src="" alt=".." width="50",height="50"></a>'+
+				'<div class="media-body "><h4 id="titlelist"></h4>'+
+				'<a class="" id="listdescrip"></a></div>'+
+				'<a class="hide" id="listurl"></a></li>'
+				
+		);
+		
+		var obj = $(".media-list").children(".radio");
+		obj.children(".optionsRadios").prop('checked',true);
+		obj.children(".pull-right").children(".media-object").attr("src",document.getElementById("img1").src);
+		//alert($(this).children($(".media-body")).text().trim());
+		obj.children(".media-body").html('<h5>'+$("#title").val()+'</h5>');
+		obj.children("#listdescrip").text($("#descrip").val());
+		obj.children("#listurl").text($("#url").val());
+		
+		
+	}else{
+		
+		 $(".media-list").children(".radio").each(function(){
+		    	if($(this).children(".optionsRadios").prop('checked')){
+		    		$(this).children(".pull-right").children(".media-object").attr("src",document.getElementById("img1").src);
+					//alert($(this).children($(".media-body")).text().trim());
+		    		$(this).children(".media-body").html('<h5>'+$("#title").val()+'</h5>');
+		    		$(this).children("#listdescrip").text($("#descrip").val());
+		    		$(this).children("#listurl").text($("#url").val());
+			
+				}
+		});
 	
-    $(".media-list").children(".radio").each(function(){
-    	if($(this).children(".optionsRadios").prop('checked')){
-    		$(this).children(".pull-right").children(".media-object").attr("src",document.getElementById("img1").src);
-			//alert($(this).children($(".media-body")).text().trim());
-    		$(this).children(".media-body").html('<h4>'+$("#title").val()+'</h4>');
-    		$(this).children("#listdescrip").text($("#descrip").val());
-    		$(this).children("#listurl").text($("#url").val());
-	
-		}
-    })  ;  
-	
+   
+	}
 	
 } 
+
+function delaltical(){
+	
+	  $(".media-list").children(".radio").each(function(){
+	    	if($(this).children(".optionsRadios").prop('checked')){
+	    		$(this).remove();
+		
+			}
+	   })  ;  
+}
 
 function savenews()
 {
@@ -233,7 +269,7 @@ function savenews()
 	
 	
 	$(".media-list").children(".radio").each(function(){
-		i++;
+		
 		var item = new Object();
 		item.Id=$(this).children("#listid").text().trim();
 		item.Title=$(this).children(".media-body").children("#listtitle").text().trim();
@@ -241,11 +277,11 @@ function savenews()
 		item.PicUrl=$(this).children(".pull-right").children(".media-object").attr("src");
 		item.Url=$(this).children("#listurl").text().trim();
 		
-		data.Articles[i]=item;
+		data.Articles.push(item);
 		
 	});
 	
-	data.ArticleCount=i;
+	data.ArticleCount=data.Articles.length;
 	
 
 	
@@ -262,7 +298,7 @@ function savenews()
         	
         },
         
-        data: data,
+        data: {data:JSON.stringify(data)},
         error: function (XMLHttpRequest, textStatus, errorThrown) {
         
         	alert("数据提交失败："+textStatus);
