@@ -28,19 +28,9 @@ public class Index {
 	@XStreamAlias("indexType")
 	private short indexType;//0:关注索引,1:默认索引,2:关键字索引,3:搜索索引
 	
-<<<<<<< HEAD
 	@XStreamAlias("msgType")
 	private short msgType;//1:文本,2:图片
-=======
 	public String id;
-	/**
-	 * index Type 1
-	 */
-	public byte indexType;
-	public byte msgType;
-	public long creatTime;
-	public String keyword;
->>>>>>> a979de59def944122f73d7d73d7bf432906b69e9
 	
 	@XStreamAlias("createTime")
 	private Timestamp creatTime;
@@ -89,25 +79,18 @@ public class Index {
 	public void setCreatTime(Timestamp creatTime) {
 		this.creatTime = creatTime;
 	}
-<<<<<<< HEAD
 	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 	}
-	public String getKeyWord() {
-		return keyWord;
-	}
+	
 	public void setKeyWord(String keyWord) {
 		this.keyWord = keyWord;
-=======
-	public String getKeyword() {
-		return keyword;
 	}
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
->>>>>>> a979de59def944122f73d7d73d7bf432906b69e9
+	public String getKeyWord() {
+		return keyWord;
 	}
 	
 	public String getText() {

@@ -1,6 +1,5 @@
 package wx.com.service.cms.index;
 
-//import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +42,7 @@ public class IndexManager implements IIndexManager {
 	@Override
 	public List<Index> getIndexByIndexType(byte indexType, int origId) {
 		// TODO Auto-generated method stub
-		return new ArrayList();
+		return null;
 	}
 
 	@Override
