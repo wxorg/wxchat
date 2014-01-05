@@ -1,5 +1,6 @@
 package wx.com.dao.index;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import wx.com.common.SQLType;
 import wx.com.common.util.StringFormatSQL;
 import wx.com.dao.base.BaseDAO;
 import wx.com.entity.cms.index.Index;
+import wx.com.entity.cms.menu.WXDBMenu;
 
 @SuppressWarnings("all")
 public class IndexDAO extends BaseDAO implements IIndexDAO {
@@ -84,8 +86,36 @@ public class IndexDAO extends BaseDAO implements IIndexDAO {
 			return Integer.valueOf(_map.get("NUMS").toString());
 		}
 		
-		return -1;
+		return -1;		
+	}
+	
+	private String queryMenuByPlatID;
+
+	public String getQueryMenuByPlatID() {
+		return queryMenuByPlatID;
+	}
+
+	public void setQueryMenuByPlatID(String queryMenuByPlatID) {
+		this.queryMenuByPlatID = queryMenuByPlatID;
+	}
+	
+	public List queryMenuByPlatID(int platId) throws Exception {
+		String stringSQL=StringFormatSQL.format(queryMenuByPlatID,platId);
+		System.out.println(stringSQL);
+        return this.query(stringSQL,SQLType.HQL); 
+	}
+	
+	public boolean saveOrUpdateMenu(WXDBMenu menu,int dealFlag) throws Exception{
 		
+		if(dealFlag==0){
+			Serializable _seria = this.save(menu);
+		    if((Integer)_seria>0)
+		    	return true;
+		    else
+		    	return false;
+		}else{
+		  return this.update(menu);
+		}
 	}
 	
 

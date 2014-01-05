@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import wx.com.entity.cms.index.Index;
+import wx.com.entity.cms.menu.WXDBMenu;
 
 /**
  * 
@@ -152,5 +153,28 @@ public interface IIndexManager {
 	* @throws
 	 */
 	public boolean delIndex(String indexId,int platid);
+	
+	/**
+	 * 
+	* @Title: queryMenuByPlatID 
+	* @Description: TODO
+	* @param @param paltId
+	* @param @return   
+	* @return WXDBMenu
+	* @throws
+	 */
+	public WXDBMenu queryMenuByPlatID(int paltId);
+	
+	/**
+	 * 
+	* @Title: saveOrUpdateMenu 
+	* @Description: TODO
+	* @param @param menu
+	* @param @param dealFlag
+	* @param @return   
+	* @return boolean
+	* @throws
+	 */
+	public boolean saveOrUpdateMenu(WXDBMenu menu,int dealFlag);
 
 }

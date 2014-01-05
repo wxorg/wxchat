@@ -3,6 +3,7 @@ package wx.com.dao.index;
 import java.util.List;
 
 import wx.com.entity.cms.index.Index;
+import wx.com.entity.cms.menu.WXDBMenu;
 
 /**
  * 
@@ -12,6 +13,7 @@ import wx.com.entity.cms.index.Index;
    * @date 2014年1月3日 上午12:11:36
    *
  */
+@SuppressWarnings("rawtypes")
 public interface IIndexDAO {
 	
 	/**
@@ -53,7 +55,7 @@ public interface IIndexDAO {
 	* @return List
 	* @throws
 	 */
-	@SuppressWarnings("rawtypes")
+	
 	public List getIndexBySelect(String whereQuery,int numPerpage,int curPage, int platId) throws Exception ;
 
 	/**
@@ -68,6 +70,30 @@ public interface IIndexDAO {
 	* @throws
 	 */
 	public int queryIndexCountByArgs(String whereQuery, int platId) throws Exception;
+	
+	/**
+	 * 
+	* @Title: queryMenuByPlatID 
+	* @Description: TODO
+	* @param @param platId
+	* @param @return
+	* @param @throws Exception   
+	* @return List
+	* @throws
+	 */
+	public List queryMenuByPlatID(int platId) throws Exception;
+	
+	/**
+	 * 
+	* @Title: saveOrUpdateMenu 
+	* @Description: TODO
+	* @param @param menu
+	* @param @return
+	* @param @throws Exception   
+	* @return boolean
+	* @throws
+	 */
+	public boolean saveOrUpdateMenu(WXDBMenu menu,int dealFlag) throws Exception;
 	
 
 }

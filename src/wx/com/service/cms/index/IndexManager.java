@@ -8,7 +8,9 @@ import javax.annotation.Resource;
 
 import wx.com.dao.index.IIndexDAO;
 import wx.com.entity.cms.index.Index;
+import wx.com.entity.cms.menu.WXDBMenu;
 
+@SuppressWarnings("rawtypes")
 public class IndexManager implements IIndexManager {
 	
 	@Resource
@@ -121,6 +123,29 @@ public class IndexManager implements IIndexManager {
 		return map;
 
 	}
+	
+	
+	public WXDBMenu queryMenuByPlatID(int paltId){
+		WXDBMenu menu=null;
+		try{
+			List list = indexDAO.queryMenuByPlatID(paltId);
+			if(list!=null&&list.size()>0)
+				menu = (WXDBMenu)list.get(0);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return null;
+		}
+		return menu;
+	}
+	
+	public boolean saveOrUpdateMenu(WXDBMenu menu,int dealFlag){
+		try{
+			return indexDAO.saveOrUpdateMenu(menu, dealFlag);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return false;
+		}
+	}
 
 	public IIndexDAO getIndexDAO() {
 		return indexDAO;
@@ -129,10 +154,5 @@ public class IndexManager implements IIndexManager {
 	public void setIndexDAO(IIndexDAO indexDAO) {
 		this.indexDAO = indexDAO;
 	}
-	
-	
-
-
-
 	
 }

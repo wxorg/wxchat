@@ -59,6 +59,9 @@
        		<property name="queryIndexCountByArgs">   
             	<value> Select count(*) NUMS from wxindexs as t where t.isValid=1 and t.platId={0} {1}  </value>   
        		</property>    
+       		<property name="queryMenuByPlatID">   
+            	<value> from WXDBMenu as t where t.isValid=1 and t.platId={0}  </value>   
+       		</property>   
         </bean>
                 
 </beans>

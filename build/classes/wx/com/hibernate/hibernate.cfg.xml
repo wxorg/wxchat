@@ -14,5 +14,6 @@
         <mapping class="wx.com.entity.cms.auth.Authorities"/>
 		<mapping class="wx.com.entity.cms.plat.PlatForm"/>  
         <mapping class="wx.com.entity.cms.index.Index"/>  
+        <mapping class="wx.com.entity.cms.menu.WXDBMenu"/>  
     </session-factory>  
 </hibernate-configuration>

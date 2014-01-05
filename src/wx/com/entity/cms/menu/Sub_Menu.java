@@ -1,4 +1,4 @@
-package wx.com.entity;
+package wx.com.entity.cms.menu;
 
 public class Sub_Menu{
 
