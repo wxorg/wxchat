@@ -12,6 +12,11 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpServletResponse;
 
+
+
+
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -19,8 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import wx.com.entity.Sub_Menu;
-import wx.com.entity.WX_Menu;
+import wx.com.entity.cms.menu.Sub_Menu;
+import wx.com.entity.cms.menu.WXDBMenu;
+import wx.com.entity.cms.menu.WX_Menu;
 import wx.com.entity.cms.plat.PlatForm;
 import wx.com.entity.cms.index.Index;
 import wx.com.entity.send.Article;
@@ -45,27 +51,20 @@ public class IndexController {
 	public ModelAndView  getwx_index(HttpServletRequest httpRequest){
 		
 		short msgtype =-1;
-		
 		short currentpage=1;
 		short numPerpage=10;
 		short indextype =-1;
 		
-		
-		
 		String numPpage = httpRequest.getParameter("numPerpage");
 		
-	/*	out======>keyword
-		out======>indextype
-		out======>msgtype*/
-		
-		@SuppressWarnings("rawtypes")
+		/*@SuppressWarnings("rawtypes")
 		java.util.Enumeration enum1=httpRequest.getParameterNames();		
 		//Enumeration enu=request.getParameterNames(); 
         while(enum1.hasMoreElements()) 
         { 
             String name=(String)enum1.nextElement(); 
             System.out.println("out======>"+name);
-        }
+        }*/
 		
 		String sqlWhere="";		
 		try {
@@ -79,7 +78,7 @@ public class IndexController {
 			if(null!= currpage){
 				currentpage = Short.valueOf(currpage);
 			}else{
-				currentpage=0;
+				currentpage=1;
 			}
 			
 			String indexType  = httpRequest.getParameter("indextype");
@@ -132,8 +131,16 @@ public class IndexController {
 		PlatForm platForm = (PlatForm) httpRequest.getSession().getAttribute("_platform_");
     	Map map = new HashMap();
 //    	keyWord=null;currpagenull;numPpage=null;msgttype=null
-    	System.out.println("numPerpage="+numPerpage+";currentpage"+currentpage+";PlatID="+ platForm.getPlatID());
-    	map.putAll(indexManager.getIndexBySelect(sqlWhere,numPerpage,currentpage, platForm.getPlatID()));
+    	try{
+    		System.out.println("numPerpage="+numPerpage+";currentpage"+currentpage+";PlatID="+ platForm.getPlatID());
+    		map.putAll(indexManager.getIndexBySelect(sqlWhere,numPerpage,currentpage, platForm.getPlatID()));
+    	}catch(Exception ex){
+    		//System.out.println("==========start========");
+    		//ex.printStackTrace();
+    		//System.out.println("==========end========");
+    		map = null;
+    	}
+    	
 		
 		return new ModelAndView("/protected/index/wx_index","indexmap",map);
 	}
@@ -152,14 +159,14 @@ public class IndexController {
 		Article article1 = new Article();
 		article1.setTitle("图片1展示");
 		article1.setDiscription("图片1展示图片1展示图片1展示图片1展示图片1展示");
-		article1.setPicUrl(ConfigureClass.getWEBURL()+"/static/a1.jpg");
-		article1.setUrl(ConfigureClass.getWEBURL()+"/static/a1.jpg");
+		article1.setPicUrl("/static/a1.jpg");
+		article1.setUrl("/static/a1.jpg");//ConfigureClass.getWEBURL()+
 		
 		Article article2 = new Article();
 		article2.setTitle("图片2展示");
 		article2.setDiscription("图片2展示图片2展示图片2展示图片2展示图片2展示");
-		article2.setPicUrl(ConfigureClass.getWEBURL()+"/static/a2.jpg");
-		article2.setUrl(ConfigureClass.getWEBURL()+"/static/a2.jpg");
+		article2.setPicUrl("/static/a2.jpg");//ConfigureClass.getWEBURL()+
+		article2.setUrl("/static/a2.jpg");//ConfigureClass.getWEBURL()+
 		
 		
 		msg_News.getArticles().add(article1);
@@ -187,10 +194,18 @@ public class IndexController {
 			keyword="";
 		short indexType=0;
 		short msgType=0;
+		boolean isRetrun = true;
 		try{
 			indexType = Short.valueOf(indextype);
 			msgType = Short.valueOf(msgtype);
+			if(indexType<0){
+				isRetrun=false;
+			}
 		}catch(Exception ex){
+			isRetrun=false;
+		}
+		
+		if(isRetrun){
 			httpRequest.getSession().setAttribute("addIndex_info", "indexType or msgType is error");
 			return new ModelAndView("/protected/index/wx_index_add?index_error=1");
 		}
@@ -226,22 +241,53 @@ public class IndexController {
 	
 	@RequestMapping(value="/wx_index_menu",method = RequestMethod.GET)
 	public ModelAndView  getwx_index_menu(HttpServletRequest httpRequest){
-	
+		
+		PlatForm platForm = (PlatForm) httpRequest.getSession().getAttribute("_platform_");
+		if(platForm==null || platForm.getPlatID()<=0){
+			httpRequest.getSession().setAttribute("addIndex_info", "platForm is null");
+			return new ModelAndView("/protected/index/wx_index_menu?index_error=1");
+		}
+		WXDBMenu menu = indexManager.queryMenuByPlatID(platForm.getPlatID());
+		if(menu==null){
+			httpRequest.getSession().setAttribute("addIndex_info", "menu is null");
+			return new ModelAndView("/protected/index/wx_index_menu?index_error=1");
+		}
+		//System.out.println(menu.getMenuJson());
 		WX_Menu wx_menu = new WX_Menu();
-		
-		wx_menu.setMainMenuCount(2);
-		
-		List<Sub_Menu> submenu1 = new Vector<Sub_Menu>(5);
-		submenu1.add(new Sub_Menu((byte)0, "子菜单1", "http://localhost/SpringMVC/protected/wx_index_menu"));
-		submenu1.add(new Sub_Menu((byte)1, "子菜单2", "12"));
-		
-		
-		wx_menu.getMainMenu().put("主菜单一", submenu1);
-		wx_menu.getMainMenu().put("主菜单二", submenu1);
-//		submenu1.get(0).getMenuName()
-		
+		try{
+			JSONObject jsonobj=new JSONObject("{\"array\":"+menu.getMenuJson()+"}");//将字符串转化成json对象 
+			String name=jsonobj.getString("array");//获取字符串。
+			System.out.println("alljson==="+name);
+			JSONArray array=jsonobj.getJSONArray("array");//获取数组
+			wx_menu.setMainMenuCount(array.length());//主菜单个数
+			System.out.println("len="+array.length());
+			for(int i=0;i<array.length();i++){
+				JSONObject tmpJson = array.getJSONObject(i);
+				System.out.println("1====="+tmpJson.toString());
+				JSONArray tmpArray = tmpJson.getJSONArray("submenus");
+				List<Sub_Menu> submenuList = new Vector<Sub_Menu>(tmpArray.length());
+				for(int k=0;k<tmpArray.length();k++){
+					JSONObject tmpJson2 = tmpArray.getJSONObject(k);
+					try{
+						submenuList.add(new Sub_Menu((byte)tmpJson2.getInt("menutype"),tmpJson2.getString("menuname"), tmpJson2.getString("word")));
+					}catch(Exception ex){
+						ex.printStackTrace();
+					}
+					System.out.println("2==="+tmpJson2.toString());
+					System.out.println("2=="+tmpJson2.getString("menuname"));
+					//JSONArray tmpArray = tmpJson.getJSONArray("submenus");
+				}
+				if(submenuList!=null&&submenuList.size()>0)
+					wx_menu.getMainMenu().put(tmpJson.getString("menuname"), submenuList);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+			httpRequest.getSession().setAttribute("addIndex_info", "menujson is error");
+			return new ModelAndView("/protected/index/wx_index_menu?index_error=1");
+		}
 		List<Index> indexlist= new ArrayList<Index>();
-		indexlist.addAll(indexManager.getIndexByIndexType((byte)2,((PlatForm) httpRequest.getSession().getAttribute("_platform_")).getPlatID()));
+		//indexlist.addAll(indexManager.getIndexByIndexType((byte)2,((PlatForm) httpRequest.getSession().getAttribute("_platform_")).getPlatID()));
+		//indexDAO.getIndexBySelect(whereQuery, numPerpage, curPage, platId)
 		//indexlist.get(0).getKeyword();
 		 Map map = new HashMap();
 		 map.put("wx_menu", wx_menu);
@@ -255,13 +301,35 @@ public class IndexController {
 	public ModelAndView  postwx_index_menu(HttpServletRequest httpRequest) throws JSONException{
 	
 		String menujson =  httpRequest.getParameter("menu");
-		
-		
-		
 		System.out.println(menujson);
 		
+		PlatForm platForm = (PlatForm) httpRequest.getSession().getAttribute("_platform_");
+		if(platForm==null || platForm.getPlatID()<=0){
+			httpRequest.getSession().setAttribute("addIndex_info", "platForm is null");
+			return new ModelAndView("/protected/index/wx_index_menu?index_error=1");
+		}
+		WXDBMenu menu = indexManager.queryMenuByPlatID(platForm.getPlatID());
+		int dealFlag=-1;
+		if(menu==null){
+			menu = new WXDBMenu();
+			menu.setCreateTime(new Timestamp(System.currentTimeMillis()));
+			menu.setPlatId(platForm.getPlatID());
+			menu.setMenuJson(menujson);
+			menu.setValid(true);
+			dealFlag=0;
+		}else{
+			menu.setMenuJson(menujson);
+			menu.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+			dealFlag=1;
+		}
 		
-		return new ModelAndView("/protected/index/wx_index_menu");
+		if(!indexManager.saveOrUpdateMenu(menu,dealFlag)){
+			httpRequest.getSession().setAttribute("addIndex_info", "save menu fail");
+			return new ModelAndView("/protected/index/wx_index_menu?index_error=1");
+		}else {
+			return new ModelAndView("/protected/index/wx_index_menu?index_success=1");
+		}
+		
 	}
 	
 	
