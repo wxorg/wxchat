@@ -57,8 +57,8 @@
       			<c:forEach items="${rowmap.value}" var = "innerlist">
       				<li class="list-group-item">
       					<span class="childmenuname">${innerlist.getMenuName()}</span>
-      					<span class="col-md-offset-1 menutype hide">${innerlist.getMenuType()}</span>
-      					<span class="col-md-offset-1 keywordorurl">${innerlist.getKeywordOrUrl()}</span>
+      					<span class="col-md-offset-1 keywordorurl hide">${innerlist.getMenuType()}</span>
+      					<span class="col-md-offset-1 keyword">${innerlist.getKeywordOrUrl()}</span>
       					<a  class="editchildmenu" style="float:right;cursor: pointer"><span class=" glyphicon glyphicon-pencil"></span> </a>
       				</li>
       			</c:forEach>
@@ -154,8 +154,8 @@
 			
 			if($('#'+obj).children().length<5){
 				$('#'+obj).append('<li class="list-group-item"><span class="childmenuname">子菜单'+($('#'+obj).children().length+1)+'</span>'+
-						'<span class="col-md-offset-1 menutype hide"></span>'+
-						'<span class="col-md-offset-1 keywordorurl"></span><a class="editchildmenu" style="float:right;cursor: pointer"><span class=" glyphicon glyphicon-pencil"></span> </a></li>');
+						'<span class="col-md-offset-1 keywordorurl hide"></span>'+
+						'<span class="col-md-offset-1 keyword"></span><a class="editchildmenu" style="float:right;cursor: pointer"><span class=" glyphicon glyphicon-pencil"></span> </a></li>');
 				
 			}else{
 				alert("子菜单书不超过5个");
@@ -180,13 +180,13 @@
 				  '<input  type="text"  class="indexkeyword" placeholder="keyword" required>'+
 				  '<button type="submit" class="btn btn-default btnchangemainmenu">确定</button></div>'+
 				  '<h4 class="panel-title">'+
-				  '<a  class="mainmenuname" data-toggle="collapse" data-toggle="collapse" data-parent="#accordion${wx_menu.getMainMenu().size()+1 }" href="#collapse${wx_menu.getMainMenu().size()+1 }" >'+
-				  '主菜单${wx_menu.getMainMenu().size()+1 }</a>'+
+				  '<a  class="mainmenuname${wx_menu.getMainMenu().size() }" data-toggle="collapse" data-toggle="collapse" data-parent="#accordion${wx_menu.getMainMenu().size() }" href="#collapse${wx_menu.getMainMenu().size() }" >'+
+				  '主菜单${wx_menu.getMainMenu().size() }</a>'+
 				  '<a  class="editmainmenu" style="cursor: pointer" class="col-md-offset-1">'+
 				  '<span class=" glyphicon glyphicon-pencil"></span></a></h4></div>'+
-				  '<div id="collapse${wx_menu.getMainMenu().size()+1 }"  class="panel-collapse collapse in">'+
-				  '<div class="panel-body"><div class="childmenu"><ul class="list-group" id="list-group${wx_menu.getMainMenu().size()+1 }"></ul>'+
-				  '<div ><a  class="editchildmenu" style="cursor: pointer" class="btn btn-link " onclick="addchilmenu(\'list-group${wx_menu.getMainMenu().size()+1 }\')"><span class="glyphicon glyphicon-plus"> 添加子菜单</span></a>'+
+				  '<div id="collapse${wx_menu.getMainMenu().size() }"  class="panel-collapse collapse in">'+
+				  '<div class="panel-body"><div class="childmenu"><ul class="list-group" id="list-group${wx_menu.getMainMenu().size() }"></ul>'+
+				  '<div ><a  class="editchildmenu" style="cursor: pointer" class="btn btn-link " onclick="addchilmenu(\'list-group${wx_menu.getMainMenu().size() }\')"><span class="glyphicon glyphicon-plus"> 添加子菜单</span></a>'+
 				  '</div></div></div></div></div>');
 				  				                	
 				                	
@@ -229,15 +229,16 @@
 				
 				$(".modal-body").find("#childmenutitle").val($(this).parent(".list-group-item").children(".childmenuname").html());
 				//$("#childmenutitle").val($(this).parent(".list-group-item").children(".childmenuname").html());
-				$(".modal-body").find("#keyword").val($(this).parent(".list-group-item").children(".keywordorurl").html());
-				$(".modal-body").find("#keywordorurl").val($(this).parent(".list-group-item").children(".menutype").html());
+				$(".modal-body").find("#keyword").val($(this).parent(".list-group-item").children(".keyword").html());
+				$(".modal-body").find("#keywordorurl").val($(this).parent(".list-group-item").children(".keywordorurl").html());
 				
 				
 				$("#btnTextConfirm").click(function(){
 					$(".editchildmenu").each(function(){
 						if($(this).hasClass("edit")){
 							$(this).parent(".list-group-item").children(".childmenuname").html($(".modal-body").find("#childmenutitle").val());
-							$(this).parent(".list-group-item").children(".keywordorurl").html($(".modal-body").find("#keyword").val());
+							$(this).parent(".list-group-item").children(".keyword").html($(".modal-body").find("#keyword").val());
+							$(this).parent(".list-group-item").children(".keywordorurl").html($(".modal-body").find("#keywordorurl").val());
 						}
 						$('#myModal').modal('hide');
 					});
@@ -274,10 +275,11 @@
 				//alert(submainlen);
 				
 				$("#list-group"+i).children().each(function(){
+					alert(submainlen);
 					var submenu=new Object();
 					submenu.menuname =$(this).children('.childmenuname').text().trim();
-					submenu.menutype =$(this).children('.menutype').text().trim();
-					submenu.word =$(this).children('.keywordorurl').text().trim();
+					submenu.menutype =$(this).children('.keywordorurl').text().trim();
+					submenu.word =$(this).children('.keyword').text().trim();
 					
 					mainmenu.submenus.push(submenu);
 					//alert(mainmenu.submenus[i].menuname);
@@ -304,6 +306,7 @@
 			
 			
 			$.ajax({
+				
 				
 				url:"${ctx}/protected/wx_index_menu",
 				type:"POST",

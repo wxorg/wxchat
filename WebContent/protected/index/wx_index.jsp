@@ -17,6 +17,25 @@
 	</div>
   </div>
   <div class="col-md-8">
+  
+  	<%
+  		String keyword ="";
+  		if(null!=request.getParameter("keyword"))
+  		{
+  			keyword=new String(request.getParameter("keyword").getBytes("iso8859-1"),"utf-8") ;
+  		}
+  				
+  				
+  		int	indextype =-1;
+  		int msgtype=-1;
+  		if(null!=request.getParameter("indextype")){
+  			indextype=Integer.valueOf(request.getParameter("indextype")); 
+  		}
+  		if(null!=request.getParameter("msgtype")){
+  			msgtype=Integer.valueOf(request.getParameter("msgtype")); 
+  		}
+  	 
+  	%>
  
    <div class="panel panel-default">
   <!-- Default panel contents -->
@@ -27,7 +46,7 @@
   				<div class="row">
   					<div class="col-md-6 form-group">
   	 					<label class="sr-only control-label" for="keyword">关键词：</label>
-   			   			 <input type="text" class="form-control" id="keyword" name="keyword" placeholder="关键词">
+   			   			<input type="text" class="form-control" id="keyword" name="keyword" placeholder="关键词">
   	 				</div>
   	 				<div class="col-md-6 form-group">
   	 					<label class="sr-only" for="indextype">索引类型</label>
@@ -52,7 +71,7 @@
 						</select>
   	 				</div>
   	 				<div class="col-md-6 form-group" >
-  	 					<button type="submit" class="btn btn-default">搜索</button>
+  	 					<button id="fiterindexbtn" type=submit class="btn btn-default">搜索</button>
    						
   	 				</div>
   	 		
@@ -78,7 +97,7 @@
 			</tr>
 		</thead>
 	
-		<tbody>
+		<tbody id="indextable">
 		
 			<c:forEach items="${indexmap.get('indexlist')}" var = "rowlist">
 			<tr>
@@ -111,7 +130,7 @@
    		<div class="">
    				<ul class=" pager " id="pagerchange">
   					<li class="" id="pagerpre">
-  						<a href="">
+  						<a >
   							<span class="glyphicon glyphicon-chevron-left">
   							</span> 
   						</a>
@@ -135,9 +154,50 @@
 
 	<script type="text/javascript">
 	
-		
-		
 	
+	$("#fiterindexbtn").click(function(){
+		
+		var content={
+				keyword:$("#keyword").val(),
+				indextype:$("#indextype").val(),
+				msgtype:$("#msgtype").val(),
+				page:pageindex
+		};
+		
+		$("#indextable").empty();
+			
+		$.ajax({
+			
+			url:"${ctx}/protected/wx_index",
+			type:"POST",
+			timeout:10000,
+			beforeSend :function (XMLHttpRequest, textStatus, errorThrown){
+				
+				 
+	        },
+	        context: document.body,
+	        complete:function (XMLHttpRequest, textStatus){
+	        	
+	        },
+	        
+	        data: content,
+	        error: function (XMLHttpRequest, textStatus, errorThrown) {
+	        	
+	        },
+	        
+	        success:function (data, textStatus) {
+
+	        	
+	        	
+	        
+	        }
+	        
+			});
+		
+		
+	});
+	
+	/*
 		function getIndex(pageindex){
 		
 		var content={
@@ -168,7 +228,7 @@
 	        
 	        success:function (data, textStatus) {
 
-	        	$(this).html(data);
+	        	
 	        	
 	        
 	        }
@@ -176,6 +236,7 @@
 			});
 		
 		}
+	*/
 	
 		$(".nav li").each(function(){
 		
@@ -184,6 +245,11 @@
 		});
 	
 		$(document).ready(function(){
+			
+			
+			$("#keyword").val("<%= keyword%>");
+			$("#indextype").val("<%= indextype%>");
+			$("#msgtype").val("<%= msgtype%>");
 		
 	
 			$("#indexmanager").addClass("active");
@@ -226,4 +292,4 @@
 
 		
 
-<%@ include file="/protected/footer.jsp" %>
+<%@ include file="/protected/footer.jsp"%>
