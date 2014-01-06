@@ -1,5 +1,6 @@
 package wx.com.controller.cms.index;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -144,6 +145,16 @@ public class IndexController {
 	
 	
 	
+	@RequestMapping(value="/wx_index_del",method = RequestMethod.POST)
+	public void  getwx_index_del(HttpServletRequest httpRequest,HttpServletResponse response) throws IOException{
+	
+		
+		String index = httpRequest.getParameter("id");
+		System.out.println(index);
+		response.getWriter().write("true");
+		response.getWriter().flush();
+		
+	}
 	
 
 	@RequestMapping(value="/wx_index_add",method = RequestMethod.GET)
@@ -183,6 +194,44 @@ public class IndexController {
 		return new ModelAndView("/protected/index/wx_index_add","newslist",newslist);
 	}
 	
+	@RequestMapping(value="/wx_index_edit",method = RequestMethod.GET)
+	public ModelAndView  getwx_index_edit(HttpServletRequest httpRequest){
+	
+		String indexId = httpRequest.getParameter("indexId");
+		System.out.println(indexId +"--------------------------------");
+		
+		Msg_News_Out msg_News = new Msg_News_Out();
+//		msg_News.setToUserName(msg.getFromUserName());
+//		msg_News.setFromUserName(msg.getToUserName());
+		msg_News.setCreateTime(StringUtil.getTime());
+//		msg_News.setMsgType("new");
+		msg_News.setArticleCount(Integer.valueOf(2));
+		Article article1 = new Article();
+		article1.setTitle("图片1展示");
+		article1.setDiscription("图片1展示图片1展示图片1展示图片1展示图片1展示");
+		article1.setPicUrl("/static/a1.jpg");
+		article1.setUrl("/static/a1.jpg");//ConfigureClass.getWEBURL()+
+		
+		Article article2 = new Article();
+		article2.setTitle("图片2展示");
+		article2.setDiscription("图片2展示图片2展示图片2展示图片2展示图片2展示");
+		article2.setPicUrl("/static/a2.jpg");//ConfigureClass.getWEBURL()+
+		article2.setUrl("/static/a2.jpg");//ConfigureClass.getWEBURL()+
+		
+		
+		msg_News.getArticles().add(article1);
+		msg_News.getArticles().add(article2);
+	
+//		System.out.println(msg_News.getArticles().size());
+		List<Msg_News_Out> newslist = new ArrayList<Msg_News_Out>();
+		newslist.add(msg_News);
+		newslist.add(msg_News);
+		
+		Map map = new HashMap();
+    	map.put("newslist",newslist);
+		return new ModelAndView("/protected/index/wx_index_edit","newslist",newslist);
+	}
+	
 	@RequestMapping(value="/wx_index_add",method = RequestMethod.POST)
 	public ModelAndView  postwx_index_add(HttpServletRequest httpRequest){
 		
@@ -217,6 +266,7 @@ public class IndexController {
 		System.out.println("==================================");
 		PlatForm platForm = (PlatForm)httpRequest.getSession().getAttribute("_platform_");//.setAttribute("_platform_", platForm);
 		Index index = new Index();
+		
 		index.setIndexType(indexType);
 		index.setKeyWord(keyword);
 		index.setMsgType(msgType);
