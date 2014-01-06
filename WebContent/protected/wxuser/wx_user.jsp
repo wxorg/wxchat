@@ -67,31 +67,21 @@
 		</thead>
 	
 		<tbody>
-			<tr>
-				<td><img src="${ctx }/static/a1.jpg" alt="..." class="img-rounded img-responsive img-size">
-				</td>
-				<td>alice
-				</td>
-				<td>
-					<select >
-  						<option value="-1">未分组</option>
-  						<option value="0">组1</option>
-  						<option value="1">组2</option>
-					</select>
-				</td>
-				<td>1
-				</td>
-			</tr>
-			<c:forEach items="${aa}" var = "rowlist">
+			
+			<c:forEach items="${userlist}" var = "rowlist">
 			
 			<tr>
-				<td>1
+				<td><img src="${ctx }${rowlist.getHeadimgurl()}" alt="..." class="img-rounded img-responsive img-size">
 				</td>
-				<td>1
+				<td>
+				${rowlist.getNickName()}
 				</td>
-				<td>1
+				<td>
+				${rowlist.getGroupId()}
 				</td>
-				<td>1
+				<td>
+				${rowlist.getSubscribe_time()}
+				
 				</td>
 			</tr>
 			</c:forEach>

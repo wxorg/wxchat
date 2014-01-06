@@ -62,6 +62,7 @@ public class NewsController {
 		List<Msg_News_Out> newslist = new ArrayList<Msg_News_Out>();
 		newslist.add(msg_News);
 		newslist.add(msg_News);
+		newslist.add(msg_News);
 //				newsManager.getMsgNewsAll(platForm.getOrigId());
 	
 //		newslist.get(0)

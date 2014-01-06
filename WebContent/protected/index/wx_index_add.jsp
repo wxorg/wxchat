@@ -127,7 +127,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title" id="myModalLabel">添加回复</h4>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body" style="max-height:450px;overflow:auto;">
 				
        
 			</div>

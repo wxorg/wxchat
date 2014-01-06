@@ -69,21 +69,20 @@
 				<td>31
 				</td>
 				<td>
-					<a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
+					
 				</td>
 
 			</tr>
-			<c:forEach items="${aa}" var = "rowlist">
+			<c:forEach items="${usergrouplist}" var = "rowlist">
 			
 			<tr>
-				<td>1
+				<td>rowlist.getGroupName()
 				</td>
-				<td>1
+				<td>rowlist.getWxuserNum()
 				</td>
-				<td>1
+				<td><a id="" href=""><span class="glyphicon glyphicon-pencil"></span></a>
 				</td>
-				<td>1
-				</td>
+				
 			</tr>
 			</c:forEach>
 			

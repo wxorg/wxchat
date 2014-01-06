@@ -21,21 +21,25 @@
   		
   
   	 	<div class="list-group">
+  	 	<div class="row">
   		<c:forEach items="${newslist}" var = "rowlist">
+  			<div class="col-md-6">
   			<div class="panel panel-default">
   			<div class="panel-heading">
    			 <h3 class="panel-title">图文预览</h3>
   			</div>
   			<div class="panel-body">
   			<ul class="media-list list-group-item">
+  				
   				<c:forEach items="${rowlist.getArticles()}" var = "aticallist">
+  					
   					<li class="media "> 					
     					<a class="pull-right" href=" ">
       						<img class="media-object" src="${ctx }/${aticallist.getPicUrl()}" style="max-width:100px;max-height:100px" width="100",height="100"/>
     					</a>
     					<div class="media-body ">
     						<a style="display:block;font-weight:bold" href="${ctx }/protected/wx_news_edit?newsId=${rowlist.getId()}" >
-    							<h4>${aticallist.getTitle()}</h4>
+    							<h5>${aticallist.getTitle()}</h5>
     						</a>
     						<a style="display:block;color:#000" href="${aticallist.getUrl() }">
     							${aticallist.getDiscription()}
@@ -45,14 +49,17 @@
    					 	</div>
    					 
   					</li>
+  					
   				
   				</c:forEach>
   				
 			</ul>
   			</div>
 	</div>
-  			
+  			</div>
   		</c:forEach>
+  		
+  		</div>
   		<!--  
   		<a href="#" class="list-group-item">Dapibus ac facilisis in</a>
   		<a href="#" class="list-group-item">Morbi leo risus</a>

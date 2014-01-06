@@ -191,7 +191,19 @@ function onchange(i){
 
 
 
+function delaltical(){
 	
+	  $(".media-list").children(".radio").each(function(){
+	    	if($(this).children(".optionsRadios").prop('checked')){
+	    		$(this).remove();
+	    		index=index-1;
+	    		alert(index);
+	    		if(index==0){
+	    			$(".panel-group").addClass("hide");
+	    		}
+			}
+	   })  ;  
+}	
 	
 
 		

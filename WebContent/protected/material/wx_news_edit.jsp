@@ -126,7 +126,8 @@
 <script type="text/javascript">
 
 function clearEditArtical(){
-	document.getElementById("img1").src="";
+	
+	$("#img1").attr("src","");
 	//alert($(this).children($(".media-body")).text().trim());
 	
 	$("#articalid").val("");
@@ -202,41 +203,58 @@ $("#picurl1").uploadify({
 
 });
 
-function addArticle(){
-	clearEditArtical();
-	$("#addArtical").removeClass("hide");
-	$("#addArtical").children(".optionsRadios").prop('checked',true);
-}
+
 
 function saveartical()
 {
+	
 	if($(".media-list").children(".radio").length==0){
 		$(".media-list").append('<li  class="media radio">'+
 				'<input type="radio" id="radio" name="optionsRadios" class="optionsRadios" value="option1"  >'+
 				'<a class="pull-right" >'+
-				'<img class="media-object img-rounded" id="listimg" src="" alt=".." width="50",height="50"></a>'+
-				'<div class="media-body "><h4 id="titlelist"></h4>'+
+				'<img class="media-object img-rounded" id="listimg" src="" alt=".." width="70",height="70"></a>'+
+				'<div class="media-body "><h5 id="listtitle"></h5>'+
 				'<a class="" id="listdescrip"></a></div>'+
-				'<a class="hide" id="listurl"></a></li>'
+				'<a class="hide" id="listurl"></a></li>'+
+				'<a class="hide" id="listid"></a>'
 				
 		);
 		
+		
 		var obj = $(".media-list").children(".radio");
 		obj.children(".optionsRadios").prop('checked',true);
-		obj.children(".pull-right").children(".media-object").attr("src",document.getElementById("img1").src);
+		obj.children(".pull-right").children(".media-object").attr("src",$("#img1").attr("src"));
 		//alert($(this).children($(".media-body")).text().trim());
-		obj.children(".media-body").html('<h5>'+$("#title").val()+'</h5>');
+		obj.children(".media-body").html('<h5 id="listtitle">'+$("#title").val()+'</h5>');
 		obj.children("#listdescrip").text($("#descrip").val());
 		obj.children("#listurl").text($("#url").val());
+		
+		obj.children(".optionsRadios").change(function(){
+			
+			$(".radio").each(function(){
+				//alert($(this).children(".optionsRadios").attr("value"));
+				if($(this).children(".optionsRadios").prop('checked')){
+			
+					document.getElementById("img1").src=$(this).children(".pull-right").children(".media-object").attr("src");
+					//alert($(this).children($(".media-body")).text().trim());
+					
+					$("#title").val($(this).children(".media-body").children("#listtitle").text().trim());
+					//alert($(this).children("#listid").text().trim());
+					$("#descrip").val($(this).children("#listdescrip").text().trim());
+					$("#url").val($(this).children("#listurl").text().trim());
+				}
+			});
+			
+		})	;
 		
 		
 	}else{
 		
 		 $(".media-list").children(".radio").each(function(){
 		    	if($(this).children(".optionsRadios").prop('checked')){
-		    		$(this).children(".pull-right").children(".media-object").attr("src",document.getElementById("img1").src);
+		    		$(this).children(".pull-right").children(".media-object").attr("src",$("#img1").attr("src"));
 					//alert($(this).children($(".media-body")).text().trim());
-		    		$(this).children(".media-body").html('<h5>'+$("#title").val()+'</h5>');
+		    		$(this).children(".media-body").html('<h5 id="listtitle">'+$("#title").val()+'</h5>');
 		    		$(this).children("#listdescrip").text($("#descrip").val());
 		    		$(this).children("#listurl").text($("#url").val());
 			
@@ -245,6 +263,7 @@ function saveartical()
 	
    
 	}
+	clearEditArtical();
 	
 } 
 
@@ -256,6 +275,53 @@ function delaltical(){
 		
 			}
 	   })  ;  
+}
+
+
+function addArticle(){
+	
+
+	
+	$(".media-list").append('<li  class="media radio">'+
+			'<input type="radio" id="radio" name="optionsRadios" class="optionsRadios" value="option1"  >'+
+			'<a class="pull-right" >'+
+			'<img class="media-object img-rounded" id="listimg" src="" alt=".." width="70",height="70"></a>'+
+			'<div class="media-body "><h5 id="listtitle"></h5>'+
+			'<a class="" id="listdescrip"></a></div>'+
+			'<a class="hide" id="listurl"></a></li>'+
+			'<a class="hide" id="listid"></a>'
+			
+	);
+	
+	
+	
+	//clearEditArtical();
+	//$("#addArtical").removeClass("hide");
+	var obj = $(".media-list").children(".radio");
+	obj.children(".optionsRadios").last().prop('checked',true);
+	obj.children(".optionsRadios").last().change(function(){
+		
+		$(".radio").each(function(){
+			//alert($(this).children(".optionsRadios").attr("value"));
+			if($(this).children(".optionsRadios").prop('checked')){
+		
+				document.getElementById("img1").src=$(this).children(".pull-right").children(".media-object").attr("src");
+				//alert($(this).children($(".media-body")).text().trim());
+				
+				$("#title").val($(this).children(".media-body").children("#listtitle").text().trim());
+				//alert($(this).children("#listid").text().trim());
+				$("#descrip").val($(this).children("#listdescrip").text().trim());
+				$("#url").val($(this).children("#listurl").text().trim());
+			}
+		});
+		
+	})	;
+	
+	
+	
+
+	
+
 }
 
 function savenews()
