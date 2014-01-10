@@ -14,6 +14,11 @@
 
 </style>
 
+<c:set value="${maplist.get('index') }" var="index"> 
+</c:set>
+
+<c:set value="${maplist.get('newslist') }" var="newslist"> 
+</c:set>
 
 <div class="row">
   <div class="col-md-2 col-md-offset-1">
@@ -36,12 +41,40 @@
   		 	
   		 	<div class="form-group" style="max-width:600px">
     			<label for="indextype">索引类型</label>
-  			    <select class="form-control" id="indextype">
-  					<option value="-1">选择索引类型</option>
-  					<option value="0">关注索引</option>
-  					<option value="1">默认索引</option>
-  					<option value="2">关键词索引</option>
-  					<option value="3">搜索索引</option>
+  			    <select class="form-control" id="indextype" value="${index.getIndexId()}">
+  			    	<option value="-1">选择索引类型</option>
+  			    	<c:choose>
+						<c:when test="${index.getIndexId()==0}">
+							<option value="0" selected>关注索引</option>
+  							<option value="1" >默认索引</option>
+  							<option value="2">关键词索引</option>
+  							<option value="3">搜索索引</option>
+						</c:when>
+						<c:when test="${index.getIndexId()==1}">
+							<option value="0" >关注索引</option>
+  							<option value="1" selected>默认索引</option>
+  							<option value="2">关键词索引</option>
+  							<option value="3">搜索索引</option>
+						</c:when>
+						<c:when test="${index.getIndexId()==2}">
+							<option value="0" >关注索引</option>
+  							<option value="1" >默认索引</option>
+  							<option value="2" selected>关键词索引</option>
+  							<option value="3">搜索索引</option>
+						</c:when>
+						<c:when test="${index.getIndexId()==3}">
+							<option value="0" >关注索引</option>
+  							<option value="1" >默认索引</option>
+  							<option value="2" >关键词索引</option>
+  							<option value="3" selected>搜索索引</option>
+						</c:when>
+						<c:otherwise>
+							
+						</c:otherwise>
+					</c:choose>
+  			    
+  					
+  					
 				</select>
 
   			    
@@ -49,7 +82,7 @@
   			
  			 <div class="form-group" style="max-width:600px">
 				<label for="keyword">索引关键词</label>
-				<input type="text" class="form-control" id="indexkeyword" placeholder="keyword" required>
+				<input type="text" class="form-control" id="indexkeyword" value="${index.getKeyWord()}" placeholder="keyword" required>
  			 </div>
   			
   			
@@ -96,7 +129,7 @@
   		
 			<div class="form-group">
 				<div class="col-md-offset-4 col-md-10">
-					<button  class="btn btn-default" type="submit" onclick="saveIndex()">提交</button>
+					<button  class="btn btn-default" type="button" onclick="saveIndex()">提交</button>
       			
 				</div>
 			</div>
@@ -140,10 +173,13 @@
 </div><!-- /.modal -->
 
 
+
+
+
 <script>
 
 
-	var saveUrl ="${ctx}/protected/wx_index_add";
+	var saveUrl ="${ctx}/protected/wx_index_edit";
 
 	var content ={
 			indextype:-1 ,//0 关注索引,1 默认索引 2、关键词 3 搜索
@@ -227,7 +263,7 @@
 				'<input type="radio" id="${rowlist.getId()}"name="optionsRadios" class="optionsRadios" value="option" >'+
 				'<ul class="media-list list-group-item"><c:forEach items="${rowlist.getArticles()}" var = "aticallist">'+
 				'<li class="media "><a class="pull-right" href=" ">'+
-				'<img class="media-object" src="${aticallist.getPicUrl()}" style="max-width:100px;max-height:100px" width="100",height="100"/></a>'+
+				'<img class="media-object" src="${ctx}/${aticallist.getPicUrl()}" style="max-width:100px;max-height:100px" width="100",height="100"/></a>'+
 				'<div class="media-body ">'+
 				'<a style="display:block;font-weight:bold" href="${ctx }/protected/wx_news_edit?newsId=${rowlist.getId()}" ><h4>${aticallist.getTitle()}</h4></a>'+
 				'<a style="display:block;color:#000" href="${aticallist.getUrl() }">${aticallist.getDiscription()}</a>'+
@@ -295,7 +331,9 @@
 	        
 	        success:function (data, textStatus) {
 
-	        	
+	        	if(data){
+	        		window.location.href="${ctx}/protected/wx_index";
+	        	}
 	        	
 	        
 	        }
@@ -304,8 +342,13 @@
 		
 	}
 	
-
 	
+
+	$(document).ready(function(){
+		
+		
+		
+	});
 	
 	
 </script>

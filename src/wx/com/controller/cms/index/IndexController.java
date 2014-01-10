@@ -198,7 +198,16 @@ public class IndexController {
 	public ModelAndView  getwx_index_edit(HttpServletRequest httpRequest){
 	
 		String indexId = httpRequest.getParameter("indexId");
-		System.out.println(indexId +"--------------------------------");
+		System.out.println(indexId +"-------------------------------11-");
+		Index index =null;
+		
+		if(null!=indexId){
+			index = indexManager.getIndex(Integer.valueOf(indexId));
+		}
+		
+		
+		
+		
 		
 		Msg_News_Out msg_News = new Msg_News_Out();
 //		msg_News.setToUserName(msg.getFromUserName());
@@ -227,9 +236,18 @@ public class IndexController {
 		newslist.add(msg_News);
 		newslist.add(msg_News);
 		
+		index =new Index();
+		index.setIndexType((byte)0);
+		index.setKeyWord("11");
+		index.setMsgType((byte)0);
+		
+		
+		
 		Map map = new HashMap();
     	map.put("newslist",newslist);
-		return new ModelAndView("/protected/index/wx_index_edit","newslist",newslist);
+    	map.put("index", index);
+//    	index.getKeyWord()
+		return new ModelAndView("/protected/index/wx_index_edit","maplist",map);
 	}
 	
 	@RequestMapping(value="/wx_index_add",method = RequestMethod.POST)
@@ -291,6 +309,25 @@ public class IndexController {
 		}
 		
 	}
+	
+	
+	
+	@RequestMapping(value="/wx_index_edit",method = RequestMethod.POST)
+	public void  postwx_index_edit(HttpServletRequest httpRequest,HttpServletResponse response ) throws IOException{
+		
+		String indextype = httpRequest.getParameter("indextype");
+		String keyword = httpRequest.getParameter("keyword");
+		String msgtype = httpRequest.getParameter("msgType");
+		String text = httpRequest.getParameter("text");
+		
+		System.out.println("wx_index_edit");
+		
+		response.getWriter().write("true");
+		
+	}
+	
+	
+	
 	
 	@RequestMapping(value="/wx_index_menu",method = RequestMethod.GET)
 	public ModelAndView  getwx_index_menu(HttpServletRequest httpRequest){

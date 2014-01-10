@@ -63,22 +63,13 @@
 		</thead>
 	
 		<tbody>
-			<tr>
-				<td>星标组
-				</td>
-				<td>31
-				</td>
-				<td>
-					
-				</td>
-
-			</tr>
+			
 			<c:forEach items="${usergrouplist}" var = "rowlist">
 			
 			<tr>
-				<td>rowlist.getGroupName()
+				<td>${ rowlist.getGroupName()}
 				</td>
-				<td>rowlist.getWxuserNum()
+				<td>${rowlist.getWxuserNum()}
 				</td>
 				<td><a id="" href=""><span class="glyphicon glyphicon-pencil"></span></a>
 				</td>

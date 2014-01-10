@@ -27,7 +27,7 @@ public interface IIndexManager {
 	* @return Index   
 	* @throws
 	 */
-	public Index getIndex(String id,int platid);
+	public Index getIndex(int id);
 	
 	/**
 	 * 

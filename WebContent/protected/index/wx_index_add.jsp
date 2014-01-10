@@ -227,7 +227,7 @@
 				'<input type="radio" id="${rowlist.getId()}"name="optionsRadios" class="optionsRadios" value="option" >'+
 				'<ul class="media-list list-group-item"><c:forEach items="${rowlist.getArticles()}" var = "aticallist">'+
 				'<li class="media "><a class="pull-right" href=" ">'+
-				'<img class="media-object" src="${aticallist.getPicUrl()}" style="max-width:100px;max-height:100px" width="100",height="100"/></a>'+
+				'<img class="media-object" src="${ctx}/${aticallist.getPicUrl()}" style="max-width:100px;max-height:100px" width="100",height="100"/></a>'+
 				'<div class="media-body ">'+
 				'<a style="display:block;font-weight:bold" href="${ctx }/protected/wx_news_edit?newsId=${rowlist.getId()}" ><h4>${aticallist.getTitle()}</h4></a>'+
 				'<a style="display:block;color:#000" href="${aticallist.getUrl() }">${aticallist.getDiscription()}</a>'+

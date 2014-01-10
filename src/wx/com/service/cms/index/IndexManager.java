@@ -17,7 +17,7 @@ public class IndexManager implements IIndexManager {
 	private IIndexDAO indexDAO;
 
 	@Override
-	public Index getIndex(String id,int origId) {
+	public Index getIndex(int id) {
 		// TODO Auto-generated method stub
 		
 		/*Index index = new Index();
