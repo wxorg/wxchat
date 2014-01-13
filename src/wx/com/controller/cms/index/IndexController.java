@@ -251,14 +251,14 @@ public class IndexController {
 	}
 	
 	@RequestMapping(value="/wx_index_add",method = RequestMethod.POST)
-	public ModelAndView  postwx_index_add(HttpServletRequest httpRequest){
+	public void  postwx_index_add(HttpServletRequest httpRequest,HttpServletResponse httpResponse) throws IOException{
 		
 		String indextype = httpRequest.getParameter("indextype");
 		String keyword = httpRequest.getParameter("keyword");
 		String msgtype = httpRequest.getParameter("msgType");
 		String text = httpRequest.getParameter("text");
 		
-		System.out.println("ddd");
+		
 		System.out.println("keyword="+keyword+";indextype="+indextype+";msgtype="+msgtype+";text="+text);
 		if(indextype.equals("0")|| indextype.equals("1") || null == keyword )
 			keyword="";
@@ -276,8 +276,9 @@ public class IndexController {
 		}
 		
 		if(!isRetrun){
-			httpRequest.getSession().setAttribute("addIndex_info", "indexType or msgType is error");
-			return new ModelAndView("/protected/index/wx_index_add","index_error",1);
+			//httpRequest.getSession().setAttribute("addIndex_info", "indexType or msgType is error");
+			httpResponse.getWriter().write("{flag:false,info:'indexType or msgType is error'}");
+//			return new ModelAndView("/protected/index/wx_index_add","index_error",1);
 		}
 		
 		System.out.println("keyword="+keyword+";indextype="+indextype+";msgtype="+msgtype+";text="+text);
@@ -302,10 +303,12 @@ public class IndexController {
 		if(!indexManager.isExistIndex(index))
 			isOK=indexManager.addIndex(index);
 		if(isOK)
-			return new ModelAndView("/protected/index/wx_index_add","index_error",1);
+			httpResponse.getWriter().write("{flag:true,info:''}");
+			//return new ModelAndView("/protected/index/wx_index_add","index_error",1);
 		else{
-			httpRequest.getSession().setAttribute("addIndex_info", "addIndex fail");
-			return new ModelAndView("/protected/index/wx_index_add");
+			httpResponse.getWriter().write("{flag:false,info:'indexType or msgType is error'}");
+			//httpRequest.getSession().setAttribute("addIndex_info", "addIndex fail");
+			//return new ModelAndView("/protected/index/wx_index_add");
 		}
 		
 	}
@@ -395,15 +398,16 @@ public class IndexController {
 	
 	
 	@RequestMapping(value="/wx_index_menu",method = RequestMethod.POST)
-	public ModelAndView  postwx_index_menu(HttpServletRequest httpRequest) throws JSONException{
+	public void  postwx_index_menu(HttpServletRequest httpRequest,HttpServletResponse httpResponse) throws JSONException, IOException{
 	
 		String menujson =  httpRequest.getParameter("menu");
 		System.out.println(menujson);
 		
 		PlatForm platForm = (PlatForm) httpRequest.getSession().getAttribute("_platform_");
 		if(platForm==null || platForm.getPlatID()<=0){
-			httpRequest.getSession().setAttribute("addIndex_info", "platForm is null");
-			return new ModelAndView("/protected/index/wx_index_menu","index_error",1);
+			//httpRequest.getSession().setAttribute("addIndex_info", "platForm is null");
+			httpResponse.getWriter().write("{flag:false,info:'platForm is null'}");
+			//return new ModelAndView("/protected/index/wx_index_menu","index_error",1);
 		}
 		WXDBMenu menu = indexManager.queryMenuByPlatID(platForm.getPlatID());
 		int dealFlag=-1;
@@ -421,10 +425,12 @@ public class IndexController {
 		}
 		
 		if(!indexManager.saveOrUpdateMenu(menu,dealFlag)){
-			httpRequest.getSession().setAttribute("addIndex_info", "save menu fail");
-			return new ModelAndView("/protected/index/wx_index_menu","index_error",1);
+			//httpRequest.getSession().setAttribute("addIndex_info", "save menu fail");
+			httpResponse.getWriter().write("{flag:false,info:'save menu fail'}");
+			//return new ModelAndView("/protected/index/wx_index_menu","index_error",1);
 		}else {
-			return new ModelAndView("/protected/index/wx_index_menu","index_success",1);
+			httpResponse.getWriter().write("{flag:true,info:''}");
+			//return new ModelAndView("/protected/index/wx_index_menu","index_success",1);
 		}
 		
 	}

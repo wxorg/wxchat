@@ -27,6 +27,13 @@
 	</div>
   </div>
   <div class="col-md-8">
+  	<div class="alert alert-success " id="alertsuccess" style="display:none">
+  		<a href="#" class="alert-link">修改成功</a>
+	</div>
+	
+	<div class="alert alert-danger " id="alertfails" style="display:none">
+ 	 	<a href="#" class="alert-link">修改失败</a>
+	</div>
   	<div class="panel panel-default">
   	<div class="panel-heading">
     	<h3 class="panel-title">添加索引</h3>
@@ -295,7 +302,22 @@
 	        
 	        success:function (data, textStatus) {
 
-	        	
+	        	try{
+	        		var data=eval('(' + data + ')'); 
+		        	
+		        	if(data.flag){
+		        		$("#alertsuccess").fadeIn();;
+		        		$("#alertsuccess").fadeOut(3000);
+		        	}else{
+		        		$("#alertfails").fadeIn();;
+		        		$("#alertfails").fadeOut(3000);
+		        	}
+	        		
+	        	}catch(e){
+	        		
+	        		$("#alertfails").fadeIn();;
+	        		$("#alertfails").fadeOut(3000);
+	        	}
 	        	
 	        
 	        }
