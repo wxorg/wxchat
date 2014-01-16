@@ -115,9 +115,8 @@
 				 	${rowlist.getCreatTime() }
 				</td>
 				<td>
-					<a href="${ctx}/wx_msg/edit?id=${row.ID}"><span class="">编辑</span></a>
-					<a href="javascript:void(0);" onclick="msgo.delTxtMsg('${row.ID}', $(this).parent().prevAll(':eq(4)').text().trim(),'${row.MENUCOUNT}');"><span
-								class="">删除</span> </a>
+					<a 	href="${ctx }/protected/wx_index_edit?indexId=${rowlist.getIndexId()}" ><span class="">编辑</span></a>
+					<a  style="cursor: pointer" onclick="delTxtMsg(this,'${rowlist.getIndexId()}')"><span class="">删除</span> </a>
 				</td>
 			</tr>
 			</c:forEach>
@@ -150,9 +149,44 @@
 
   	
   </div>
-
+	
 
 	<script type="text/javascript">
+
+	function delTxtMsg(obj,id){
+		
+		$.ajax({
+			
+			url:"${ctx}/protected/wx_index_del",
+			type:"POST",
+			timeout:10000,
+			beforeSend :function (XMLHttpRequest, textStatus, errorThrown){
+				
+				 
+	        },
+	        context: document.body,
+	        complete:function (XMLHttpRequest, textStatus){
+	        	
+	        },
+	        
+	        data: {id:id},
+	        error: function (XMLHttpRequest, textStatus, errorThrown) {
+	        	
+	        },
+	        
+	        success:function (data, textStatus) {
+
+
+	        	if(data){
+
+	        		$(obj).parents('tr').remove();
+	        	}
+	        	
+	        
+	        }
+	        
+			});
+	}
 	
 	
 	$("#fiterindexbtn").click(function(){

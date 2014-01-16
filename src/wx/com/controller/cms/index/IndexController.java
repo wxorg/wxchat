@@ -1,5 +1,6 @@
 package wx.com.controller.cms.index;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -144,6 +145,16 @@ public class IndexController {
 	
 	
 	
+	@RequestMapping(value="/wx_index_del",method = RequestMethod.POST)
+	public void  getwx_index_del(HttpServletRequest httpRequest,HttpServletResponse response) throws IOException{
+	
+		
+		String index = httpRequest.getParameter("id");
+		System.out.println(index);
+		response.getWriter().write("true");
+		response.getWriter().flush();
+		
+	}
 	
 
 	@RequestMapping(value="/wx_index_add",method = RequestMethod.GET)
@@ -183,15 +194,71 @@ public class IndexController {
 		return new ModelAndView("/protected/index/wx_index_add","newslist",newslist);
 	}
 	
+	@RequestMapping(value="/wx_index_edit",method = RequestMethod.GET)
+	public ModelAndView  getwx_index_edit(HttpServletRequest httpRequest){
+	
+		String indexId = httpRequest.getParameter("indexId");
+		System.out.println(indexId +"-------------------------------11-");
+		Index index =null;
+		
+		if(null!=indexId){
+			index = indexManager.getIndex(Integer.valueOf(indexId));
+		}
+		
+		
+		
+		
+		
+		Msg_News_Out msg_News = new Msg_News_Out();
+//		msg_News.setToUserName(msg.getFromUserName());
+//		msg_News.setFromUserName(msg.getToUserName());
+		msg_News.setCreateTime(StringUtil.getTime());
+//		msg_News.setMsgType("new");
+		msg_News.setArticleCount(Integer.valueOf(2));
+		Article article1 = new Article();
+		article1.setTitle("图片1展示");
+		article1.setDiscription("图片1展示图片1展示图片1展示图片1展示图片1展示");
+		article1.setPicUrl("/static/a1.jpg");
+		article1.setUrl("/static/a1.jpg");//ConfigureClass.getWEBURL()+
+		
+		Article article2 = new Article();
+		article2.setTitle("图片2展示");
+		article2.setDiscription("图片2展示图片2展示图片2展示图片2展示图片2展示");
+		article2.setPicUrl("/static/a2.jpg");//ConfigureClass.getWEBURL()+
+		article2.setUrl("/static/a2.jpg");//ConfigureClass.getWEBURL()+
+		
+		
+		msg_News.getArticles().add(article1);
+		msg_News.getArticles().add(article2);
+	
+//		System.out.println(msg_News.getArticles().size());
+		List<Msg_News_Out> newslist = new ArrayList<Msg_News_Out>();
+		newslist.add(msg_News);
+		newslist.add(msg_News);
+		
+		index =new Index();
+		index.setIndexType((byte)0);
+		index.setKeyWord("11");
+		index.setMsgType((byte)0);
+		
+		
+		
+		Map map = new HashMap();
+    	map.put("newslist",newslist);
+    	map.put("index", index);
+//    	index.getKeyWord()
+		return new ModelAndView("/protected/index/wx_index_edit","maplist",map);
+	}
+	
 	@RequestMapping(value="/wx_index_add",method = RequestMethod.POST)
-	public ModelAndView  postwx_index_add(HttpServletRequest httpRequest){
+	public void  postwx_index_add(HttpServletRequest httpRequest,HttpServletResponse httpResponse) throws IOException{
 		
 		String indextype = httpRequest.getParameter("indextype");
 		String keyword = httpRequest.getParameter("keyword");
 		String msgtype = httpRequest.getParameter("msgType");
 		String text = httpRequest.getParameter("text");
 		
-		System.out.println("ddd");
+		
 		System.out.println("keyword="+keyword+";indextype="+indextype+";msgtype="+msgtype+";text="+text);
 		if(indextype.equals("0")|| indextype.equals("1") || null == keyword )
 			keyword="";
@@ -209,14 +276,16 @@ public class IndexController {
 		}
 		
 		if(!isRetrun){
-			httpRequest.getSession().setAttribute("addIndex_info", "indexType or msgType is error");
-			return new ModelAndView("/protected/index/wx_index_add","index_error",1);
+			//httpRequest.getSession().setAttribute("addIndex_info", "indexType or msgType is error");
+			httpResponse.getWriter().write("{flag:false,info:'indexType or msgType is error'}");
+//			return new ModelAndView("/protected/index/wx_index_add","index_error",1);
 		}
 		
 		System.out.println("keyword="+keyword+";indextype="+indextype+";msgtype="+msgtype+";text="+text);
 		System.out.println("==================================");
 		PlatForm platForm = (PlatForm)httpRequest.getSession().getAttribute("_platform_");//.setAttribute("_platform_", platForm);
 		Index index = new Index();
+		
 		index.setIndexType(indexType);
 		index.setKeyWord(keyword);
 		index.setMsgType(msgType);
@@ -234,13 +303,34 @@ public class IndexController {
 		if(!indexManager.isExistIndex(index))
 			isOK=indexManager.addIndex(index);
 		if(isOK)
-			return new ModelAndView("/protected/index/wx_index_add","index_error",1);
+			httpResponse.getWriter().write("{flag:true,info:''}");
+			//return new ModelAndView("/protected/index/wx_index_add","index_error",1);
 		else{
-			httpRequest.getSession().setAttribute("addIndex_info", "addIndex fail");
-			return new ModelAndView("/protected/index/wx_index_add");
+			httpResponse.getWriter().write("{flag:false,info:'indexType or msgType is error'}");
+			//httpRequest.getSession().setAttribute("addIndex_info", "addIndex fail");
+			//return new ModelAndView("/protected/index/wx_index_add");
 		}
 		
 	}
+	
+	
+	
+	@RequestMapping(value="/wx_index_edit",method = RequestMethod.POST)
+	public void  postwx_index_edit(HttpServletRequest httpRequest,HttpServletResponse response ) throws IOException{
+		
+		String indextype = httpRequest.getParameter("indextype");
+		String keyword = httpRequest.getParameter("keyword");
+		String msgtype = httpRequest.getParameter("msgType");
+		String text = httpRequest.getParameter("text");
+		
+		System.out.println("wx_index_edit");
+		
+		response.getWriter().write("true");
+		
+	}
+	
+	
+	
 	
 	@RequestMapping(value="/wx_index_menu",method = RequestMethod.GET)
 	public ModelAndView  getwx_index_menu(HttpServletRequest httpRequest){
@@ -308,15 +398,16 @@ public class IndexController {
 	
 	
 	@RequestMapping(value="/wx_index_menu",method = RequestMethod.POST)
-	public ModelAndView  postwx_index_menu(HttpServletRequest httpRequest) throws JSONException{
+	public void  postwx_index_menu(HttpServletRequest httpRequest,HttpServletResponse httpResponse) throws JSONException, IOException{
 	
 		String menujson =  httpRequest.getParameter("menu");
 		System.out.println(menujson);
 		
 		PlatForm platForm = (PlatForm) httpRequest.getSession().getAttribute("_platform_");
 		if(platForm==null || platForm.getPlatID()<=0){
-			httpRequest.getSession().setAttribute("addIndex_info", "platForm is null");
-			return new ModelAndView("/protected/index/wx_index_menu","index_error",1);
+			//httpRequest.getSession().setAttribute("addIndex_info", "platForm is null");
+			httpResponse.getWriter().write("{flag:false,info:'platForm is null'}");
+			//return new ModelAndView("/protected/index/wx_index_menu","index_error",1);
 		}
 		WXDBMenu menu = indexManager.queryMenuByPlatID(platForm.getPlatID());
 		int dealFlag=-1;
@@ -334,10 +425,12 @@ public class IndexController {
 		}
 		
 		if(!indexManager.saveOrUpdateMenu(menu,dealFlag)){
-			httpRequest.getSession().setAttribute("addIndex_info", "save menu fail");
-			return new ModelAndView("/protected/index/wx_index_menu","index_error",1);
+			//httpRequest.getSession().setAttribute("addIndex_info", "save menu fail");
+			httpResponse.getWriter().write("{flag:false,info:'save menu fail'}");
+			//return new ModelAndView("/protected/index/wx_index_menu","index_error",1);
 		}else {
-			return new ModelAndView("/protected/index/wx_index_menu","index_success",1);
+			httpResponse.getWriter().write("{flag:true,info:''}");
+			//return new ModelAndView("/protected/index/wx_index_menu","index_success",1);
 		}
 		
 	}

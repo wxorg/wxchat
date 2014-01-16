@@ -14,41 +14,67 @@
 
 </style>
 
+<c:set value="${maplist.get('index') }" var="index"> 
+</c:set>
+
+<c:set value="${maplist.get('newslist') }" var="newslist"> 
+</c:set>
 
 <div class="row">
   <div class="col-md-2 col-md-offset-1">
   	<div class="btn-group-vertical sidebar-offcanvas" role="navigation">
 
 		<div class="list-group">
-            <a href="${ctx}/protected/wx_index" class="list-group-item">普通索引</a>
+            <a href="${ctx}/protected/wx_index" class="list-group-item active">普通索引</a>
             <a href="${ctx}/protected/wx_index_menu" class="list-group-item">菜单管理</a>
-			<a href="${ctx}/protected/wx_index_add" class="list-group-item  active">添加索引</a>
+			<a href="${ctx}/protected/wx_index_add" class="list-group-item  ">添加索引</a>
           </div>
 	</div>
   </div>
   <div class="col-md-8">
-  	<div class="alert alert-success " id="alertsuccess" style="display:none">
-  		<a href="#" class="alert-link">修改成功</a>
-	</div>
-	
-	<div class="alert alert-danger " id="alertfails" style="display:none">
- 	 	<a href="#" class="alert-link">修改失败</a>
-	</div>
   	<div class="panel panel-default">
   	<div class="panel-heading">
-    	<h3 class="panel-title">添加索引</h3>
+    	<h3 class="panel-title">编辑索引</h3>
   	</div>
   	<div class="panel-body">
   		 <form role="form">
   		 	
   		 	<div class="form-group" style="max-width:600px">
     			<label for="indextype">索引类型</label>
-  			    <select class="form-control" id="indextype">
-  					<option value="-1">选择索引类型</option>
-  					<option value="0">关注索引</option>
-  					<option value="1">默认索引</option>
-  					<option value="2">关键词索引</option>
-  					<option value="3">搜索索引</option>
+  			    <select class="form-control" id="indextype" value="${index.getIndexId()}">
+  			    	<option value="-1">选择索引类型</option>
+  			    	<c:choose>
+						<c:when test="${index.getIndexId()==0}">
+							<option value="0" selected>关注索引</option>
+  							<option value="1" >默认索引</option>
+  							<option value="2">关键词索引</option>
+  							<option value="3">搜索索引</option>
+						</c:when>
+						<c:when test="${index.getIndexId()==1}">
+							<option value="0" >关注索引</option>
+  							<option value="1" selected>默认索引</option>
+  							<option value="2">关键词索引</option>
+  							<option value="3">搜索索引</option>
+						</c:when>
+						<c:when test="${index.getIndexId()==2}">
+							<option value="0" >关注索引</option>
+  							<option value="1" >默认索引</option>
+  							<option value="2" selected>关键词索引</option>
+  							<option value="3">搜索索引</option>
+						</c:when>
+						<c:when test="${index.getIndexId()==3}">
+							<option value="0" >关注索引</option>
+  							<option value="1" >默认索引</option>
+  							<option value="2" >关键词索引</option>
+  							<option value="3" selected>搜索索引</option>
+						</c:when>
+						<c:otherwise>
+							
+						</c:otherwise>
+					</c:choose>
+  			    
+  					
+  					
 				</select>
 
   			    
@@ -56,7 +82,7 @@
   			
  			 <div class="form-group" style="max-width:600px">
 				<label for="keyword">索引关键词</label>
-				<input type="text" class="form-control" id="indexkeyword" placeholder="keyword" required>
+				<input type="text" class="form-control" id="indexkeyword" value="${index.getKeyWord()}" placeholder="keyword" required>
  			 </div>
   			
   			
@@ -103,7 +129,7 @@
   		
 			<div class="form-group">
 				<div class="col-md-offset-4 col-md-10">
-					<button  class="btn btn-default" type="submit" onclick="saveIndex()">提交</button>
+					<button  class="btn btn-default" type="button" onclick="saveIndex()">提交</button>
       			
 				</div>
 			</div>
@@ -147,10 +173,13 @@
 </div><!-- /.modal -->
 
 
+
+
+
 <script>
 
 
-	var saveUrl ="${ctx}/protected/wx_index_add";
+	var saveUrl ="${ctx}/protected/wx_index_edit";
 
 	var content ={
 			indextype:-1 ,//0 关注索引,1 默认索引 2、关键词 3 搜索
@@ -302,21 +331,8 @@
 	        
 	        success:function (data, textStatus) {
 
-	        	try{
-	        		var data=eval('(' + data + ')'); 
-		        	
-		        	if(data.flag){
-		        		$("#alertsuccess").fadeIn();;
-		        		$("#alertsuccess").fadeOut(3000);
-		        	}else{
-		        		$("#alertfails").fadeIn();;
-		        		$("#alertfails").fadeOut(3000);
-		        	}
-	        		
-	        	}catch(e){
-	        		
-	        		$("#alertfails").fadeIn();;
-	        		$("#alertfails").fadeOut(3000);
+	        	if(data){
+	        		window.location.href="${ctx}/protected/wx_index";
 	        	}
 	        	
 	        
@@ -326,8 +342,13 @@
 		
 	}
 	
-
 	
+
+	$(document).ready(function(){
+		
+		
+		
+	});
 	
 	
 </script>

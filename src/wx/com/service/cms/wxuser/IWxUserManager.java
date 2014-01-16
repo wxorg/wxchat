@@ -35,7 +35,7 @@ public interface IWxUserManager {
 	* @return List<WxUser>   
 	* @throws
 	 */
-	public List<WxUser> getWxUserByNickName(String nickName,String origId);
+	public List<WxUser> getWxUserByNickName(String nickName,int i);
 	
 	/**
 	 * 
@@ -58,6 +58,6 @@ public interface IWxUserManager {
 	* @return List<WxUser>   
 	* @throws
 	 */
-	public List<WxUser> getAllWxUser(String origId);
+	public List<WxUser> getAllWxUser(int i);
 
 }

@@ -10,7 +10,17 @@
 	}
 </style>
 
-
+<%
+  		String nickName ="";
+  		if(null!=request.getParameter("nickname"))
+  		{
+  			nickName=new String(request.getParameter("nickname").getBytes("iso8859-1"),"utf-8") ;
+  		}
+  				
+  				
+  		
+  	%>
+  	
 <div class="row">
   <div class="col-md-2 col-md-offset-1">
   	<div class="btn-group-vertical sidebar-offcanvas" role="navigation">
@@ -28,13 +38,13 @@
   <div class="panel-heading">
     <h3 class="panel-title">
      
-  	<form class="form-inline" role="form" >
+  	<form class="form-inline"  action='${ctx}/protected/wx_user' method="GET" role="form" >
   		<div class="row">
   			<div class="col-md-3">
  
   					<div class="form-group">
   	 					<label class="sr-only control-label" for="nickname">昵称</label>
-   			   			 <input type="text" class="form-control" id="nickname" placeholder="昵称">
+   			   			 <input type="text" class="form-control" id="nickname" name="nickname" placeholder="昵称">
   	 				</div>
 
  
@@ -68,7 +78,7 @@
 	
 		<tbody>
 			
-			<c:forEach items="${userlist}" var = "rowlist">
+			<c:forEach items="${usermap.get('userlist')}" var = "rowlist">
 			
 			<tr>
 				<td><img src="${ctx }${rowlist.getHeadimgurl()}" alt="..." class="img-rounded img-responsive img-size">
@@ -91,14 +101,20 @@
   </div>
   </div>
   
-   <div > 
-   		<ul class=" pager " style="margin:5px 0px 5px 0px;text-align:center">
-  			<li class=" disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span> </a></li>
-  			<li class=" disabled" ><a href="#">1/3</a></li>
-  			<li class=""><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+	  
+	  <div class="">
+   				<ul class=" pager " id="pagerchange">
+  					<li class="" id="pagerpre">
+  						<a >
+  							<span class="glyphicon glyphicon-chevron-left">
+  							</span> 
+  						</a>
+  					</li>
+  					<li class="" id="pagernum"><a ><span id="currentpage">${usermap.get("currpage")}</span>/<span id="totlepage">${usermap.get("totlepage")}</span></a></li>
+  					<li class=""  id="pagerafter"><a><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+				</ul>
 
-		</ul>
-	  </div>
+   		</div>
    
    
 </div>
@@ -106,6 +122,44 @@
   </div>
 </div>
 
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	
+	$("#nickname").val("<%= nickName%>");
+
+
+
+	$("#pagerpre").click(function(){
+		
+		if($("#currentpage").text()==1){
+			return;
+		}else{
+			var src="${ctx}/protected/wx_user?nickname="+$("#nickname").val()+"&currentpage="+(Number($("#currentpage").text())-1)+"&totlepage="+$("#totlepage").text();
+	
+			$(this).children("a").attr("href",src);
+			//getIndex(Number($("#currentpage").text())-1);
+		}
+		
+	});
+	
+	
+	$("#pagerafter").click(function(){
+		
+		if($("#currentpage").text()==$("#totlepage").text()){
+			return;
+		}else{
+			
+			var src="${ctx}/protected/wx_user?nickname="+$("#nickname").val()+"&currentpage="+(Number($("#currentpage").text())+1)+"&totlepage="+$("#totlepage").text();
+
+			$(this).children("a").attr("href",src);
+		}
+		
+	});
+	
+
+});
+</script>
 
 <script src="${ctx}/js/user.js"></script>
 		

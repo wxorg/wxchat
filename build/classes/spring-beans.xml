@@ -63,6 +63,16 @@
             	<value> from WXDBMenu as t where t.isValid=1 and t.platId={0}  </value>   
        		</property>   
         </bean>
+        
+         
+         
+         
+          <bean id="wxUserCustomManager" class="wx.com.service.cms.wxuser.WxUserCustomManager">
+       		 
+        </bean>
+        <bean id="wxUserManager" class="wx.com.service.cms.wxuser.WxUserManager">
+       		 
+        </bean>
                 
 </beans>
 

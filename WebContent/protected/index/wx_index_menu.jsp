@@ -2,9 +2,9 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="/protected/header.jsp"%>
 
-<c:set value="${mapindex.get(\"wx_menu\")}" var="wx_menu" >
+<c:set value="${mapindex.get(\"wx_menu\")}" var="wx_menu" />
 
-</c:set>
+
 
 
 <div class="row">
@@ -20,6 +20,14 @@
 	</div>
   </div>
   <div class="col-md-8">
+  
+  	<div class="alert alert-success " id="alertsuccess" style="display:none">
+  		<a href="#" class="alert-link">修改成功</a>
+	</div>
+	
+	<div class="alert alert-danger " id="alertfails" style="display:none">
+ 	 	<a href="#" class="alert-link">修改失败</a>
+	</div>
  
    <div class="panel panel-default">
   <!-- Default panel contents -->
@@ -33,7 +41,7 @@
   		<div class="panel-group" id="accordion">
   		
   		<c:forEach items="${mapindex.get(\"wx_menu\").getMainMenu()}" var = "rowmap" varStatus="status">
-  <div class="panel panel-default">
+  <div class="panel panel-default basemenu">
     <div class="panel-heading">
     	<div class="form-inline hide">
                 	<input  type="text"  class="indexkeyword" placeholder="keyword" required>
@@ -44,9 +52,12 @@
                 ${rowmap.key }           
          </a>
          
-         <a  class="editmainmenu" style="cursor: pointer" class="col-md-offset-">
+         <a  class="editmainmenu col-md-offset-1" style="cursor: pointer" >
         	<span class=" glyphicon glyphicon-pencil"></span>
-         </a>
+         </a>&nbsp;&nbsp;
+          <a  class="delmainmenu " style="cursor: pointer" class="col-md-offset-1">
+        	<span class=" glyphicon glyphicon-trash"></span>
+          </a>
        </h4>
     </div>
     <div id="collapse${status.index }"  class="panel-collapse collapse in">
@@ -59,7 +70,9 @@
       					<span class="childmenuname">${innerlist.getMenuName()}</span>
       					<span class="col-md-offset-1 keywordorurl hide">${innerlist.getMenuType()}</span>
       					<span class="col-md-offset-1 keyword">${innerlist.getKeywordOrUrl()}</span>
-      					<a  class="editchildmenu" style="float:right;cursor: pointer"><span class=" glyphicon glyphicon-pencil"></span> </a>
+      					<a  class="delchildmenu " style="float:right;cursor: pointer"><span class=" glyphicon glyphicon-trash"></span> </a>
+      					<a  class="editchildmenu " style="float:right;cursor: pointer"><span class=" glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;&nbsp; </a>
+      					
       				</li>
       			</c:forEach>
   				
@@ -116,6 +129,11 @@
 
 	<script type="text/javascript">
 	
+	
+		var baseMenuNum= "${wx_menu.getMainMenu().size() }";
+		
+		
+		
 		$('#myModal1').modal({
 		  keyboard: false,
 		  show:false
@@ -134,6 +152,13 @@
 				
 				$(this).parents('.panel-heading').children('.form-inline').removeClass('hide');
 				//$('#myModal1').modal('toggle');
+			});
+			$(".delmainmenu").click(function(){
+				
+				baseMenuNum++;
+				//alert($(this).parents('.panel-title').children(".mainmenuname").text());
+				$(this).parents('.basemenu').remove();
+
 			});
 			
 			
@@ -155,7 +180,9 @@
 			if($('#'+obj).children().length<5){
 				$('#'+obj).append('<li class="list-group-item"><span class="childmenuname">子菜单'+($('#'+obj).children().length+1)+'</span>'+
 						'<span class="col-md-offset-1 keywordorurl hide"></span>'+
-						'<span class="col-md-offset-1 keyword"></span><a class="editchildmenu" style="float:right;cursor: pointer"><span class=" glyphicon glyphicon-pencil"></span> </a></li>');
+						'<span class="col-md-offset-1 keyword"></span>'+
+						'<a  class="delchildmenu " style="float:right;cursor: pointer"><span class=" glyphicon glyphicon-trash"></span> </a>'+
+						'<a class="editchildmenu" style="float:right;cursor: pointer"><span class=" glyphicon glyphicon-pencil"></span> &nbsp;&nbsp;&nbsp;</a></li>');
 				
 			}else{
 				alert("子菜单书不超过5个");
@@ -163,9 +190,9 @@
 				
 
 			
-			
+			//alert($('#'+obj+' li').hasClass('list-group-item'));
 			childmenuInit($('#'+obj+" li").last().children('.editchildmenu'));
-			
+			childmenuDel($('#'+obj+" li").last().find('glyphicon-trash'));
 			
 		}	
 	
@@ -176,20 +203,24 @@
 				$("#accordion").append(
 				
 		
-				  '<div class="panel panel-default"><div class="panel-heading"><div class="form-inline hide">'+
+				  '<div class="panel panel-default basemenu"><div class="panel-heading"><div class="form-inline hide">'+
 				  '<input  type="text"  class="indexkeyword" placeholder="keyword" required>'+
 				  '<button type="submit" class="btn btn-default btnchangemainmenu">确定</button></div>'+
 				  '<h4 class="panel-title">'+
-				  '<a  class="mainmenuname${wx_menu.getMainMenu().size() }" data-toggle="collapse" data-toggle="collapse" data-parent="#accordion${wx_menu.getMainMenu().size() }" href="#collapse${wx_menu.getMainMenu().size() }" >'+
-				  '主菜单${wx_menu.getMainMenu().size() }</a>'+
-				  '<a  class="editmainmenu" style="cursor: pointer" class="col-md-offset-1">'+
-				  '<span class=" glyphicon glyphicon-pencil"></span></a></h4></div>'+
-				  '<div id="collapse${wx_menu.getMainMenu().size() }"  class="panel-collapse collapse in">'+
-				  '<div class="panel-body"><div class="childmenu"><ul class="list-group" id="list-group${wx_menu.getMainMenu().size() }"></ul>'+
-				  '<div ><a  class="editchildmenu" style="cursor: pointer" class="btn btn-link " onclick="addchilmenu(\'list-group${wx_menu.getMainMenu().size() }\')"><span class="glyphicon glyphicon-plus"> 添加子菜单</span></a>'+
+				  '<a  class="mainmenuname mainmenuname'+baseMenuNum+'" data-toggle="collapse" data-toggle="collapse" data-parent="#accordion'+baseMenuNum+'" href="#collapse'+baseMenuNum+'" >'+
+				  '主菜单'+baseMenuNum+'</a>'+
+				  '<a  class="editmainmenu col-md-offset-1" style="cursor: pointer" >'+
+				  '<span class=" glyphicon glyphicon-pencil"></span></a>'+
+				  '&nbsp;&nbsp; <a  class="delmainmenu " style="cursor: pointer" class="col-md-offset-"><span class=" glyphicon glyphicon-trash"></span></a> </h4></div>'+
+				  '<div id="collapse'+baseMenuNum+'"  class="panel-collapse collapse in">'+
+				  '<div class="panel-body"><div class="childmenu"><ul class="list-group" id="list-group'+baseMenuNum+'"></ul>'+
+				  '<div ><a   style="cursor: pointer" class="btn btn-link " onclick="addchilmenu(\'list-group'+baseMenuNum+'\')"><span class="glyphicon glyphicon-plus"> 添加子菜单</span></a>'+
 				  '</div></div></div></div></div>');
 				  				                	
-				                	
+				
+				baseMenuNum++;
+		        	
+		               	
 				clickInit();
 						    
 			}
@@ -198,57 +229,102 @@
 
 		}
 		
+		function childmenuDel(obj){
+			
+			
+			$(obj).click(function(){
+				$(this).remove();
+			});
+		
+			
+		}
+		
 		function childmenuInit(obj){
 			
 			
-			obj.click(function(){
-				
-				
-				
-				$(this).addClass("edit");
-				
-				$(".modal-body").append('<form role="form"><div class="form-group">'+
-						'<label for="childmenutitle">菜单名</label>'+
-						'<input type="text" class="form-control" id="childmenutitle" placeholder="菜单名"></div>'+
-						'<div class="form-group"><label for="childmenutype">菜单类型</label>'+
-						'<select class="form-control" id="keywordorurl"><option value="0">事件</option><option value="1">链接</option></select></div>'+
-						'<div class="form-group"><label for="keyword">关键字/链接</label>'+
-						'<input type="text" class="form-control" id="keyword" placeholder="关键词 /url"></div>'+
-						
-						'<div class="form-group hide"><label for"keyword">关键词</label>'+
-						'<select class="form-control " id="keywordorurl">'+
-						'<c:forEach items="${mapindex.get(\"indexlist\")}" var = "rowlist" varStatus="status">'+
-						'<option>${rowlist.getKeyword()}</option></c:forEach>'+
-						'</form>'
-						
-						
-						);		
-				
+				obj.click(function(){
 					
-				
-				
-				$(".modal-body").find("#childmenutitle").val($(this).parent(".list-group-item").children(".childmenuname").html());
-				//$("#childmenutitle").val($(this).parent(".list-group-item").children(".childmenuname").html());
-				$(".modal-body").find("#keyword").val($(this).parent(".list-group-item").children(".keyword").html());
-				$(".modal-body").find("#keywordorurl").val($(this).parent(".list-group-item").children(".keywordorurl").html());
-				
+					
+					
+					$(this).addClass("edit");
+					
+					$(".modal-body").append('<form role="form"><div class="form-group">'+
+							'<label for="childmenutitle">菜单名</label>'+
+							'<input type="text" class="form-control" id="childmenutitle" placeholder="菜单名"></div>'+
+							'<div class="form-group"><label for="childmenutype">菜单类型</label>'+
+							'<select class="form-control" id="keywordorurl"><option value="0" >事件</option><option value="1">链接</option></select></div>'+
+							'<div class="form-group"><label for="keyword">关键字/链接</label>'+
+							'<input type="text" class="form-control" id="keyword" placeholder="关键词 /url"></div>'+
+							
+							'<div class="form-group hide"><label for"keyword">关键词</label>'+
+							'<select class="form-control " id="keywordorurl">'+
+							'<c:forEach items="${mapindex.get(\"indexlist\")}" var = "rowlist" varStatus="status">'+
+							'<option>${rowlist.getKeyword()}</option></c:forEach>'+
+							'</form>'
+							
+							
+							);		
+					
+						
+					
+					
+					$(".modal-body").find("#childmenutitle").val($(this).parent(".list-group-item").children(".childmenuname").html());
+					//$("#childmenutitle").val($(this).parent(".list-group-item").children(".childmenuname").html());
+					$(".modal-body").find("#keyword").val($(this).parent(".list-group-item").children(".keyword").html());
+					$(".modal-body").find("#keywordorurl").val($(this).parent(".list-group-item").children(".keywordorurl").html());
+					
+					
+					
+					btnTextConfirm($(".editchildmenu"));
+					/*
+					$("#btnTextConfirm").click(function(){
+					
+						$(".editchildmenu").each(function(){
+							
+							if($(this).hasClass("edit")){
+								
+								$(this).parent(".list-group-item").children(".childmenuname").html($(".modal-body").find("#childmenutitle").val());
+								$(this).parent(".list-group-item").children(".keyword").html($(".modal-body").find("#keyword").val());
+								$(this).parent(".list-group-item").children(".keywordorurl").html($(".modal-body").find("#keywordorurl").val());
+							}
+							
+							
+						});
+						$('#myModal').modal('hide');
+						
+					});
+					*/
+					  
+			
+					$('#myModal').modal('toggle');
+					
+				});
+			
+			
+		}
+		
+		function btnTextConfirm(obj){
+			
+			
 				
 				$("#btnTextConfirm").click(function(){
-					$(".editchildmenu").each(function(){
+					
+					obj.each(function(){
 						if($(this).hasClass("edit")){
+							
 							$(this).parent(".list-group-item").children(".childmenuname").html($(".modal-body").find("#childmenutitle").val());
 							$(this).parent(".list-group-item").children(".keyword").html($(".modal-body").find("#keyword").val());
 							$(this).parent(".list-group-item").children(".keywordorurl").html($(".modal-body").find("#keywordorurl").val());
 						}
-						$('#myModal').modal('hide');
+						
+						
 					});
 					
+					$('#myModal').modal('hide');
 				});
-				  
-		
-				$('#myModal').modal('toggle');
 				
-			});
+				
+			
 		}
 		
 		$('#myModal').on('hidden.bs.modal', function (e) {
@@ -275,7 +351,7 @@
 				//alert(submainlen);
 				
 				$("#list-group"+i).children().each(function(){
-					alert(submainlen);
+					
 					var submenu=new Object();
 					submenu.menuname =$(this).children('.childmenuname').text().trim();
 					submenu.menutype =$(this).children('.keywordorurl').text().trim();
@@ -329,6 +405,22 @@
 		        
 		        success:function (data, textStatus) {
 
+		        	try{
+		        		var data=eval('(' + data + ')'); 
+			        	
+			        	if(data.flag){
+			        		$("#alertsuccess").fadeIn();;
+			        		$("#alertsuccess").fadeOut(3000);
+			        	}else{
+			        		$("#alertfails").fadeIn();;
+			        		$("#alertfails").fadeOut(3000);
+			        	}
+		        		
+		        	}catch(e){
+		        		
+		        		$("#alertfails").fadeIn();;
+		        		$("#alertfails").fadeOut(3000);
+		        	}
 		        	
 		        	
 		        
@@ -342,8 +434,17 @@
 		$(document).ready(function(){
 		
 			clickInit();
-			childmenuInit($(".editchildmenu"));
+			$(".editchildmenu").each(function(){
+				childmenuInit($(this));
+			});
 			
+			$(".list-group-item").each(function(){
+
+				childmenuDel($(this).find('glyphicon-trash'));
+				
+			});
+			
+	
 			
 		
 		});
