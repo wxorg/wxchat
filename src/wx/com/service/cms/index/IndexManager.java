@@ -104,7 +104,7 @@ public class IndexManager implements IIndexManager {
 		
 		Map map = new HashMap();
 		try{
-			int totlepage= indexDAO.queryIndexCountByArgs(whereQuery,platId)/numPerpage +1;
+			int totlepage=(int)(Math.ceil(indexDAO.queryIndexCountByArgs(whereQuery,platId)/(float)numPerpage));
 			//System.out.println("totlepage="+totlepage);
 			List list = indexDAO.getIndexBySelect(whereQuery, numPerpage, curPage, platId);
 			//System.out.println("list size="+list.size());

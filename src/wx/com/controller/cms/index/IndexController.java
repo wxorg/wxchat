@@ -86,7 +86,7 @@ public class IndexController {
 			if(null!= indexType && !indexType.equals("-1")){
 				indextype = Short.valueOf(indexType);
 				if(sqlWhere.length()>5)
-					sqlWhere=sqlWhere+" or t.indexType = "+indextype;
+					sqlWhere=sqlWhere+" and t.indexType = "+indextype;
 				else
 					sqlWhere=" and ( t.indexType = "+indextype;
 			}
@@ -95,7 +95,7 @@ public class IndexController {
 			if(null!= msgType && !msgType.equals("-1")){
 				msgtype = Short.valueOf(msgType);
 				if(sqlWhere.length()>5)
-					sqlWhere=sqlWhere+" or t.msgType = "+msgtype;
+					sqlWhere=sqlWhere+" and t.msgType = "+msgtype;
 				else
 					sqlWhere="and ( t.msgType = "+msgtype;
 			}
